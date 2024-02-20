@@ -443,8 +443,8 @@ export default {
         text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
         
         img {
-          width: 100px;
-          height: 100px;
+          width: 70px;
+          height: 70px;
           margin-right: 20px;
         }
         .name {
@@ -454,7 +454,7 @@ export default {
           span {
             font-style: normal;
             font-weight: 700;
-            font-size: 24px;
+            font-size: 18px;
             user-select: text;
             color: white;
           }
@@ -496,7 +496,7 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(90deg, #140a4b 20%, rgba(39, 89, 168, 0) 80%);
+    background: linear-gradient(90deg, #2759a8 20%, rgba(39, 89, 168, 0) 80%);
   }
 }
 
