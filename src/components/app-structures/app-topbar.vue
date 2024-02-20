@@ -5,16 +5,12 @@
         <div class="web-logo" v-on:click="GO_TO('/')">
           <img src="/img/app-logo.svg" alt />
         </div>
-        <div class="inapp-menu mobile-none" v-if="this.$store.state.currentInApp">
-          <div class="home-btn" v-on:click="GO_TO('/')">
-            <i class="las la-home"></i>
-          </div>
-          <div class="btn-group-separater"></div>
-          <div class="inapp-logo">
-            <img :src="this.$store.state.currentInApp.icon" />
-            <label for>{{ this.$store.state.currentInApp.name }}</label>
-          </div>
+
+        <div class="app-topbar-text">
+          <label>CPOC IMS</label>
+          <label>INSPECTION & MAINTENANCE SYSTEM</label>
         </div>
+
         <label class="dev-mode-badge" v-if="this.$store.state.mode == 'dev'">
           RUNNING IN DEVELOPMENT MODE
           <br />
@@ -224,6 +220,19 @@ export default {
   .left-col {
     display: flex;
     align-items: center;
+    .app-topbar-text {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 12px;
+        font-weight: 700;
+        color: $web-font-color-blue;
+        font-family: $web-default-font;
+      }
+      label:first-child {
+        color: rgb(4, 184, 4);
+      }
+    }
     .sidebar-toggle {
       width: 40px;
       height: 30px;
@@ -239,15 +248,15 @@ export default {
       }
     }
     .web-logo {
-      width: 100px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      margin: 0 10px 0 20px;
-      // cursor: pointer;
+      cursor: pointer;
+      margin-left: 10px;
+      margin-right: 10px;
       img {
-        width: 100%;
-        height: 44px;
+        width: 38px;
+        height: 38px;
       }
       @media screen and (max-width: 768px) {
         width: 80px;
