@@ -18,9 +18,7 @@
       :options="pipingList"
     /> -->
     <toolbar
-        pageSubName="User Account"
-        :isNewBtn="true"
-        newBtnLabel="New Account"
+        pageSubName="General Platform Inspection"
         :isBack="true"
         style="grid-column: span 3"
       />
