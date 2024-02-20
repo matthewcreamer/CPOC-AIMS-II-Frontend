@@ -52,6 +52,41 @@ const routes = [
         alias: "Inspection & Anomaly Monthly Performance Dashboard",
         component: () => import("../views/Applications/IAMP/Dashboard/Page.vue"),
       },
+      {
+        path: "/inspection",
+        alias: "Inspection",
+        component: () => import("../views/Applications/IAMP/Inspection/Page.vue"),
+      },
+      {
+        path: "/anomaly",
+        alias: "Anomaly",
+        component: () => import("../views/Applications/IAMP/Anomaly/Page.vue"),
+      },
+      {
+        path: "/hightlight-activities",
+        alias: "Hightlight Activities",
+        component: () => import("../views/Applications/IAMP/HightlightActivities/Page.vue"),
+      },
+      {
+        path: "/moc",
+        alias: "Management Of Change",
+        component: () => import("../views/Applications/IAMP/MOC/Page.vue"),
+      },
+      {
+        path: "/inspection-campaign",
+        alias: "Inspection Campaign",
+        component: () => import("../views/Applications/IAMP/InspectionCampaign/Page.vue"),
+      },
+      {
+        path: "/rectification-campaign",
+        alias: "Rectification Campaign",
+        component: () => import("../views/Applications/IAMP/RectificationCampaign/Page.vue"),
+      },
+      {
+        path: "/monthly-report",
+        alias: "Monthly Report",
+        component: () => import("../views/Applications/IAMP/MonthlyReport/Page.vue"),
+      },
     ]
   },
   //GPI
@@ -86,11 +121,11 @@ const routes = [
       {
         path: "/",
         alias: "Ex-Inspection Dashboard",
-        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+        component: () => import("../views/Applications/ExInspection/Dashboard/Page.vue"),
       },
       {
         path: "/list",
-        alias: "List to Ex-Inspection",
+        alias: "List of Ex-Inspection",
         component: () => import("../views/Applications/ExInspection/List/Page.vue"),
       },
     ]
@@ -107,8 +142,8 @@ const routes = [
         component: () => import("../views/Applications/TemporaryRepair/Dashboard/Page.vue"),
       },
       {
-        path: "/temporary-repair-record",
-        alias: "Temporary Repair Report",
+        path: "/trr",
+        alias: "Temporary Repair Record",
         component: () => import("../views/Applications/TemporaryRepair/TRR/Page.vue"),
       },
       {
@@ -116,11 +151,6 @@ const routes = [
         alias: "Temporary Repair Pending Approval",
         component: () => import("../views/Applications/TemporaryRepair/PendingApproval/Page.vue"),
       },
-      // {
-      //   path: "/",
-      //   alias: "Temporary Repair Dashboard",
-      //   component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
-      // },
     ]
   },
   //Reliability
@@ -132,10 +162,31 @@ const routes = [
       {
         path: "/",
         alias: "Reliability Dashboard",
-        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+        component: () => import("../views/Applications/Reliability/Dashboard/Page.vue"),
+      },
+      {
+        path: "/failure-report",
+        alias: "Failure Report",
+        component: () => import("../views/Applications/Reliability/FailureReport/Page.vue"),
+      },
+      {
+        path: "/pending-approval",
+        alias: "Pending Approval",
+        component: () => import("../views/Applications/Reliability/PendingApproval/Page.vue"),
+      },
+      {
+        path: "/stt",
+        alias: "Short Term Tracking",
+        component: () => import("../views/Applications/Reliability/STT/Page.vue"),
+      },
+      {
+        path: "/ltt",
+        alias: "Long Term Tracking",
+        component: () => import("../views/Applications/Reliability/LTT/Page.vue"),
       },
     ]
   },
+  
   {
     path: "/md",
     name: "MasterData",
