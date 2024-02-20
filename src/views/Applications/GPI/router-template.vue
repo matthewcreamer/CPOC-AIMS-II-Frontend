@@ -19,7 +19,8 @@
     /> -->
     <toolbar
         pageSubName="General Platform Inspection"
-        :isBack="true"
+        :isBackPath="true"
+        :isBack_specificPath="'/'"
         style="grid-column: span 3"
       />
     <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>

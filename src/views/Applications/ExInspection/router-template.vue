@@ -2,7 +2,8 @@
   <div class="pm-page" :class="[sidebarHiding == true ? 'pm-page-none-sidbar' : 'pm-page']">
     <toolbar
         pageSubName="Ex-Inspection"
-        :isBack="true"
+        :isBackPath="true"
+        :isBack_specificPath="'/'"
         style="grid-column: span 3"
       />
     <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
