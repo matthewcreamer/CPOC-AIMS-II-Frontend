@@ -1,19 +1,5 @@
 <template>
-  <!-- <div class="pm-page" :class="[sidebarHiding == true ? 'pm-page-none-sidbar' : 'pm-page']">
-    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()" />
-    <div class="pm-page-container">
-      <router-view></router-view>
-    </div>
-    <popupAdd v-if="isAdd == true" @closePopup="TOGGLE_POPUPADD()" />
-  </div> -->
   <div class="pm-page" :class="[sidebarHiding == true ? 'pm-page-none-sidbar' : 'pm-page']">
-    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
-    <div class="pm-page-container">
-      <router-view></router-view>
-    </div>
-  </div>
-</template> 
-
     <!-- <toolbar
       :pageSubName="this.$store.state.currentPageName"
       :pageSubInnerName="this.$store.state.currentPageInnerName"
@@ -31,22 +17,33 @@
       :isSearchDropdown="false"
       :options="pipingList"
     /> -->
+    <toolbar
+        pageSubName="User Account"
+        :isNewBtn="true"
+        newBtnLabel="New Account"
+        :isBack="true"
+        style="grid-column: span 3"
+      />
+    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
+    <div class="pm-page-container">
+      <router-view></router-view>
+    </div>
+  </div>
+</template> 
 
 <script>
 // import axios from "/axios.js";
-// import ViewLayout from "@/layouts/sidebar-layout.vue";
 // Structures
-// import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
+import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
 import sidebar from "@/components/app-structures/app-sidebar.vue";
 
 export default {
   name: "router-template-detail",
   components: {
-    // toolbar,
+    toolbar,
     sidebar
   },
   created() {
-    // this.$emit(`update:layout`, ViewLayout);
     this.$store.commit("UPDATE_CURRENT_INAPP", {
       name: "E-NDE REPORT",
       //icon: "/img/icon_menu/equipment/piping.png"
@@ -84,7 +81,7 @@ export default {
 .pm-page {
   display: grid;
   grid-template-columns: 200px calc(100vw - 200px);
-  grid-template-rows: calc(100vh - 44px);
+  grid-template-rows: 51px calc(100vh - 95px);
   transition: all 0.3s;
   .pm-page-container {
     background-color: #fff;
@@ -96,8 +93,6 @@ export default {
     grid-template-columns: 54px calc(100vw - 54px);
     .pm-page-container {
       background-color: #fff;
-      .page-container {
-      }
     }
   }
 }
@@ -106,8 +101,6 @@ export default {
   grid-template-columns: 54px calc(100vw - 54px);
   .pm-page-container {
     background-color: #fff;
-    .page-container {
-    }
   }
 }
 </style>

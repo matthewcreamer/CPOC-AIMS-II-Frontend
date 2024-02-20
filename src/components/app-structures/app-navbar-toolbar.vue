@@ -38,119 +38,21 @@
         </div>
       </div> -->
     </div>
-    <div class="right-col">
-      <div class="search-box" v-if="isSearchBoxList == true">
-        <i class="las la-search search"></i>
-        <input
-          v-model="searchKeyword"
-          type="text"
-          placeholder="search tag no."
-          v-on:keyup.enter="$emit('isSearch')"
-        />
-        <i class="las la-times clear" v-if="searchKeyword != ''" v-on:click="CLEAR_SEARCH()"></i>
-      </div>
-      <div class="search-box" id="v-search" v-if="isSearchDropdown == true">
-        <i class="las la-search search"></i>
-        <v-select
-          class="custom-select"
-          v-model="selectedOption"
-          :options="formattedOptions"
-          placeholder="search line no."
-          @input="onSelectOption"
-        />
-        <i class="las la-times clear" v-if="searchKeyword != ''" v-on:click="CLEAR_SEARCH()"></i>
-      </div>
-      <div class="search-box" v-if="isSearchBox == true">
-        <i class="las la-search search"></i>
-        <input
-          v-model="searchKeyword"
-          type="text"
-          placeholder="search tag no."
-          v-on:keyup.enter="GET_SEARCH()"
-        />
-        <i class="las la-times clear" v-if="searchKeyword != ''" v-on:click="CLEAR_SEARCH()"></i>
-      </div>
-      <v-ons-toolbar-button v-if="isSave" class="highlight-btn" v-on:click="$emit('isSaveBtn')">
-        <i class="las la-save"></i>
-        <span>Save</span>
-      </v-ons-toolbar-button>
-      <v-ons-toolbar-button v-if="isEdit" v-on:click="$emit('isEditBtn')">
-        <i class="las la-edit"></i>
-        <span>Edit</span>
-      </v-ons-toolbar-button>
-      <v-ons-toolbar-button v-if="isDelete" v-on:click="$emit('isDeleteBtn')">
-        <i class="las la-trash"></i>
-        <span>Delete</span>
-      </v-ons-toolbar-button>
-
-      <div class="btn-group-separater" v-if="isPrint || isDownload"></div>
-
-      <v-ons-toolbar-button v-if="isRefresh" v-on:click="$emit('refreshInfo')">
-        <i class="las la-sync"></i>
-        <span>Refresh</span>
-      </v-ons-toolbar-button>
-
-      <v-ons-toolbar-button v-if="isPrint">
-        <i class="las la-print"></i>
-        <span>Print</span>
-      </v-ons-toolbar-button>
-
-      <v-ons-toolbar-button v-if="isDownload" v-on:click="$emit('isDownloadBtn')">
-        <i class="las la-download"></i>
-        <span>Download</span>
-      </v-ons-toolbar-button>
-
-      <v-ons-toolbar-button v-if="isNewBtn" v-on:click="$emit('newBtnFn')">
-        <i class="las la-plus"></i>
-        <span>{{ newBtnLabel }}</span>
-      </v-ons-toolbar-button>
-
-      <v-ons-toolbar-button
-        v-if="isMoreBtn"
-        v-on:click="SHOW_POPOVER($event, 'down', true)"
-        style="padding-right: 0px"
-      >
-        <i class="las la-cog"></i>
-        <!-- <span>more</span> -->
-      </v-ons-toolbar-button>
-      <v-ons-popover
-        cancelable
-        :visible.sync="popoverVisible"
-        :target="popoverTarget"
-        :direction="popoverDirection"
-        :cover-target="coverTarget"
-      >
-        <!-- <v-ons-toolbar-button class="popover-button" v-on:click="NEW_piping_INFO()">
-          <span>Add New</span>
-          <i class="las la-plus"></i>
-        </v-ons-toolbar-button>-->
-        <v-ons-toolbar-button class="popover-button" v-on:click="EDIT_PIPING_INFO()">
-          <span>Edit Info</span>
-          <i class="las la-edit"></i>
-        </v-ons-toolbar-button>
-
-        <v-ons-toolbar-button class="popover-button" v-on:click="DELETE_PIPING_INFO()">
-          <span style="color: red">Delete</span>
-          <i class="las la-trash" style="color: red"></i>
-        </v-ons-toolbar-button>
-      </v-ons-popover>
-    </div>
-    <popupAdd v-if="isAdd == true" @closePopup="TOGGLE_POPUPADD()" />
-    <popupEdit :editInfo="infoPiping" v-if="isEditPopup == true" @closePopup="TOGGLE_POPUP()" />
+    
   </div>
 </template>
 
 <script>
 import moment from "moment";
 import axios from "/axios.js";
-import vSelect from "vue-select";
+// import vSelect from "vue-select";
 
 export default {
   name: "app-toolbar",
   components: {
     // popupEdit,
     // popupAdd,
-    vSelect
+    // vSelect
   },
   props: {
     pageName: String,
@@ -167,11 +69,7 @@ export default {
     isNewBtn: Boolean,
     isRefresh: Boolean,
     isMoreBtn: Boolean,
-    infoPiping: Object,
     newBtnLabel: String,
-    isSearchBox: Boolean,
-    isSearchBoxList: Boolean,
-    isSearchDropdown: Boolean,
     options: Array
   },
   data() {
@@ -399,7 +297,7 @@ export default {
   .info-item {
     display: block;
     width: fit-content;
-    padding-right: 40px;
+    padding-right: 25px;
 
     .desc,
     .value {
@@ -422,11 +320,18 @@ export default {
       font-weight: 600;
       font-size: 12px;
     }
+    .integrity-status {
+      padding: 3px;
+      text-align: center;
+      color: white !important;
+      text-transform: uppercase;
+      font-size: 10px;
+    }
   }
 }
 
 .search-box {
-  width: 250px;
+  width: 180px;
   height: 34px;
   position: relative;
   margin-right: 10px;
@@ -518,6 +423,6 @@ export default {
 }
 .custom-select {
   font-size: 14px;
-  color: grey;
+  color: #5b5b5b;
 }
 </style>
