@@ -81,6 +81,48 @@ export default new Vuex.Store({
         isActive: true,
       },
     ],
+    sidebarRRList: [
+      {
+        id: 1,
+        name: "Dashboard",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/reliability",
+        isActive: true,
+      },
+      {
+        id: 2,
+        name: "Failure Report",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/failure-report",
+        isActive: true,
+      },
+      {
+        id: 3,
+        name: "Pending Approval",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/pending-approval",
+        isActive: true,
+      },
+      {
+        id: 4,
+        name: "Short Term Tracking",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/stt",
+        isActive: true,
+      },
+      {
+        id: 5,
+        name: "Long Term Tracking",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/ltt",
+        isActive: true,
+      },
+    ],
     sidebarTemporaryList: [
       {
         id: 1,
