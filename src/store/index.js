@@ -77,9 +77,35 @@ export default new Vuex.Store({
         name: "Pending Approval",
         icon: "/img/icon_sidebar/executive_management/summary.png",
         icon_menu: '/img/icon_menu/executive_management/summary.png',
-        link: "/pending-approval",
+        link: "/gpi-pending-approval",
         isActive: true,
       },
+    ],
+    sidebarTemporaryList: [
+      {
+        id: 1,
+        name: "Dashboard",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/temporary-repair",
+        isActive: true,
+      }, {
+        id: 3,
+        name: "Temporary Repair Record",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/temporary-repair-record",
+        isActive: true,
+      },
+      {
+        id: 2,
+        name: "Pending Approval",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/temporary-pending-approval",
+        isActive: true,
+      },
+     
     ],
     sidebarExinspecList: [
       {

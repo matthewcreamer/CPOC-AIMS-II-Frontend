@@ -71,7 +71,7 @@ const routes = [
         component: () => import("../views/Applications/GPI/GPIRecord/Page.vue"),
       },
       {
-        path: "/pending-approval",
+        path: "/gpi-pending-approval",
         alias: "Pending Approval",
         component: () => import("../views/Applications/GPI/PendingApproval/Page.vue"),
       },
@@ -104,8 +104,23 @@ const routes = [
       {
         path: "/",
         alias: "Temporary Repair Dashboard",
-        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+        component: () => import("../views/Applications/TemporaryRepair/Dashboard/Page.vue"),
       },
+      {
+        path: "/temporary-repair-record",
+        alias: "Temporary Repair Report",
+        component: () => import("../views/Applications/TemporaryRepair/TRR/Page.vue"),
+      },
+      {
+        path: "/temporary-pending-approval",
+        alias: "Temporary Repair Pending Approval",
+        component: () => import("../views/Applications/TemporaryRepair/PendingApproval/Page.vue"),
+      },
+      // {
+      //   path: "/",
+      //   alias: "Temporary Repair Dashboard",
+      //   component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      // },
     ]
   },
   //Reliability
