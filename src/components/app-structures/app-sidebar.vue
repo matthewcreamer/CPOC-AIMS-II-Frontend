@@ -83,7 +83,7 @@ export default {
 .app-sidebar {
   width: 200px;
   height: 100%;
-  background-color: #2759a8;
+  background-color: $web-theme-color-secondary;
   border: 1px solid #e6e6e6;
   border-width: 0 1px 0 0;
   position: relative;
@@ -172,7 +172,7 @@ export default {
   }
 
   .fixed-panel {
-    background-color: #2759a8;
+    background-color: $web-theme-color-secondary;
   }
 }
 @media screen and (max-width: 1024px) {
