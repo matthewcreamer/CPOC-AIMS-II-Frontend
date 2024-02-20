@@ -17,7 +17,7 @@ export default new Vuex.Store({
       prod: 'https://dis02.dexon-technology.com:444/api',
     },
     user: '',
-    appIcon: '/app-icon.jpeg',
+    appIcon: '/img/app-logo.svg',
     currentInApp: '',
     currentPageName: '',
     currentPageInnerName: '',

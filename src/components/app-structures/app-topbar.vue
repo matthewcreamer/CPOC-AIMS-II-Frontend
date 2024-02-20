@@ -230,7 +230,7 @@ export default {
         font-family: $web-default-font;
       }
       label:first-child {
-        color: rgb(4, 184, 4);
+        color: #1D9531;
       }
     }
     .sidebar-toggle {
