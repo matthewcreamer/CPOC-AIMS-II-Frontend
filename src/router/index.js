@@ -41,6 +41,71 @@ const routes = [
       },
     ]
   },
+  //Inspection & anomaly monthly performance
+  {
+    path: "/iamp",
+    name: "Inspection & Anomaly Monthly Performance",
+    component: () => import("../views/Applications/IAMP/router-template.vue"),
+    children: [
+      {
+        path: "/",
+        alias: "Inspection & Anomaly Monthly Performance Dashboard",
+        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+    ]
+  },
+  //GPI
+  {
+    path: "/gpi",
+    name: "General Platform Inspection",
+    component: () => import("../views/Applications/GPI/router-template.vue"),
+    children: [
+      {
+        path: "/",
+        alias: "GPI Dashboard",
+        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+    ]
+  },
+  //Ex-inspection
+  {
+    path: "/ex-inspection",
+    name: "Ex-Inspection",
+    component: () => import("../views/Applications/ExInspection/router-template.vue"),
+    children: [
+      {
+        path: "/",
+        alias: "Ex-Inspection Dashboard",
+        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+    ]
+  },
+  //Temporary repair
+  {
+    path: "/temporary-repair",
+    name: "Temporary Repair",
+    component: () => import("../views/Applications/TemporaryRepair/router-template.vue"),
+    children: [
+      {
+        path: "/",
+        alias: "Temporary Repair Dashboard",
+        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+    ]
+  },
+  //Reliability
+  {
+    path: "/reliability",
+    name: "Reliability",
+    component: () => import("../views/Applications/Reliability/router-template.vue"),
+    children: [
+      {
+        path: "/",
+        alias: "Reliability Dashboard",
+        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+    ]
+  },
   {
     path: "/md",
     name: "MasterData",
