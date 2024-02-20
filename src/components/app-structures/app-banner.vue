@@ -48,6 +48,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/style/main.scss";
 #user-panel {
     background-image: url("/public/img/banner.png");
     background-size: cover;
@@ -116,7 +117,7 @@ export default {
         height: 100%;
         top: 0;
         left: 0;
-        background: linear-gradient(90deg, #2759a8 20%, rgba(39, 89, 168, 0) 80%);
+        background: linear-gradient(90deg, $web-theme-color-secondary 20%, rgba(39, 89, 168, 0) 80%);
     }
 }
 </style>
