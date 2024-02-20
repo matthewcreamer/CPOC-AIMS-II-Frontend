@@ -1,5 +1,13 @@
 <template>
   <div class="pm-page" :class="[sidebarHiding == true ? 'pm-page-none-sidbar' : 'pm-page']">
+    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
+    <toolbar :calname="calname"></toolbar>
+    <div class="pm-page-container">
+      <router-view></router-view>
+    </div>
+  </div>
+</template> 
+
     <!-- <toolbar
       :pageSubName="this.$store.state.currentPageName"
       :pageSubInnerName="this.$store.state.currentPageInnerName"
@@ -17,7 +25,7 @@
       :isSearchDropdown="false"
       :options="pipingList"
     /> -->
-    <toolbar
+    <!-- <toolbar
         pageSubName="User Account"
         :isNewBtn="true"
         newBtnLabel="New Account"
@@ -29,13 +37,14 @@
       <router-view></router-view>
     </div>
   </div>
-</template> 
+</template>  -->
 
 <script>
 // import axios from "/axios.js";
 // Structures
-import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
+
 import sidebar from "@/components/app-structures/app-sidebar.vue";
+import toolbar from "@/components/app-structures/app-toolbar.vue"
 
 export default {
   name: "router-template-detail",
@@ -55,11 +64,14 @@ export default {
     if (this.$store.state.status.server == true) {
       console.log('online');
     }
+    this.calname = this.$store.state
+    console.log(this.$store.state)
   },
   data() {
     return {
       sidebarHiding: false,
-      isAdd: false
+      isAdd: false ,
+      calname: "",
     };
   },
   computed: {},

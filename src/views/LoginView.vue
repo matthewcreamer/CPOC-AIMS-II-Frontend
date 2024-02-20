@@ -10,7 +10,7 @@
         <img :src="appIcon" alt="app icon" />
       </div>
       <!-- <h1>SPRC</h1> -->
-      <label class="sub-title">E-NDE REPORT</label>
+      <label class="sub-title">E-NDE REssssPORT</label>
       <div class="form-login">
         <div class="input-set">
           <input

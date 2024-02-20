@@ -235,12 +235,13 @@ export default new Vuex.Store({
 
         })
         .catch((error) => {
+          
           console.log("VALIDATE ERROR:")
           console.log(error)
           if (error.response.status == 0) {
             console.log('SERVER FAILED')
-            state.status.server = false;
-            state.status.fullscreenAlert = true;
+            //state.status.server = false;
+            //state.status.fullscreenAlert = true;
             // alert('Cannot connect to server. Click "OK" to retry.')
             // router.go();
           }
