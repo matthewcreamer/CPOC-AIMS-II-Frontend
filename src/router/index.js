@@ -50,7 +50,7 @@ const routes = [
       {
         path: "/",
         alias: "Inspection & Anomaly Monthly Performance Dashboard",
-        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+        component: () => import("../views/Applications/IAMP/Dashboard/Page.vue"),
       },
     ]
   },
