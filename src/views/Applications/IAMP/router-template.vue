@@ -1,28 +1,12 @@
 <template>
   <div class="pm-page" :class="[sidebarHiding == true ? 'pm-page-none-sidbar' : 'pm-page']">
-    <!-- <toolbar
-      :pageSubName="this.$store.state.currentPageName"
-      :pageSubInnerName="this.$store.state.currentPageInnerName"
-      @refreshInfo="refreshPage()"
-      :isBackPath="false"
-      :isBack_specificPath="'/piping'"
-      :isNewBtn="false"
-      newBtnLabel="New Line"
-      @newBtnFn="TOGGLE_POPUP()"
-      style="grid-column: span 3"
-      :infoPiping="infoPiping"
-      :isMoreBtn="false"
-      :isSearchBox="false"
-      :isRefresh="true"
-      :isSearchDropdown="false"
-      :options="pipingList"
-    /> -->
     <toolbar
         pageSubName="Inspection & Anomaly Monthly Performance"
         :isBack="true"
         style="grid-column: span 3"
       />
     <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
+    <banner :calname="calname" ></banner>
     <div class="pm-page-container">
       <router-view></router-view>
     </div>
@@ -34,12 +18,14 @@
 // Structures
 import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
 import sidebar from "@/components/app-structures/app-sidebar.vue";
+import banner from "@/components/app-structures/app-banner.vue"
 
 export default {
   name: "router-template-detail",
   components: {
     toolbar,
-    sidebar
+    sidebar,
+    banner,
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_INAPP", {
@@ -47,17 +33,20 @@ export default {
       //icon: "/img/icon_menu/equipment/piping.png"
     });
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "E-NDE REPORT",
+      subpageName: "DASHBOARD",
       subpageInnerName: null
     });
     if (this.$store.state.status.server == true) {
       console.log('online');
     }
+    this.calname = this.$store.state
+    console.log("-=-=-=-",this.$store)
   },
   data() {
     return {
       sidebarHiding: false,
-      isAdd: false
+      isAdd: false,
+      calname: "",
     };
   },
   computed: {},

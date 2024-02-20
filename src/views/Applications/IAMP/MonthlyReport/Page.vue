@@ -58,7 +58,7 @@ export default {
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "NDE DASHBOARD",
+      subpageName: "MONTHLY REPORT",
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {

@@ -23,6 +23,8 @@
         style="grid-column: span 3"
       />
     <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
+    <banner :calname="calname"></banner>
+    
     <div class="pm-page-container">
       <router-view></router-view>
     </div>
@@ -34,12 +36,14 @@
 // Structures
 import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
 import sidebar from "@/components/app-structures/app-sidebar-gpi.vue";
+import banner from "@/components/app-structures/app-banner.vue"
 
 export default {
   name: "router-template-detail",
   components: {
     toolbar,
-    sidebar
+    sidebar,
+    banner,
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_INAPP", {
@@ -53,11 +57,14 @@ export default {
     if (this.$store.state.status.server == true) {
       console.log('online');
     }
+    this.calname = this.$store.state
+    console.log(this.$store)
   },
   data() {
     return {
       sidebarHiding: false,
-      isAdd: false
+      isAdd: false,
+      calname: {},
     };
   },
   computed: {},
