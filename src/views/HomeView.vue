@@ -1,13 +1,14 @@
 <template>
   <div id="page-home" class="page-body">
     <div id="user-panel">
-      <div class="page-container" style="padding-top: 40px; padding-bottom: 80px">
+      <div class="page-container">
         <div class="wrapper">
           <div class="left-col">
             <div class="detail">
+              <img src="/img/default_profile_picture.png" alt>
               <div class="name">
-                <h2>Title Page</h2>
-                <h2>Sub-title</h2>
+                <span>Admin</span>
+                <span>Super User</span>
               </div>
             </div>
           </div>
@@ -21,22 +22,6 @@
             </v-ons-toolbar-button>
           </div>
         </div>
-        <div class="searchbar-box">
-          <input
-            type="text"
-            name="search"
-            size="50"
-            v-model="search_key"
-            placeholder="Search"
-            class="query"
-          />
-          <span class="icon">
-            <i class="la la-search"></i>
-          </span>
-          <span class="close" v-if="search_key" v-on:click="SEARCH_CLEAR()">
-            <i class="la la-close"></i>
-          </span>
-        </div>
       </div>
       <div class="bg-filter"></div>
     </div>
@@ -46,17 +31,17 @@
         <h2 class="page-section-label" style="padding-top: 40px">Modules</h2>
       </div>
       <div class="client-list-recent" v-if="!this.search_key && this.assetListRecent.length > 0">
-        <v-ons-card
-          class="client-card"
-          v-for="item in assetListPaged"
-          :key="item.id"
-          v-on:click="VIEW_INFO(item)"
-        >
+        <div
+            class="client-card"
+            v-for="item in assetListPaged"
+            :key="item.id"
+            v-on:click="VIEW_INFO(item)"
+          >
           <div class="client_logo">
             <img :src="item.logo" alt="logo" />
           </div>
           <div class="title">{{ item.asset_name }}</div>
-        </v-ons-card>
+        </div>
       </div>
     </div>
     <div class="page-container" v-if="
@@ -65,14 +50,23 @@
       <div class="section-label" v-if="showSectionLabel == true">
         <h2 class="page-section-label">Master Data & Management</h2>
       </div>
-      <div class="app-drawer-wrapper">
-        <div class="app-item-wrapper" v-for="item in appsList.managementApps" :key="item.id">
-          <div class="app-item" v-on:click="OPEN_APP(item)" v-if="item.isActive == true">
+      <div class="client-list-recent" >
+          <div
+            class="client-card"
+            v-on:click="OPEN_APP(item)" 
+            v-for="item in appsList.managementApps" :key="item.id"
+          >
+            <div class="client_logo" v-if="item.isActive == true">
+              <!-- <img :src="item.icon_menu" alt="logo" /> -->
+              <img src="/img/icon_menu/equipment/white/prd3.svg" alt="logo" />
+            </div>
+            <div class="title">{{ item.name }}</div>
+          </div>
+          <!-- <div class="app-item" v-on:click="OPEN_APP(item)" v-if="item.isActive == true">
             <img :src="item.icon_menu" />
             <label>{{ item.name }}</label>
-          </div>
+          </div> -->
         </div>
-      </div>
     </div>
     <AppLoading :icon="openingApp.icon_menu" :name="openingApp.name" v-if="isOpening == true" />
     <PageLoading v-if="isLoading == true" text="Loading" />
@@ -106,13 +100,33 @@ export default {
       assetList: [
         {
           id_asset: 1,
-          asset_name: "Module 1",
-          // logo: "/img/icon_menu/equipment/flowline.png"
+          asset_name: "Inspection & Anomaly Monthly Performance",
+          logo: "/img/icon_menu/equipment/white/flowline2.svg"
         },
         {
           id_asset: 2,
-          asset_name: "Module 2",
-          // logo: "/img/icon_menu/equipment/piping.png"
+          asset_name: "General Platform Inspection",
+          logo: "/img/icon_menu/equipment/white/piping2.svg"
+        },
+        {
+          id_asset: 3, 
+          asset_name: "Ex-Inspection",
+          logo: "/img/icon_menu/equipment/white/pressure_vessel2.svg"
+        },
+        {
+          id_asset: 4,
+          asset_name: "Reliability Report",
+          logo: "/img/icon_menu/equipment/white/tank1.svg"
+        },
+        {
+          id_asset: 5,
+          asset_name: "Temporary Repair",
+          logo: "/img/icon_menu/equipment/white/pipeline4.svg"
+        },
+        {
+          id_asset: 6,
+          asset_name: "Corrosion Monitoring",
+          logo: "/img/icon_menu/equipment/white/block_valve2.svg"
         },
       ],
       assetListPaged: [],
@@ -359,7 +373,6 @@ export default {
 
 .page-container {
   position: relative;
-  // height: 100%;
   padding-top: 40px;
 }
 
@@ -385,72 +398,65 @@ export default {
   align-items: center;
   .page-section-label {
     font-size: 1.75em;
-    font-style: italic;
+    font-weight: 700;
     text-transform: capitalize;
     color: $web-font-color-black;
     padding-left: 8px;
-    font-weight: 500;
   }
 }
 
 #user-panel {
-  // background-image: url("/public/img/filename");
+  background-image: url("/public/img/banner.png");
   background-size: cover;
-  background-position: center;
+  background-position: 50% 45%;
   background-repeat: no-repeat;
   position: relative;
-
-  @media screen and (max-width: 768px) {
-    margin: 0 -20px;
-  }
+  height: 170px;
+  
   .page-container {
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .wrapper {
-    height: 150px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    width: 100%;
     .left-col {
       .detail {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         color: $web-font-color-white;
         text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+        
+        img {
+          width: 100px;
+          height: 100px;
+          margin-right: 20px;
+        }
         .name {
           display: flex;
+          flex-direction: column;
 
-          h2 {
+          span {
             font-style: normal;
             font-weight: 700;
             font-size: 24px;
-            margin: 0 !important;
-            text-transform: uppercase;
-            letter-spacing: 1pt;
             user-select: text;
+            color: white;
           }
-          h2:last-child {
-            margin-left: 10px !important;
-          }
-
-          .hl {
-            font-size: 30px;
-            font-weight: 700;
-          }
-        }
-        .desc {
-          margin-top: 15px;
-          display: flex;
-          flex-direction: column;
-          label {
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 22px;
-            // color: $web-font-color-grey;
+          span:last-child {
+            font-weight: 500;
+            opacity: 0.6;
           }
         }
       }
@@ -486,7 +492,7 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(90deg, #22a6da 0%, rgba(39, 89, 168, 0) 150%);
+    background: linear-gradient(90deg, #140a4b 20%, rgba(39, 89, 168, 0) 80%);
   }
 }
 
@@ -528,42 +534,32 @@ export default {
 
 .client-card {
   cursor: pointer;
-  height: 100%;
-  padding: 8px 20px;
+  width: 180px;
+  height: 170px;
   margin: 0;
+  aspect-ratio: 4 / 3;
   .client_logo {
-    width: 100%;
-    max-width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    background: rgb(20,10,75);
+    background: linear-gradient(175deg, rgba(20,10,75,1) 28%, rgba(20,10,75,0.6012998949579832) 100%);
+    border-radius: 30px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px auto 10px;
-
-    //Another Style (no background)
-    // width: 60px;
-    // height: 60px;
-    // padding: 10px;
-    // margin: 10px auto;
-    // overflow: hidden;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
-    // border-radius: 6px;
-    // background-color: white;
-    // margin-bottom: 14px;
+    padding: 5px;
 
     img {
-      width: 100%;
-      height: 100%;
+      max-width: 65%;
+      max-height: 65%;
       object-fit: contain;
     }
   }
   .title {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -571,25 +567,18 @@ export default {
     text-align: center;
     font-family: "SF Pro", "SF Pro Display", "Helvetica Nueue", "Noto Sans Thai",
       "Roboto", sans-serif !important;
-  }
-
-  @media screen and (max-width: 1024px) {
-    .client_logo {
-      width: 100%;
-      height: 80px;
-    }
-  }
-  @media screen and (max-width: 425px) {
-    .client_logo {
-      width: 100%;
-      height: 80px;
-    }
+      text-transform: uppercase;
   }
 }
 
 .client-card:hover {
-  // transition: all 100ms;
+  transition: all 120ms;
   transform: scale(1.02);
+}
+
+.client-card:active {
+  transition: all 120ms;
+  transform: scale(0.97);
 }
 
 .client-list-list {
