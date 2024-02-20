@@ -33,7 +33,7 @@
 // import axios from "/axios.js";
 // Structures
 import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
-import sidebar from "@/components/app-structures/app-sidebar.vue";
+import sidebar from "@/components/app-structures/app-sidebar-ex-inspection.vue";
 
 export default {
   name: "router-template-detail",

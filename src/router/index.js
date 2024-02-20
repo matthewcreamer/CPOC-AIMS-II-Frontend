@@ -66,12 +66,12 @@ const routes = [
         component: () => import("../views/Applications/GPI/Dashboard/Page.vue"),
       },
       {
-        path: "gpi-record",
+        path: "/gpi-record",
         alias: "GPI Record",
         component: () => import("../views/Applications/GPI/GPIRecord/Page.vue"),
       },
       {
-        path: "pending-approval",
+        path: "/pending-approval",
         alias: "Pending Approval",
         component: () => import("../views/Applications/GPI/PendingApproval/Page.vue"),
       },
@@ -87,6 +87,11 @@ const routes = [
         path: "/",
         alias: "Ex-Inspection Dashboard",
         component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+      {
+        path: "/list",
+        alias: "List to Ex-Inspection",
+        component: () => import("../views/Applications/ExInspection/List/Page.vue"),
       },
     ]
   },
