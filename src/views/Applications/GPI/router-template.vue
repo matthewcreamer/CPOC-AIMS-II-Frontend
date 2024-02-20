@@ -1,22 +1,5 @@
 <template>
   <div class="pm-page" :class="[sidebarHiding == true ? 'pm-page-none-sidbar' : 'pm-page']">
-    <!-- <toolbar
-      :pageSubName="this.$store.state.currentPageName"
-      :pageSubInnerName="this.$store.state.currentPageInnerName"
-      @refreshInfo="refreshPage()"
-      :isBackPath="false"
-      :isBack_specificPath="'/piping'"
-      :isNewBtn="false"
-      newBtnLabel="New Line"
-      @newBtnFn="TOGGLE_POPUP()"
-      style="grid-column: span 3"
-      :infoPiping="infoPiping"
-      :isMoreBtn="false"
-      :isSearchBox="false"
-      :isRefresh="true"
-      :isSearchDropdown="false"
-      :options="pipingList"
-    /> -->
     <toolbar
         pageSubName="General Platform Inspection"
         :isBackPath="true"
@@ -27,7 +10,7 @@
     <banner :calname="calname"></banner>
     
     <div class="pm-page-container">
-      <router-view></router-view>
+      <router-view :key="$route.fullPath"></router-view>
     </div>
   </div>
 </template> 

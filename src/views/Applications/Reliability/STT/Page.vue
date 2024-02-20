@@ -58,7 +58,7 @@ export default {
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "STT",
+      subpageName: "SHORT TERM TRACKING",
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
