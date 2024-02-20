@@ -18,7 +18,7 @@ const routes = [
     component: () => import("../views/LoginView.vue"),
   },
   {
-    path: "/home",
+    path: "/",
     name: "Home",
     component: () => import("../views/HomeView.vue"),
   },
@@ -30,7 +30,7 @@ const routes = [
 
   //NDE
   {
-    path: "/",
+    path: "/nde",
     name: "NDE",
     component: () => import("../views/Applications/NDE/router-template.vue"),
     children: [

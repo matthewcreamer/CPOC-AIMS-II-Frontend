@@ -3,7 +3,7 @@
     <div class="app-topbar-wrapper">
       <div class="left-col">
         <div class="web-logo" v-on:click="GO_TO('/')">
-          <img src="/img/SPRC_logo.jpeg" alt />
+          <img src="/img/app-logo.svg" alt />
         </div>
         <div class="inapp-menu mobile-none" v-if="this.$store.state.currentInApp">
           <div class="home-btn" v-on:click="GO_TO('/')">
@@ -241,17 +241,17 @@ export default {
     .web-logo {
       width: 100px;
       cursor: pointer;
-
+      display: flex;
+      align-items: center;
       margin: 0 10px 0 20px;
       // cursor: pointer;
       img {
         width: 100%;
         height: 44px;
-        object-fit: contain;
       }
       @media screen and (max-width: 768px) {
         width: 80px;
-        margint-top: 4px;
+        margin-top: 4px;
       }
     }
     .inapp-menu {
