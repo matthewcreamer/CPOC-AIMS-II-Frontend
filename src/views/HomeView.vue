@@ -167,14 +167,18 @@ export default {
     VIEW_INFO(i) {
       if (i.id_asset) {
         let path = encodeURI(i.asset_name.toLowerCase());
-        if (i.asset_name == "Pressure Vessel") {
-          path = "vessel";
-        } else if (i.asset_name == "Storage Tank") {
-          path = "tank";
-        } else if (i.asset_name == "Pressure Relief Device") {
-          path = "prd";
-        } else if (i.asset_name == "Rotating") {
-          path = "rotating";
+        if (i.asset_name == "Inspection & Anomaly Monthly Performance") {
+          path = "iamp";
+        } else if (i.asset_name == "General Platform Inspection") {
+          path = "gpi";
+        } else if (i.asset_name == "Ex-Inspection") {
+          path = "ex-inspection";
+        } else if (i.asset_name == "Reliability Report") {
+          path = "reliability";
+        } else if (i.asset_name == "Temporary Repair") {
+          path = "temporary-repair";
+        } else if (i.asset_name == "Corrosion Monitoring") {
+          path = "";
         }
         this.KEEP_RECENT(i);
         this.$store.commit("UPDATE_CURRENT_VIEW_CLIENT", i.asset_name);
