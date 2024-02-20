@@ -62,8 +62,18 @@ const routes = [
     children: [
       {
         path: "/",
-        alias: "GPI Dashboard",
-        component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+        alias: "Dashboard",
+        component: () => import("../views/Applications/GPI/NdeDashboard.vue"),
+      },
+      {
+        path: "gpi-record",
+        alias: "GPI Record",
+        component: () => import("../views/Applications/GPI/GpiRecord.vue"),
+      },
+      {
+        path: "pending-approval",
+        alias: "Pending Approval",
+        component: () => import("../views/Applications/GPI/PendingApproval.vue"),
       },
     ]
   },

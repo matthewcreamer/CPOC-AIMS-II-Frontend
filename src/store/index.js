@@ -55,6 +55,32 @@ export default new Vuex.Store({
         },
       ],
     },
+    sidebarGPIList : [
+      {
+        id: 100,
+        name: "Dashboard",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/gpi/dashboard",
+        isActive: true,
+      },
+      {
+        id: 100,
+        name: "GPI Record",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/gpi/gpi-record",
+        isActive: true,
+      },
+      {
+        id: 100,
+        name: "Pending Approval",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/gpi/pending-approval",
+        isActive: true,
+      },
+    ],
     sidebarMasterDateList: [
       {
         id: 100,
