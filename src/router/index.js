@@ -49,19 +49,19 @@ const routes = [
     children: [
       {
         path: "/",
-        alias: "Inspection & Anomaly Monthly Performance Dashboard",
+        alias: "Dashboard",
         component: () => import("../views/Applications/IAMP/Dashboard/Page.vue"),
       },
       {
         path: "/inspection",
-        alias: "Inspection",
+        alias: "Inspection & Anomaly Monthly Performance Inspection",
         component: () => import("../views/Applications/IAMP/Inspection/Page.vue"),
       },
       {
-        path: "/anomaly",
-        alias: "Anomaly",
+        path: "/anomaly-iamp",
+        alias: "Inspection & Anomaly Monthly Performance Anomaly",
         component: () => import("../views/Applications/IAMP/Anomaly/Page.vue"),
-      },
+      }, 
       {
         path: "/hightlight-activities",
         alias: "Hightlight Activities",
@@ -81,6 +81,11 @@ const routes = [
         path: "/rectification-campaign",
         alias: "Rectification Campaign",
         component: () => import("../views/Applications/IAMP/RectificationCampaign/Page.vue"),
+      },
+      {
+        path: "/inspection-campaign",
+        alias: "Inspection Campaign",
+        component: () => import("../views/Applications/IAMP/InspectionCampaign/Page.vue"),
       },
       {
         path: "/monthly-report",

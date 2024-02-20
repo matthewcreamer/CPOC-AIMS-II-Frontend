@@ -105,7 +105,65 @@ export default new Vuex.Store({
         link: "/temporary-pending-approval",
         isActive: true,
       },
-     
+   
+    ],
+    sidebarIAMPList: [
+      {
+        id: 1,
+        name: "Dashboard",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/iamp",
+        isActive: true,
+      }, 
+      {
+        id: 2,
+        name: "Inspection",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/inspection",
+        isActive: true,
+      },
+      {
+        id: 3,
+        name: "Anomaly",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/anomaly-iamp",
+        isActive: true,
+      },
+      {
+        id: 4,
+        name: "Highligh Activities",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/highligh-activities",
+        isActive: true,
+      },
+      {
+        id: 5,
+        name: "Management of Change",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/management-of-change",
+        isActive: true,
+      },
+      {
+        id: 2,
+        name: "Rectification Campaign",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "rectification-campaign",
+        isActive: true,
+      },
+      {
+        id: 3,
+        name: "Monthly Report",
+        icon: "/img/icon_sidebar/executive_management/summary.png",
+        icon_menu: '/img/icon_menu/executive_management/summary.png',
+        link: "/monthly-report",
+        isActive: true,
+      },
     ],
     sidebarExinspecList: [
       {

@@ -6,6 +6,7 @@
       </div>
       <router-link v-for="item in sidebarMenu" :key="item.id" :to="item.link">
         <v-ons-toolbar-button class="item">
+          <img src="/img/icon_sidebar/tank/info.png" />
           <!-- <i :class="item.icon"></i> -->
           <!-- <img :src="item.icon" /> -->
           <span>{{ item.name }}</span>
