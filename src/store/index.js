@@ -94,7 +94,7 @@ export default new Vuex.Store({
         name: "Temporary Repair Record",
         icon: "/img/icon_sidebar/executive_management/summary.png",
         icon_menu: '/img/icon_menu/executive_management/summary.png',
-        link: "/temporary-repair-record",
+        link: "/trr",
         isActive: true,
       },
       {
