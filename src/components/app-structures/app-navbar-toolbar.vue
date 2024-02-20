@@ -265,7 +265,7 @@ export default {
 }
 .toolbar-button:hover,
 .toolbar-button:active {
-  background-color: $dexon-primary-blue;
+  background-color: $web-theme-color-secondary;
 
   i {
     color: $web-font-color-white;
