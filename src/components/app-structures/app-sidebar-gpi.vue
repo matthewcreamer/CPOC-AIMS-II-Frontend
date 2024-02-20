@@ -81,7 +81,7 @@ export default {
     .item:hover,
     .router-link-active > .item,
     .router-link-exact-active > .item {
-      background: $dexon-primary-red;
+      background: $dexon-primary-green;
     }
   }
   .item-container:last-child {
