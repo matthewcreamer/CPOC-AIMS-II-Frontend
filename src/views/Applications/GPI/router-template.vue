@@ -6,8 +6,8 @@
         :isBack_specificPath="'/'"
         style="grid-column: span 3"
       />
-    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()"></sidebar>
-    <banner :calname="calname"></banner>
+    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
+    <banner :calname="calname" style="grid-column: span 2"></banner>
     
     <div class="pm-page-container">
       <router-view :key="$route.fullPath"></router-view>
@@ -69,11 +69,17 @@ export default {
 <style lang="scss" scoped>
 .pm-page {
   display: grid;
-  grid-template-columns: 200px calc(100vw - 200px);
-  grid-template-rows: 51px calc(100vh - 95px);
+  grid-template-columns: 200px;
+  grid-template-rows: 51px;
+  // grid-template-columns: 200px calc(100vw - 200px);
+  // grid-template-rows: 51px calc(100vh - 95px);
+  overflow: hidden;
   transition: all 0.3s;
   .pm-page-container {
     background-color: #fff;
+    grid-column: span 2;
+    height: calc(100vh - 95px);
+    margin: 0 !important;
   }
 }
 

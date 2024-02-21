@@ -21,7 +21,7 @@ import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
+  // DxDataGrid,
 //   DxSearchPanel,
 //   DxPaging,
 //   DxPager,
@@ -205,6 +205,8 @@ export default {
 .page-container {
   width: 100%;
   height: 100%;
+  margin: 0 !important; 
+  // margin-top: 500px;
   overflow-y: auto;
 }
 #report-sheet {
