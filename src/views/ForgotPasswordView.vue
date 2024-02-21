@@ -4,6 +4,11 @@
       <img class="app-background" src="/img/banner.png" alt="app background image">
       
       <div class="form-login">
+        <v-ons-toolbar-button v-on:click="$router.go(-1)">
+          <i class="las la-angle-left"></i>
+          <span>Back</span>
+        </v-ons-toolbar-button>
+
         <img class="app-logo" :src="appIcon" alt="app icon" />
 
         <div class="app-description">
@@ -142,8 +147,38 @@ export default {
     align-items: center;
     padding: 0 35px 0 35px;
     gap: 20px;
+    .toolbar-button {
+      background-color: $web-theme-color-background;
+      padding: 0;
+      margin-top: 20px;
+      padding-right: 15px;
+      height: 34px;
+      border: 0px;
+      align-self: flex-start;
+
+      i {
+        font-size: 18px;
+        color: $dexon-primary-blue;
+      }
+      span {
+        font-size: 12px;
+        font-weight: 500;
+        color: $web-font-color-black;
+      }
+    }
+    .toolbar-button:hover,
+    .toolbar-button:active {
+      background-color: $web-theme-color-secondary;
+
+      i {
+        color: $web-font-color-white;
+      }
+      span {
+        color: $web-font-color-white;
+      }
+    }
     .app-logo {
-      margin-top: 15vh;
+      margin-top: 10vh;
       width: 80px;
       height: 80px;
       align-self: flex-start;
