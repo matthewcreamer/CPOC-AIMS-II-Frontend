@@ -30,60 +30,106 @@
           mode="form"
         >
           <DxForm label-location="top">
-            <DxItem :col-count="2" :col-span="2" item-type="group">
-              <DxItem data-field="inspection_date" :col-span="1" />
-              <DxItem data-field="project_no" :col-span="1" />
-              <DxItem data-field="report_no" :col-span="1" />
-              <DxItem data-field="remark" :col-span="1" />
+            <DxItem :col-count="3" :col-span="2" item-type="group">
+              <DxItem data-field="item_no" :col-span="1" />
+              <DxItem data-field="gpi_no" :col-span="1" />
+              <DxItem data-field="platform_type" :col-span="1" />
+              <DxItem data-field="id_asset_type" :col-span="1" />
+              <DxItem data-field="tag_no" :col-span="1" />
+              <DxItem data-field="gpi_date" :col-span="1" />
+              <DxItem data-field="exp_date" :col-span="1" />
+              <DxItem data-field="main_work_ctr" :col-span="1" />
+              <DxItem data-field="severity" :col-span="1" />
+              <DxItem data-field="comment" :col-span="1" />
             </DxItem>
           </DxForm>
         </DxEditing>
+
         <DxColumn
-          data-field="inspection_date"
-          caption="Inspection Date"
-          data-type="date"
-          format="dd MMM yyyy"
-          sort-order="desc"
-          :width="140"
-          :editor-options="inspDateInputOptions"
+          data-field="item_no"
+          caption="Item"
+          :editor-options="GPINoInputOptions"
         >
           <DxRequiredRule />
         </DxColumn>
+
         <DxColumn
-          data-field="project_no"
-          caption="Project No."
-          :width="140"
-          :editor-options="projectNoInputOptions"
+          data-field="gpi_no"
+          caption="GPI No."
+          :editor-options="GPINoInputOptions"
         >
+          <DxRequiredRule />
         </DxColumn>
+
         <DxColumn
-          data-field="report_no"
-          caption="Report No."
-          :width="140"
-          :editor-options="reportNoInputOptions"
+          data-field="platform_type"
+          caption="Platform"
+          :editor-options="platformNoInputOptions"
+        >
+          <DxRequiredRule />
+        </DxColumn>
+
+        <DxColumn
+            data-field="id_asset_type"
+            caption="Asset Type"
+            alignment="center"
+          >
+          <DxLookup :data-source="statusList" display-expr="code" value-expr="id" />
+          <DxRequiredRule />
+        </DxColumn>
+
+        <DxColumn
+            data-field="tag_no"
+            caption="Tag No."
+            alignment="center"
+            :editor-options="tagNoInputOptions"
+          >
+          <DxRequiredRule />
+          <!-- <DxLookup :data-source="statusList" display-expr="integrity_status" value-expr="id" /> -->
+        </DxColumn>
+
+        <DxColumn
+          data-field="gpi_date"
+          caption="GPI Date"
+          data-type="date"
+          format="dd MMM yyyy"
+          :editor-options="GPIDateInputOptions"
+        >
+          <DxRequiredRule /></DxColumn>
+
+        <DxColumn
+          data-field="exp_date"
+          caption="Expected Finish Date"
+          data-type="date"
+          format="dd MMM yyyy"
+          :editor-options="ExpDateInputOptions"
+        >
+          <DxRequiredRule /></DxColumn>
+
+        <DxColumn
+          data-field="main_work_ctr"
+          caption="Main WorkCtr"
+          :editor-options="MainWorkCtrInputOptions"
         />
+
         <DxColumn
-            data-field="id_final_thk_status"
-            caption="Thickness Status"
-            alignment="center"
-            width="110"
-          >
-          <DxLookup :data-source="statusList" display-expr="integrity_status" value-expr="id" />
-        </DxColumn>
-        <DxColumn
-            data-field="id_final_visual_status"
-            caption="Visual Status"
-            alignment="center"
-            width="110"
-          >
-          <DxLookup :data-source="statusList" display-expr="integrity_status" value-expr="id" />
-        </DxColumn>
-        <DxColumn data-field="remark" caption="Remark" :editor-options="remarkInputOptions"></DxColumn>
+          data-field="severity"
+          caption="Severity"
+          :editor-options="SeverityInputOptions"
+        />
+    
+        <DxColumn 
+          data-field="comment" 
+          caption="Comments" 
+          :editor-options="conmmentInputOptions"
+        ></DxColumn>
+
         <DxColumn type="buttons">
           <DxButton hint="Export" icon="fas fa-file-alt"      />
           <DxButton name="edit" hint="Edit" icon="edit" />
           <DxButton name="delete" hint="Delete" icon="trash" />
         </DxColumn>
+
         <!-- Configuration goes here -->
         <DxToolbar>
           <DxItem
@@ -93,6 +139,7 @@
         </DxToolbar>
         <template #addButton>
           <DXButton
+          text="Add New"
           icon="las la-plus"
           @click="ADD_ROW"
           hint="Add"
@@ -100,7 +147,7 @@
         </template>
         <!-- <DxFilterRow :visible="true" /> -->
         <DxScrolling mode="standard" />
-        <DxSearchPanel :visible="true" />
+        <DxSearchPanel :visible="false" />
         <DxPaging :page-size="10" :page-index="0" />
         <DxPager
           :show-page-size-selector="true"
@@ -111,8 +158,6 @@
         />
         <DxExport :enabled="true" />
       </DxDataGrid>
-
-      <img src="/img/banner.png">
     </div>
   </div>
 </template> 
@@ -193,12 +238,22 @@ export default {
       dataGridAttributes: {
         class: "data-grid-style"
       },
-      statusList: [],
+      statusList: [
+        { id: 1, code: "Fench" },
+        { id: 2, code: "Piping" },
+        { id: 3, code: "Pressure Vessel" },
+        { id: 4, code: "Bridge" },
+        { id: 5, code: "Lifting Cane" }
+      ],
       gridRefName: "grid-insp-record",
-      inspDateInputOptions: { placeholder: "Select date" },
-      projectNoInputOptions: { placeholder: "Enter project no" },
-      reportNoInputOptions: { placeholder: "Enter report no" },
-      remarkInputOptions: { placeholder: "Enter remark" }
+      ExpDateInputOptions: { placeholder: "Select date" },
+      GPIDateInputOptions: { placeholder: "Select date" },
+      GPINoInputOptions: { placeholder: "Enter GPI No." },
+      MainWorkCtrInputOptions: { placeholder: "Enter main workCtr" },
+      SeverityInputOptions: { placeholder: "Enter severity" },
+      platformNoInputOptions: { placeholder: "Enter platform" },
+      conmmentInputOptions: { placeholder: "Enter remark" },
+      tagNoInputOptions: {placeholder:"Enter tag No."}
     };
   },
   computed: {},
@@ -250,8 +305,8 @@ export default {
       e.data.id_line = this.$route.params.id_tag;
       e.data.id = 0;
       e.data.is_active = true;
-      e.data.inspection_date = moment(e.data.inspection_date).format("L");
-      console.log(e.data);
+      //e.data.inspection_date = moment(e.data.inspection_date).format("L");
+      console.log("CREATE_RECORD",e.data);
       axios({
         method: "post",
         url: "/PipingInspectionRecord",
