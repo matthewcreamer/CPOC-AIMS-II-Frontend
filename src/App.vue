@@ -49,7 +49,7 @@ export default {
 .app-page {
   width: 100%;
   height: calc(100vh - 36px);
-  padding-top: 44px;
+  padding-top: 45px;
   overflow: hidden;
 }
 

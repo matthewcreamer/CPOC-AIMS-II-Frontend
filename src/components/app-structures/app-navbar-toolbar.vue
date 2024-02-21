@@ -195,6 +195,7 @@ export default {
       font-weight: 600;
       line-height: 29px;
       letter-spacing: -0.08px;
+      margin: 0;
 
       display: -webkit-box;
       -webkit-line-clamp: 1;
