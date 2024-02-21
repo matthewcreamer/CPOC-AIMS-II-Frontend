@@ -278,11 +278,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/main.scss";
-#page-home {
-  height: calc(100vh - 44px);
-  overflow-y: scroll;
-}
-
 .app-drawer-wrapper {
   display: grid;
   width: 100%;
@@ -401,8 +396,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   .page-section-label {
-    font-size: 1.75em;
-    font-weight: 700;
+    font-size: 1.9em;
+    font-weight: 800;
     text-transform: capitalize;
     color: $web-font-color-black;
     padding-left: 8px;
@@ -454,7 +449,7 @@ export default {
           span {
             font-style: normal;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 15px;
             user-select: text;
             color: white;
           }
@@ -562,8 +557,8 @@ export default {
     }
   }
   .title {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 1.4em;
+    font-weight: 500;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
