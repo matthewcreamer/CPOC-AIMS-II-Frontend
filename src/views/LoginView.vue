@@ -36,7 +36,7 @@
         <span class="forgotPassword">Forgot Password?</span>
 
         <div class="footer">
-          <span>2023 Ⓒ Designed and developed by</span>
+          <span>2024 Ⓒ Designed and developed by</span>
           <img src="/img/dexon.svg" alt="dexon">
         </div>
       </div>
@@ -213,7 +213,7 @@ export default {
     }
     .forgotPassword {
       text-decoration: underline;
-      font-size: 12px;
+      font-size: 13px;
       align-self: flex-start;
     }
     .footer {
@@ -222,6 +222,11 @@ export default {
       gap: 10px;
       position: fixed;
       bottom: 20px;
+      font-size: 10px;
+      img {
+        width: 100px;
+        height: auto;
+      }
     }
   }
 }
