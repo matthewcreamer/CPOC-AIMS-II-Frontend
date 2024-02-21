@@ -46,6 +46,10 @@ export default {
 @import "@/style/form.scss";
 @import "~vue-wysiwyg/dist/vueWysiwyg.css";
 
+#app {
+  overflow: hidden;
+}
+
 .app-page {
   width: 100%;
   height: calc(100vh - 36px);
