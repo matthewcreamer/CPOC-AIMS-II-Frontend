@@ -33,7 +33,7 @@
           Login with Microsoft
         </button>
 
-        <span class="forgotPassword">Forgot Password?</span>
+        <span @click="$router.push('/forgot-password')" class="forgotPassword">Forgot Password?</span>
 
         <div class="footer">
           <span>2024 Ⓒ Designed and developed by</span>
@@ -200,6 +200,7 @@ export default {
       color: white;
       border-radius: 5px;
       font-weight: 800;
+      cursor: pointer;
     }
     .signin {
       background-image: linear-gradient(to right, #1A0D7F, #3F2DCA);
@@ -215,6 +216,7 @@ export default {
       text-decoration: underline;
       font-size: 13px;
       align-self: flex-start;
+      cursor: pointer;
     }
     .footer {
       display: flex;

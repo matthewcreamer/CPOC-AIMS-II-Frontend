@@ -1,5 +1,5 @@
 <template>
-  <div id="app-topbar" v-if="isLoginPage == false">
+  <div id="app-topbar" v-if="canDisplayToolbar">
     <div class="app-topbar-wrapper">
       <div class="left-col">
         <div class="web-logo" v-on:click="GO_TO('/')">
@@ -175,12 +175,12 @@ export default {
     }
   },
   computed: {
-    isLoginPage() {
+    canDisplayToolbar() {
       var path = this.$route.path;
-      if (path == "/login") {
-        return true;
-      } else {
+      if (path == "/login" || path == "/forgot-password") {
         return false;
+      } else {
+        return true;
       }
     },
     baseURL() {

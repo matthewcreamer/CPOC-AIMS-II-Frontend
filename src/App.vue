@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <topBar :key="$route.fullPath" />
-    <component :is="layout" class="app-page" :class="{ 'app-page-fullpage': isLoginPage }">
+    <component :is="layout" class="app-page" :class="{ 'app-page-fullpage': isFullScreenPage }">
       <router-view :layout.sync="layout" />
     </component>
     <!-- <footerLabel /> -->
@@ -30,9 +30,9 @@ export default {
     };
   },
   computed: {
-    isLoginPage() {
+    isFullScreenPage() {
       var path = this.$route.path;
-      if (path == "/login") return true;
+      if (path == "/login" || path == "/forgot-password") return true;
       else {
         return false;
       }
