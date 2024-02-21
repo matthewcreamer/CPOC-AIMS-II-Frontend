@@ -923,6 +923,47 @@ hr {
 
 }
 
+#data-grid-list .dx-datagrid-headers {
+    color: #fff;
+    background-color: $web-theme-color-secondary;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  #data-grid-list td[role="columnheader"] {
+    text-align: center !important;
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  #data-grid-list td[role="gridcell"] {
+    font-size: 12px;
+    font-weight: 500;
+    vertical-align: middle;
+    cursor: pointer !important;
+  }
+  
+  #data-grid-list .dx-toolbar-text-auto-hide .dx-button .dx-button-content {
+    padding: 9px;
+  }
+  
+  #data-grid-list .dx-datagrid-search-panel {
+    margin: 0;
+  }
+  
+  #data-grid-list .dx-datagrid {
+    background-color: transparent !important;
+  }
+  
+  #data-grid-list .dx-toolbar {
+    background-color: transparent !important;
+  }
+  
+  #data-grid-list .dx-datagrid-focus-overlay {
+    border: none;
+    border-bottom: 2px solid $web-theme-color-secondary;
+  }
+
 // .dx-header-row>td>.dx-datagrid-text-content {
 //     writing-mode: tb-rl !important;
 //     transform: rotate(-180deg) !important;
