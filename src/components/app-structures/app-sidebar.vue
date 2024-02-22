@@ -1,46 +1,17 @@
 <template>
   <div class="app-sidebar" :class="[sidebarHiding == true ? 'app-sidebar-hide' : 'app-sidebar']">
     <div class="item-container">
-      <!-- SECTION INFO -->
-      <div class="section-label">
-        <label>NDE</label>
-      </div>
-      <router-link :to="'/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Dashboard</span>
-        </v-ons-toolbar-button>
-      </router-link>
-      <router-link :to="'/report/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Report</span>
-        </v-ons-toolbar-button>
-      </router-link>
-      <router-link :to="'/pending-appv/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Pending Approval</span>
-        </v-ons-toolbar-button>
-      </router-link>
-
-      <!-- SECTION INFO -->
-      <div class="section-label">
-        <label>Management</label>
-      </div>
-
-      <router-link :to="'/account/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Account</span>
-        </v-ons-toolbar-button>
-      </router-link>
-      <router-link :to="'/report-appv/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Report Approval</span>
-        </v-ons-toolbar-button>
-      </router-link>
+      <template v-for="(route, index) in routes">
+        <div class="section-label" v-if="!route.url" :key="index">
+          <label>{{ route.name }}</label>
+        </div>
+        <router-link :to="route.url" v-if="route.url" :key="index">
+          <v-ons-toolbar-button class="item">
+            <div v-html="route.icon"></div>
+            <span>{{ route.name }}</span>
+          </v-ons-toolbar-button>
+        </router-link>
+      </template>
     </div>
     <div class="item-container fixed-panel">
       <v-ons-toolbar-button class="item bottom-btn" v-on:click="SHOW_HIDE_SIDEBAR()">
@@ -59,7 +30,9 @@
 export default {
   name: "app-sidebar",
   created() {},
-  props: {},
+  props: {
+    routes: Array
+  },
   data() {
     return {
       id_tag: this.$route.params.id_tag,
@@ -147,6 +120,13 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
       }
+      .svg {
+        width: 18px;
+        max-height: 18px;
+        object-fit: contain;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
       i.right-arrow {
         position: absolute;
         top: 50%;
@@ -154,6 +134,10 @@ export default {
         transform: translateY(-50%);
         font-size: 14px;
       }
+    }
+    .item:not(:empty) > *:first-child {
+      margin-left: 10px;
+      margin-right: 10px;
     }
 
     .item:hover,
