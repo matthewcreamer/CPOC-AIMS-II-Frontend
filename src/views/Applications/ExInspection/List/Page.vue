@@ -1,7 +1,66 @@
 <template>
   <div class="page-container">
     <div class="page-section">
-      <h1>List of Ex-Inspection</h1>
+      <div class="table-wrapper">
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="{ mode: 'single' }"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+          :column-auto-width="true"
+        >
+          <DxEditing
+            :allow-updating="false"
+            :allow-deleting="false"
+            :allow-adding="true"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="true" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="single" />
+          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
+          <DxColumn data-field="tag_no" caption="Tag No." :width="150" alignment="center" />
+          <DxColumn data-field="equip_desc" caption="Equipment Description" :width="150" alignment="center" />
+          <DxColumn data-field="location" caption="Location" :width="90" alignment="center" />
+          <DxColumn data-field="spec_location" caption="Specific Location" :width="200" alignment="center" />
+          <DxColumn data-field="zone" caption="Zone" :width="90" alignment="center" />
+          <DxColumn data-field="group_gas" caption="Gas Group" :width="90" alignment="center" />
+          <DxColumn data-field="class_temp" caption="Temp Class" :width="90" alignment="center" />
+          <DxColumn data-field="other" caption="other?" alignment="center" />
+          <DxColumn data-field="other" caption="other?" alignment="center" />
+          <DxColumn data-field="other" caption="other?" alignment="center" />
+
+          <!-- <DxToolbar>
+            <DxItem location="after" template="addRowTemplate" />
+          </DxToolbar>
+          
+
+          <template #addRowTemplate>
+            <DxAddRowButton icon="plus" text="Add New" />
+          </template> -->
+
+          <!-- Configuration goes here -->
+          <!-- <DxFilterRow :visible="true" /> -->
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="true" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+      </div>
     </div>
   </div>
 </template> 
@@ -19,21 +78,25 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  // DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,20 +104,24 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
     // DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
     // DxItem,
-    // DxEditing,
+    DxEditing,
+    DxFilterRow,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
-    // DxFormItem,
+    // DxRequiredRule,
+    // DxFormItem
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -62,11 +129,62 @@ export default {
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      this.testList = [
+        {
+          id: 1,
+          id_item: 1,
+          tag_no: 'NA-PP-252',
+          equip_desc: 'NAV. LIGHT',
+          location: 'MAIN',
+          spec_location: 'MERCURY WASHING BAY',
+          zone: 'NHA',
+          group_gas: 'NHA',
+          class_temp: 'NHA',
+          other: ' . . . ',
+        },
+        {
+          id: 1,
+          id_item: 2,
+          tag_no: 'NAJB-250-04',
+          equip_desc: 'JUNCTION BOX',
+          location: 'MAIN',
+          spec_location: 'MERCURY WASHING BAY',
+          zone: 'NHA',
+          group_gas: 'NHA',
+          class_temp: 'NHA',
+          other: ' . . . ',
+        },
+        {
+          id: 1,
+          id_item: 1,
+          tag_no: 'FR-00001',
+          equip_desc: 'PCV-03302',
+          location: 'MAIN',
+          spec_location: 'MERCURY WASHING BAY',
+          zone: 'NHA',
+          group_gas: 'NHA',
+          class_temp: 'NHA',
+          other: ' . . . ',
+        },
+        {
+          id: 1,
+          id_item: 1,
+          tag_no: 'FR-00001',
+          equip_desc: 'PCV-03302',
+          location: 'MAIN',
+          spec_location: 'MERCURY WASHING BAY',
+          zone: 'NHA',
+          group_gas: 'NHA',
+          class_temp: 'NHA',
+          other: ' . . . ',
+        }
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -127,7 +245,7 @@ export default {
       e.data.id_line = this.$route.params.id_tag;
       e.data.id = 0;
       e.data.is_active = true;
-      e.data.inspection_date = moment(e.data.inspection_date).format("L");
+      //e.data.inspection_date = moment(e.data.inspection_date).format("L");
       console.log(e.data);
       axios({
         method: "post",
@@ -205,7 +323,10 @@ export default {
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +370,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {
