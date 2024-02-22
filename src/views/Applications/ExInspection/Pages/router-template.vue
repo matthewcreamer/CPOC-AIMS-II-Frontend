@@ -3,7 +3,7 @@
     <toolbar
         pageSubName="Ex-Inspection"
         :isBackPath="true"
-        :isBack_specificPath="'/'"
+        :isBack_specificPath="'/ex-inspection'"
         style="grid-column: span 3"
       />
     <sidebar :routes="routes" @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
