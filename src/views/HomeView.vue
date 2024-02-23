@@ -48,7 +48,7 @@
          !this.search_key
       ">
       <div class="section-label" v-if="showSectionLabel == true">
-        <h2 class="page-section-label">Master Data & Management</h2>
+        <h2 class="page-section-label">Management</h2>
       </div>
       <div class="client-list-recent" >
           <div
@@ -57,15 +57,10 @@
             v-for="item in appsList.managementApps" :key="item.id"
           >
             <div class="client_logo" v-if="item.isActive == true">
-              <!-- <img :src="item.icon_menu" alt="logo" /> -->
-              <img src="/img/icon_menu/equipment/white/prd3.svg" alt="logo" />
+              <img :src="item.icon_menu" alt="logo" />
             </div>
             <div class="title">{{ item.name }}</div>
           </div>
-          <!-- <div class="app-item" v-on:click="OPEN_APP(item)" v-if="item.isActive == true">
-            <img :src="item.icon_menu" />
-            <label>{{ item.name }}</label>
-          </div> -->
         </div>
     </div>
     <AppLoading :icon="openingApp.icon_menu" :name="openingApp.name" v-if="isOpening == true" />
@@ -101,32 +96,32 @@ export default {
         {
           id_asset: 1,
           asset_name: "Inspection & Anomaly Monthly Performance",
-          logo: "/img/icon_menu/equipment/white/flowline2.svg"
+          logo: "/img/icon_menu/modules/insp_anom.svg"
         },
         {
           id_asset: 2,
           asset_name: "General Platform Inspection",
-          logo: "/img/icon_menu/equipment/white/piping2.svg"
+          logo: "/img/icon_menu/modules/gpi.svg"
         },
         {
           id_asset: 3, 
           asset_name: "Ex-Inspection",
-          logo: "/img/icon_menu/equipment/white/pressure_vessel2.svg"
+          logo: "/img/icon_menu/modules/ex.svg"
         },
         {
           id_asset: 4,
           asset_name: "Reliability Report",
-          logo: "/img/icon_menu/equipment/white/tank1.svg"
+          logo: "/img/icon_menu/modules/relia.svg"
         },
         {
           id_asset: 5,
           asset_name: "Temporary Repair",
-          logo: "/img/icon_menu/equipment/white/pipeline4.svg"
+          logo: "/img/icon_menu/modules/tempo.svg"
         },
         {
           id_asset: 6,
           asset_name: "Corrosion Monitoring",
-          logo: "/img/icon_menu/equipment/white/block_valve2.svg"
+          logo: "/img/icon_menu/modules/cm.svg"
         },
       ],
       assetListPaged: [],
@@ -551,8 +546,8 @@ export default {
     padding: 5px;
 
     img {
-      max-width: 65%;
-      max-height: 65%;
+      max-width: 50%;
+      max-height: 50%;
       object-fit: contain;
     }
   }
