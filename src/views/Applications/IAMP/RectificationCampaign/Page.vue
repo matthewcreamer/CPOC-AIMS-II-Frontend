@@ -1,7 +1,62 @@
 <template>
   <div class="page-container">
     <div class="page-section">
-      <h1>Rectification Campaign</h1>
+      <div class="table-wrapper">
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="{ mode: 'single' }"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+          :column-auto-width="true"
+        >
+          <DxEditing
+            :allow-updating="false"
+            :allow-deleting="false"
+            :allow-adding="true"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="false" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="single" />
+          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
+          <DxColumn data-field="rectification_issue" caption="Rectification Issue" :min-width="90" alignment="center" />
+          <DxColumn data-field="pic" caption="PIC" :width="130" alignment="center" />
+          <DxColumn data-field="contactor" caption="Contactor" :width="130" alignment="center" />
+          <DxColumn data-field="target_completion" caption="Target Completion" :width="130" alignment="center" />
+          <DxColumn data-field="execution" caption="Execution" :width="130" alignment="center" />
+          <DxColumn data-field="comments" caption="Comments" :min-width="300" alignment="center" />
+
+          <!-- <DxToolbar>
+            <DxItem location="after" template="addRowTemplate" />
+          </DxToolbar>
+          
+
+          <template #addRowTemplate>
+            <DxAddRowButton icon="plus" text="Add New" />
+          </template> -->
+
+          <!-- Configuration goes here -->
+          <!-- <DxFilterRow :visible="true" /> -->
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="true" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+      </div>
     </div>
   </div>
 </template> 
@@ -19,21 +74,25 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  // DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,20 +100,24 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
     // DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
     // DxItem,
-    // DxEditing,
+    DxEditing,
+    DxFilterRow,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
-    // DxFormItem,
+    // DxRequiredRule,
+    // DxFormItem
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -62,11 +125,54 @@ export default {
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      this.testList = [
+        {
+          id: 1,
+          id_item: 1,
+          rectification_issue: 'Change Insulating Gasket on Downstr...',
+          pic: 'Anattapong',
+          contactor: 'SNU',
+          target_completion: '8 Nov 2022',
+          execution: '',
+          comments: 'complete 59 ea of dowloa. . '
+        },
+        {
+          id: 2,
+          id_item: 2,
+          rectification_issue: 'LOKRING implementation (Underbridg..',
+          pic: 'Chanat',
+          contactor: 'LOKRING',
+          target_completion: '18 Nov 2022',
+          execution: '',
+          comments: 'now piping repair'
+        },
+        {
+          id: 3,
+          id_item: 3,
+          rectification_issue: 'Piping replacement Under bridge MDPP..',
+          pic: '-',
+          contactor: 'Tantawan',
+          target_completion: '20 Nov 2022',
+          execution: '',
+          comments: ''
+        },
+        {
+          id: 4,
+          id_item: 4,
+          rectification_issue: 'Insulation Rectification Campaign',
+          pic: 'Chanat',
+          contactor: 'Raise',
+          target_completion: '25 Nov 2022',
+          execution: '',
+          comments: 'Supporting MRU Change ...'
+        },
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -205,7 +311,10 @@ export default {
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +358,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {

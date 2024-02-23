@@ -1,7 +1,79 @@
 <template>
   <div class="page-container">
     <div class="page-section">
-      <h1>Management Of Change</h1>
+      <div class="table-wrapper">
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="{ mode: 'single' }"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+          :column-auto-width="true"
+        >
+          <DxEditing
+            :allow-updating="false"
+            :allow-deleting="false"
+            :allow-adding="true"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="false" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="single" />
+          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
+          <DxColumn data-field="moc_number" caption="MOC No." :width="90" alignment="center" />
+          <DxColumn data-field="title" caption="Title" :min-width="100" alignment="center" />
+          <DxColumn data-field="nature_of_change" caption="Nature Of Change" :width="90" alignment="center" />
+          <DxColumn data-field="worksite" caption="Worksite" :min-width="80" alignment="center" />
+          <DxColumn data-field="residual_risk_level" caption="Residual Risk Level" :width="90" alignment="center" />
+          <DxColumn data-field="start_date" caption="Start Date" :width="120" alignment="center" />
+          <DxColumn data-field="expiry_date" caption="Expiry Date" :width="120" alignment="center" />
+          <DxColumn data-field="status" caption="Status" :width="80" alignment="center" />
+          <DxColumn data-field="action" caption="Action" :width="80" alignment="center" />
+          <DxColumn data-field="remark" caption="Remark" :width="80" alignment="center" />
+          <DxColumn data-field="initiator" caption="Initiator" :width="80" alignment="center" />
+          <DxColumn caption="MOC" :width="80" alignment="center" cell-template="moc-cell-template" />
+          <DxColumn caption="RA" :width="80" alignment="center" cell-template="ra-cell-template" />
+          <DxColumn :width="40" alignment="center" cell-template="list-cell-template" />
+
+          <template #moc-cell-template="{  }">
+            <div class="column-template">
+              <pdfFileSvg />
+              <magnifyingGlassSvg />
+            </div>
+          </template>
+
+          <template #ra-cell-template="{  }">
+            <div class="column-template">
+              <pdfFileSvg />
+              <magnifyingGlassSvg />
+            </div>
+          </template>
+
+          <template #list-cell-template="{  }">
+            <listSvg class="listSvg" />
+          </template>
+
+          <!-- Configuration goes here -->
+          <!-- <DxFilterRow :visible="true" /> -->
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="true" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+      </div>
     </div>
   </div>
 </template> 
@@ -13,27 +85,34 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import pdfFileSvg from "@/components/svg/pdf-file-svg.vue"
+import magnifyingGlassSvg from "@/components/svg/magnifying-glass-svg.vue"
+import listSvg from "@/components/svg/list-svg.vue"
 
 //DataGrid
 import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  // DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,20 +120,27 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
     // DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
     // DxItem,
-    // DxEditing,
+    DxEditing,
+    DxFilterRow,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
-    // DxFormItem,
+    // DxRequiredRule,
+    // DxFormItem
+    pdfFileSvg,
+    magnifyingGlassSvg,
+    listSvg,
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -62,11 +148,119 @@ export default {
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      this.testList = [
+        {
+          id: 1,
+          id_item: 1,
+          moc_number: 'MOC OFF_23-005',
+          title: 'Splash Pigging Frequency Increase From 2 Months To 3 Months',
+          nature_of_change: 'Deviation',
+          worksite: 'MDPP',
+          residual_risk_level: 'Low',
+          start_date: '14 Feb, 2023',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+        {
+          id: 2,
+          id_item: 2,
+          moc_number: 'MOC OFF_22-040',
+          title: '',
+          nature_of_change: 'Deviation',
+          worksite: 'MDPP',
+          residual_risk_level: 'Medium',
+          start_date: '25 Jan, 2023',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+        {
+          id: 3,
+          id_item: 3,
+          moc_number: 'MOC OFF_22-046',
+          title: '',
+          nature_of_change: 'Modification',
+          worksite: 'MDPP',
+          residual_risk_level: 'Medium',
+          start_date: '3 Jul, 2023',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+        {
+          id: 4,
+          id_item: 4,
+          moc_number: 'MOC OFF_22-028',
+          title: '',
+          nature_of_change: 'Deviation',
+          worksite: 'MDPP',
+          residual_risk_level: 'Medium',
+          start_date: '',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+        {
+          id: 5,
+          id_item: 5,
+          moc_number: 'MOC OFF_22-034',
+          title: '',
+          nature_of_change: 'Modification',
+          worksite: 'MDPP',
+          residual_risk_level: 'Low',
+          start_date: '',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+        {
+          id: 6,
+          id_item: 6,
+          moc_number: 'MOC OFF_23-009',
+          title: '',
+          nature_of_change: 'Deviation',
+          worksite: 'MDPP',
+          residual_risk_level: 'Low',
+          start_date: '',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+        {
+          id: 7,
+          id_item: 7,
+          moc_number: 'MOC OFF_23-017',
+          title: '',
+          nature_of_change: 'Deviation',
+          worksite: 'MDPP',
+          residual_risk_level: 'Medium',
+          start_date: '',
+          expiry_date: '',
+          status: '',
+          action: '-',
+          remark: '',
+          initiator: ''
+        },
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -202,10 +396,41 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.column-template {
+  display: flex; 
+  gap: 10px; 
+  justify-content: space-between;
+  svg {
+    width: 25px;
+    transition: 0.2s;
+  }
+  svg:last-child {
+    width: 25px; 
+    padding: 5px; 
+    background-color: blue; 
+    fill: white;
+  }
+  svg:hover {
+    transform: scale(1.1);
+  }
+}
+.listSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: orange; 
+  fill: white;
+  transition: 0.2s;
+}
+.listSvg:hover {
+  transform: scale(1.1);
+}
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +474,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {

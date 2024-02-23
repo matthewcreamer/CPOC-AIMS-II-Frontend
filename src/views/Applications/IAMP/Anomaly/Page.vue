@@ -1,7 +1,60 @@
 <template>
   <div class="page-container">
     <div class="page-section">
-      <h1>Anomaly</h1>
+      <div class="table-wrapper">
+        <h4 style="margin: 5px 0;">High Risk Equipment Inspection & High Risk Anomaly Status</h4>
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="{ mode: 'single' }"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+          :column-auto-width="true"
+        >
+          <DxEditing
+            :allow-updating="false"
+            :allow-deleting="false"
+            :allow-adding="false"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="false" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="single" />
+          <DxColumn data-field="module" caption="Module" :width="150" alignment="left" />
+          <DxColumn data-field="inspection_status" cellTemplate="circleTemplate" caption="Inspection Status" :width="150" alignment="center" />
+          <DxColumn data-field="anomaly_repair_status" cellTemplate="circleTemplate" caption="Anomaly Repair" :width="150" alignment="center" />
+          <DxColumn data-field="note" caption="Note" :min-width="300" alignment="left" />
+
+
+          <template #circleTemplate="{ data }">
+            <div class="circle" :style="{backgroundColor: GET_STATUS_CELL_COLOR(data)}"></div>
+          </template>
+          
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="false" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+        <div class="circle-wrapper">
+          <div class="circle-row" v-for="status in statusList" :key="status.id">
+            <div class="circle" :style="{backgroundColor: GET_STATUS_COLOR(status.id)}" />
+            <span>{{ status.status }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template> 
@@ -19,21 +72,25 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  // DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,32 +98,104 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
     // DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
     // DxItem,
-    // DxEditing,
+    DxEditing,
+    DxFilterRow,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
-    // DxFormItem,
+    // DxRequiredRule,
+    // DxFormItem
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "ANOMALY REPORT",
+      subpageName: "ANOMALY",
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      // 1 complete / 2 due / 3 overdue
+      this.testList = [
+        {
+          id: 1,
+          module: 'Piping',
+          inspection_status: 1,
+          anomaly_repair_status: 2,
+          note: 'Pending 1 CM WO, target to complete by Q4/23'
+        },
+        {
+          id: 2,
+          module: 'Pressure Vessel',
+          inspection_status: 1,
+          anomaly_repair_status: 1,
+          note: 'Completed pressure vessel inspection & repair due 2022'
+        },
+        {
+          id: 3,
+          module: 'Flowline',
+          inspection_status: 1,
+          anomaly_repair_status: 1,
+          note: 'Completed flowline inspection & repair due 2022'
+        },
+        {
+          id: 4,
+          module: 'Pipeline',
+          inspection_status: 1,
+          anomaly_repair_status: 1,
+          note: 'Underwater inspection was postponed to Q1/24. Under assessment for deferral process.'
+        },
+        {
+          id: 5,
+          module: 'Topside Riser',
+          inspection_status: 2,
+          anomaly_repair_status: 1,
+          note: 'Planning for anomaly rectification for riser due 2022.'
+        },
+        {
+          id: 6,
+          module: 'Subsea Riser',
+          inspection_status: 1,
+          anomaly_repair_status: 1,
+          note: 'Underwater inspection was postponed to Q1/24. Under assessment for deferral process.'
+        },
+        {
+          id: 7,
+          module: 'Structure',
+          inspection_status: 1,
+          anomaly_repair_status: 1,
+          note: 'Completed structure inspection & repair due 2022.'
+        },
+      ];
+      this.statusList = [
+        {
+          id: 1,
+          status: 'Complete',
+        },
+        {
+          id: 2,
+          status: 'Due',
+        },
+        {
+          id: 3,
+          status: 'Overdue',
+        }
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
+      statusList: null,
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -194,6 +323,38 @@ export default {
           );
         })
         .finally(() => {});
+    },
+    GET_STATUS(value) {
+      return this.statusList.map(status => status.id === value);
+    },
+    GET_STATUS_CELL_COLOR(value) {
+      if(value.rowType === "data" && value.column.dataField === "inspection_status") {
+        switch (value.data.inspection_status) {
+          case 1: return '#1D9531';
+          case 2: return '#FFD600';
+          case 3: return '#F34A4A';
+        
+          default: return '#000'
+        }
+      }
+      else if (value.rowType === "data" && value.column.dataField === "anomaly_repair_status") {
+        switch (value.data.anomaly_repair_status) {
+          case 1: return '#1D9531';
+          case 2: return '#FFD600';
+          case 3: return '#F34A4A';
+        
+          default: return '#000'
+        }
+      }
+    },
+    GET_STATUS_COLOR(value) {
+      switch (value) {
+        case 1: return '#1D9531';
+        case 2: return '#FFD600';
+        case 3: return '#F34A4A';
+      
+        default: return '#000'
+      }
     }
   }
 };
@@ -202,10 +363,39 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.circle-wrapper {
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+  .circle-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    .circle {
+      display: block !important;
+      margin: 0;
+    }
+    span {
+      font-size: 12px;
+    }
+  }
+}
+.circle {
+  display: flex;
+  margin: 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +439,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {

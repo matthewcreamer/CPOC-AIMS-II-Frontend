@@ -1,7 +1,58 @@
 <template>
   <div class="page-container">
     <div class="page-section">
-      <h1>Hightlight Activities</h1>
+      <div class="table-wrapper">
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="{ mode: 'single' }"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+          :column-auto-width="true"
+        >
+          <DxEditing
+            :allow-updating="true"
+            :allow-deleting="true"
+            :allow-adding="true"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="false" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="single" />
+          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
+          <DxColumn data-field="report_date" caption="Report Date" :width="90" alignment="center" />
+          <DxColumn data-field="platform" caption="Platform" :width="90" alignment="center" />
+          <DxColumn data-field="asset_type" caption="Asset Type" :width="80" alignment="center" />
+          <DxColumn data-field="tag_no" caption="Tag No." :width="150" alignment="center" />
+          <DxColumn data-field="activites" caption="Activites" :min-width="150" alignment="center" />
+          <DxColumn data-field="detail" caption="Detail" :min-width="300" alignment="center" />
+
+          <DxColumn type="buttons">
+            <DxButton name="edit" hint="Edit" icon="edit" />
+            <DxButton name="delete" hint="Delete" icon="trash" />
+          </DxColumn>
+
+          <!-- Configuration goes here -->
+          <!-- <DxFilterRow :visible="true" /> -->
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="true" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+      </div>
     </div>
   </div>
 </template> 
@@ -19,21 +70,26 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  // DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  DxButton,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,32 +97,70 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
     // DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
     // DxItem,
-    // DxEditing,
+    DxEditing,
+    DxFilterRow,
+    DxButton,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
-    // DxFormItem,
+    // DxRequiredRule,
+    // DxFormItem
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "HIGHLIGHT ACTIVITY",
+      subpageName: "HIGHLIGHT ACTIVITIES",
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      this.testList = [
+        {
+          id: 1,
+          id_item: 1,
+          report_date: '13 Oct 2023',
+          platform: 'MDPP',
+          asset_type: 'Flowline',
+          tag_no: 'V-0111',
+          activites: 'Filter Coalescing Crack Detection',
+          detail: 'Complete crack monitoring for ...'
+        },
+        {
+          id: 2,
+          id_item: 2,
+          report_date: '10 Oct 2023',
+          platform: 'MDA',
+          asset_type: 'Pressure Vessel',
+          tag_no: 'MDA-05',
+          activites: 'Sand Erosion Integrity Management',
+          detail: 'Detect sign of sand erosion ...'
+        },
+        {
+          id: 3,
+          id_item: 3,
+          report_date: '23 Sep 2023',
+          platform: 'MDPP',
+          asset_type: 'Flare',
+          tag_no: '-',
+          activites: 'Drone inspection on Flare platform',
+          detail: 'As inspection team got request ...'
+        },
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -205,7 +299,10 @@ export default {
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +346,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {
