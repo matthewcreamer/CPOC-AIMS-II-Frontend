@@ -30,7 +30,7 @@ export default {
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_INAPP", {
-      name: "E-NDE REPORT",
+      name: "CPOC IMS",
       //icon: "/img/icon_menu/equipment/piping.png"
     });
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
