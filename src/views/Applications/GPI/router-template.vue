@@ -6,7 +6,7 @@
         :isBack_specificPath="'/'"
         style="grid-column: span 3"
       />
-      <sidebar :routes="routes" @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
+    <sidebar :routes="routes" @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
     <banner :calname="calname" style="grid-column: span 2"></banner>
     
     <div class="pm-page-container">
