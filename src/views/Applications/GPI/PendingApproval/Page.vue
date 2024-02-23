@@ -28,7 +28,7 @@
             :use-icons="true"
             mode="form"
           />
-          <DxFilterRow :visible="true" />
+          <DxFilterRow :visible="false" />
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="multiple" />
           

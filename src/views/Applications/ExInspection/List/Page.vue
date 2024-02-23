@@ -22,7 +22,7 @@
             :use-icons="true"
             mode="popup"
           />
-          <DxFilterRow :visible="true" />
+          <DxFilterRow :visible="false" />
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="single" />
           <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
