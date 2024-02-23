@@ -26,31 +26,28 @@
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="single" />
           <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-          <DxColumn data-field="moc_number" caption="MOC No." :width="90" alignment="center" />
-          <DxColumn data-field="title" caption="Title" :width="100" alignment="center" />
-          <DxColumn data-field="nature_of_change" caption="Nature Of Change" :width="90" alignment="center" />
-          <DxColumn data-field="worksite" caption="Worksite" :width="80" alignment="center" />
-          <DxColumn data-field="residual_risk_level" caption="Residual Risk Level" :width="90" alignment="center" />
-          <DxColumn data-field="start_date" caption="Start Date" :min-width="300" alignment="center" />
-          <DxColumn data-field="expiry_date" caption="Expiry Date" :width="90" alignment="center" />
-          <DxColumn data-field="status" caption="Status" :width="80" alignment="center" />
-          <DxColumn data-field="action" caption="Action" :width="80" alignment="center" />
-          <DxColumn data-field="remark" caption="Remark" :width="80" alignment="center" />
-          <DxColumn data-field="initiator" caption="Initiator" :width="80" alignment="center" />
-          <DxColumn caption="MOC" :min-width="150" alignment="center" cell-template="moc-cell-template" />
-          <DxColumn caption="RA" :min-width="150" alignment="center" cell-template="ra-cell-template" />
+          <DxColumn data-field="inspection_program" caption="Inspection Program" :min-width="90" alignment="center" />
+          <DxColumn data-field="start_date" caption="Start date" :width="100" alignment="center" />
+          <DxColumn data-field="end_date" caption="End Date" :width="90" alignment="center" />
+          <DxColumn data-field="pic" caption="PIC" :width="80" alignment="center" />
+          <DxColumn data-field="comments" caption="Comments" :min-width="90" alignment="center" />
+          <DxColumn data-field="status" caption="Status" :width="90" alignment="center" cellTemplate="block-cell-template" />
+          <DxColumn caption="Attachments" :width="200" alignment="center" cell-template="attachment-cell-template" />
+          <DxColumn :width="40" alignment="center" cell-template="list-cell-template" />
 
-          <template #moc-cell-template="{  }">
-            <div style="display: flex; gap: 10px;">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 144-208 0c-35.3 0-64 28.7-64 64l0 144-48 0c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"/></svg>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+          <template #attachment-cell-template="{  }">
+            <div class="column-template">
+              <span>FileName.ext</span>
+              <magnifyingGlassSvg />
             </div>
           </template>
 
-          <template #ra-cell-template="{  }">
-            <div style="display: flex; gap: 10px;">
-              FileName <button>DOWNLOAD</button>
-            </div>
+          <template #list-cell-template="{  }">
+            <listSvg class="listSvg" />
+          </template>
+
+          <template #block-cell-template="{ data }">
+            <div class="block" :style="{backgroundColor: GET_STATUS_CELL_COLOR(data)}"></div>
           </template>
 
           <!-- Configuration goes here -->
@@ -79,6 +76,8 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import magnifyingGlassSvg from "@/components/svg/magnifying-glass-svg.vue"
+import listSvg from "@/components/svg/list-svg.vue"
 
 //DataGrid
 import "devextreme/dist/css/dx.light.css";
@@ -129,6 +128,8 @@ export default {
     // DxLookup,
     // DxRequiredRule,
     // DxFormItem
+    magnifyingGlassSvg,
+    listSvg,
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -140,55 +141,83 @@ export default {
         {
           id: 1,
           id_item: 1,
-          fr_no: 'FR-00001',
-          tag_no: 'PCV-03302',
-          platform: 'MDPP',
-          unit: '-',
-          equipment_type: 'Choke Valve',
-          detail: 'Phase 3 Choke valve damage issue (MDF01/05, AMA04/12, MTA10)',
-          disc: 'INST',
-          rca_status: 'Done',
-          rca_action_status: 'Done'
+          inspection_program: 'Block Valve Inspection (Feb 2022)',
+          start_date: '02 Jan, 2022',
+          end_date: '17 Jan, 2022',
+          pic: 'Chanat',
+          comments: '',
+          status: 2
         },
         {
           id: 2,
           id_item: 2,
-          fr_no: 'FR-00002',
-          tag_no: 'LSB-PP-200',
-          platform: 'MDPP',
-          unit: 'V-0331',
-          equipment_type: 'Instrument and Utility',
-          detail: 'Gas Leak from ¾” drain valve upstream of PCV-03302​',
-          disc: 'MECH',
-          rca_status: 'Done',
-          rca_action_status: 'Done'
+          inspection_program: 'Process Piping Inspection (Jan 2022)',
+          start_date: '17 Jan, 2022',
+          end_date: '19 Jan, 2022',
+          pic: 'Chanat',
+          comments: '',
+          status: 2
         },
         {
           id: 3,
           id_item: 3,
-          fr_no: 'FR-00003',
-          tag_no: 'UPS-PP-230',
-          platform: 'MDPP',
-          unit: 'Low Voltage',
-          equipment_type: 'Switch Board',
-          detail: 'ESD-2 activated due to lost power supply and TG-2 and TG-3 tripped and lost power supply.​',
-          disc: 'ELEC',
-          rca_status: 'Ongoing',
-          rca_action_status: 'Done'
+          inspection_program: 'Equipment Inspection (Feb 2022)',
+          start_date: '23 Feb, 2022',
+          end_date: '23 Mar, 2022',
+          pic: 'Chanat',
+          comments: '',
+          status: 2
         },
         {
           id: 4,
           id_item: 4,
-          fr_no: 'FR-00004',
-          tag_no: 'PCV-03302',
-          platform: 'MDPP',
-          unit: 'BC1',
-          equipment_type: 'UPS',
-          detail: 'Variable Inlet Guide Vane (VIGV) Position Controller Shutdown​',
-          disc: 'INST',
-          rca_status: 'Done',
-          rca_action_status: 'Done'
-        }
+          inspection_program: 'Flowline Inspection (Feb 2022)',
+          start_date: '23 Feb, 2022',
+          end_date: '23 Mar, 2022',
+          pic: 'Chanat',
+          comments: '',
+          status: 2
+        },
+        {
+          id: 5,
+          id_item: 5,
+          inspection_program: 'Intelligent Pigging (IP)',
+          start_date: '17 Mar, 2022',
+          end_date: '7 Apr, 2022',
+          pic: 'Syahriman',
+          comments: '',
+          status: 2
+        },
+        {
+          id: 6,
+          id_item: 6,
+          inspection_program: 'Lifting Recertification Campaign',
+          start_date: '25 Mar, 2022',
+          end_date: '23 Apr, 2022',
+          pic: 'Syahriman',
+          comments: '',
+          status: 2
+        },
+        {
+          id: 7,
+          id_item: 7,
+          inspection_program: 'Inspection For Low Nom Activities',
+          start_date: '23 Mar, 2022',
+          end_date: '7 Apr, 2022',
+          pic: 'Chanat',
+          comments: '',
+          status: 2
+        },
+        {
+          id: 8,
+          id_item: 8,
+          inspection_program: 'Riser Inspection (Apr 2022)',
+          start_date: '27 Apr, 2022',
+          end_date: '25 May, 2022',
+          pic: 'Chanat',
+          comments: '',
+          status: 2
+        },
       ];
       // this.FETCH_INSP_RECORD();
     }
@@ -323,7 +352,17 @@ export default {
           );
         })
         .finally(() => {});
-    }
+    },
+    GET_STATUS_CELL_COLOR(value) {
+      if(value.rowType === "data" && value.column.dataField === "status") {
+        switch (value.data.status) {
+          case 1: return '#6ffc03';
+          case 2: return '#47a102';
+        
+          default: return '#000'
+        }
+      }
+    },
   }
 };
 </script>
@@ -331,6 +370,41 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.block {
+  display: flex;
+  margin: 0 auto;
+  width: 22px;
+  height: 22px;
+}
+.column-template {
+  display: flex; 
+  align-items: center;
+  gap: 10px; 
+  justify-content: space-between;
+  svg {
+    width: 25px;
+    transition: 0.2s;
+  }
+  svg:last-child {
+    width: 25px; 
+    padding: 5px; 
+    background-color: blue; 
+    fill: white;
+  }
+  svg:hover {
+    transform: scale(1.1);
+  }
+}
+.listSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: orange; 
+  fill: white;
+  transition: 0.2s;
+}
+.listSvg:hover {
+  transform: scale(1.1);
+}
 .page-container {
   width: 100%;
   height: 100%;

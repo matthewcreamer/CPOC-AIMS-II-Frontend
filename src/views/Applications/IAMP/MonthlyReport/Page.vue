@@ -2,6 +2,25 @@
   <div class="page-container">
     <div class="page-section">
       <div class="table-wrapper">
+        <div class="filter-wrapper">
+          <div class="filter">
+            <span>Year</span>
+            <DxSelectBox
+              name="ttt"
+              :items="['2023']"
+              :value="'2023'"
+              :input-attr="{ 'aria-label': 'Report Date' }"
+            />
+          </div>
+          <div class="filter">
+            <span>Month</span>
+            <DxSelectBox
+                :items="['October']"
+                :value="'October'"
+                :input-attr="{ 'aria-label': 'Report Date' }"
+              />
+          </div>
+        </div>
         <DxDataGrid
           id="data-grid-list"
           key-expr="id"
@@ -18,32 +37,19 @@
           <DxEditing
             :allow-updating="false"
             :allow-deleting="false"
-            :allow-adding="true"
+            :allow-adding="false"
             :use-icons="true"
             mode="popup"
           />
           <DxFilterRow :visible="false" />
           <DxHeaderFilter :visible="false" />
-          <DxSelection mode="single" />
-          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-          <DxColumn data-field="fr_no" caption="FR No." :width="90" alignment="center" />
-          <DxColumn data-field="tag_no" caption="Tag No." :width="100" alignment="center" />
-          <DxColumn data-field="platform" caption="Platform" :width="90" alignment="center" />
-          <DxColumn data-field="unit" caption="Unit" :width="80" alignment="center" />
-          <DxColumn data-field="equipment_type" caption="Equipment Type" :width="90" alignment="center" />
-          <DxColumn data-field="detail" caption="Detail" :min-width="300" alignment="center" />
-          <DxColumn data-field="disc" caption="Disc." :width="90" alignment="center" />
-          <DxColumn data-field="rca_status" caption="RCA Status" :width="80" alignment="center" />
-          <DxColumn data-field="rca_action_status" caption="RCA Action Status" :width="80" alignment="center" />
-
-          <!-- <DxToolbar>
-            <DxItem location="after" template="addRowTemplate" />
-          </DxToolbar>
-          
-
-          <template #addRowTemplate>
-            <DxAddRowButton icon="plus" text="Add New" />
-          </template> -->
+          <DxSelection mode="multiple" />
+          <DxColumn data-field="report_date" caption="Report Date" :width="130" alignment="center" />
+          <DxColumn data-field="platform" caption="Platform" :width="130" alignment="center" />
+          <DxColumn data-field="asset_type" caption="Asset Type" :width="130" alignment="center" />
+          <DxColumn data-field="tag_no" caption="Tag No." :width="130" alignment="center" />
+          <DxColumn data-field="activities" caption="Activities" :min-width="300" alignment="left" />
+          <DxColumn data-field="detail" caption="Detail" :min-width="300" alignment="left" />
 
           <!-- Configuration goes here -->
           <!-- <DxFilterRow :visible="true" /> -->
@@ -59,6 +65,35 @@
           />
           <DxExport :enabled="false" />
         </DxDataGrid>
+
+        <div class="filter-report">
+          <h5>FILTER REPORT</h5>
+          <div class="field">
+            <DxCheckBox
+              :value="true"
+              :element-attr="checkedLabel"
+            />
+            <span>Inspection</span>
+          </div>
+          <div class="field">
+            <DxCheckBox
+              :value="true"
+              :element-attr="checkedLabel"
+            />
+            <span>Anomaly</span>
+          </div>
+          <div class="field">
+            <DxCheckBox
+              :value="true"
+              :element-attr="checkedLabel"
+            />
+            <span>Highlight Activities</span>
+          </div>
+        </div>
+        <button class="filter-report-download">
+          <downloadSvg class="svg" />
+          DOWNLOAD
+        </button>
       </div>
     </div>
   </div>
@@ -71,6 +106,7 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import downloadSvg from "@/components/svg/download-svg.vue"
 
 //DataGrid
 import "devextreme/dist/css/dx.light.css";
@@ -79,6 +115,8 @@ import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
 // import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
+import DxSelectBox from 'devextreme-vue/select-box';
+import { DxCheckBox } from 'devextreme-vue/check-box';
 import {
   DxDataGrid,
   DxSearchPanel,
@@ -117,10 +155,13 @@ export default {
     // DxItem,
     DxEditing,
     DxFilterRow,
+    DxSelectBox,
+    DxCheckBox,
     // DxAddRowButton,
     // DxLookup,
     // DxRequiredRule,
     // DxFormItem
+    downloadSvg,
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -131,56 +172,22 @@ export default {
       this.testList = [
         {
           id: 1,
-          id_item: 1,
-          fr_no: 'FR-00001',
-          tag_no: 'PCV-03302',
+          report_date: '13 Oct 2023',
           platform: 'MDPP',
-          unit: '-',
-          equipment_type: 'Choke Valve',
-          detail: 'Phase 3 Choke valve damage issue (MDF01/05, AMA04/12, MTA10)',
-          disc: 'INST',
-          rca_status: 'Done',
-          rca_action_status: 'Done'
+          asset_type: 'Flowline',
+          tag_no: 'V-0111',
+          activities: 'Filter Coalescing Crack Detection',
+          detail: 'Complete crack monitoring for ...'
         },
         {
           id: 2,
-          id_item: 2,
-          fr_no: 'FR-00002',
-          tag_no: 'LSB-PP-200',
+          report_date: '10 Oct 2023',
           platform: 'MDPP',
-          unit: 'V-0331',
-          equipment_type: 'Instrument and Utility',
-          detail: 'Gas Leak from ¾” drain valve upstream of PCV-03302​',
-          disc: 'MECH',
-          rca_status: 'Done',
-          rca_action_status: 'Done'
+          asset_type: 'Flare',
+          tag_no: '-',
+          activities: 'Drone inspection on Flare platform',
+          detail: 'As inspection team got request ...'
         },
-        {
-          id: 3,
-          id_item: 3,
-          fr_no: 'FR-00003',
-          tag_no: 'UPS-PP-230',
-          platform: 'MDPP',
-          unit: 'Low Voltage',
-          equipment_type: 'Switch Board',
-          detail: 'ESD-2 activated due to lost power supply and TG-2 and TG-3 tripped and lost power supply.​',
-          disc: 'ELEC',
-          rca_status: 'Ongoing',
-          rca_action_status: 'Done'
-        },
-        {
-          id: 4,
-          id_item: 4,
-          fr_no: 'FR-00004',
-          tag_no: 'PCV-03302',
-          platform: 'MDPP',
-          unit: 'BC1',
-          equipment_type: 'UPS',
-          detail: 'Variable Inlet Guide Vane (VIGV) Position Controller Shutdown​',
-          disc: 'INST',
-          rca_status: 'Done',
-          rca_action_status: 'Done'
-        }
       ];
       // this.FETCH_INSP_RECORD();
     }
@@ -322,7 +329,70 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/main.scss";
+.filter-report {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 10px;
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 50px;
+  -webkit-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
 
+  h5 {
+    margin: 0;
+  }
+  .field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+.filter-report-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  background-color: white;
+  padding: 10px;
+  width: 220px;
+  border-radius: 10px;
+  margin-top: 20px;
+  -webkit-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  font-size: 20px;
+  font-weight: 800;
+  transition: 0.2s;
+  cursor: pointer;
+
+  .svg {
+    width: 20px;
+  }
+}
+.filter-report-download:hover {
+  transform:translateY(-2px);
+}
+.filter-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  
+  span {
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
 .page-container {
   width: 100%;
   height: 100%;

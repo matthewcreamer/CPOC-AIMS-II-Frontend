@@ -963,6 +963,11 @@ hr {
     border: none;
     border-bottom: 2px solid $web-theme-color-secondary;
   }
+  
+  .dx-checkbox-checked .dx-checkbox-icon::before {
+    content: "\2714"; 
+    color: black;
+  }
 
 // .dx-header-row>td>.dx-datagrid-text-content {
 //     writing-mode: tb-rl !important;
