@@ -6,7 +6,7 @@
         :isBack_specificPath="'/'"
         style="grid-column: span 3"
       />
-    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
+    <sidebar :routes="routes" @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
     <banner :calname="calname" style="grid-column: span 2"></banner>
     <div class="pm-page-container">
       <router-view></router-view>
@@ -18,8 +18,14 @@
 // import axios from "/axios.js";
 // Structures
 import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
-import sidebar from "@/components/app-structures/app-sidebar-iamp.vue";
+import sidebar from "@/components/app-structures/app-sidebar.vue";
 import banner from "@/components/app-structures/app-banner.vue"
+
+import pieChartSvg from "@/components/svg/pie-chart-svg.vue"
+import windowLayoutSvg from "@/components/svg/window-layout-svg.vue"
+import exclamationMarkSvg from "@/components/svg/exclamation-mark-svg.vue"
+import starSvg from "@/components/svg/star-svg.vue"
+import calenderSvg from "@/components/svg/calender-svg.vue"
 
 export default {
   name: "router-template-detail",
@@ -27,6 +33,7 @@ export default {
     toolbar,
     sidebar,
     banner,
+    
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_INAPP", {
@@ -48,6 +55,78 @@ export default {
       sidebarHiding: false,
       isAdd: false,
       calname: "",
+      routes: [
+        {
+          name: 'Information'
+        },
+        {
+          url: '/iamp',
+          icon: {
+            svg: pieChartSvg,
+            size: 18
+          },
+          name: 'Dashboard'
+        },
+        {
+          url: '/inspection',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Inspection Record'
+        },
+        {
+          line: true
+        },
+        {
+          url: '/anomaly-iamp',
+          icon: {
+            svg: exclamationMarkSvg,
+            size: 18
+          },
+          name: 'Anomaly'
+        },
+        {
+          url: '/hightlight-activities',
+          icon: {
+            svg: starSvg,
+            size: 18
+          },
+          name: 'Highlight Activities'
+        },
+        {
+          url: '/moc',
+          icon: {
+            svg: starSvg,
+            size: 18
+          },
+          name: 'Management Of Change'
+        },
+        {
+          url: '/inspection-campaign',
+          icon: {
+            svg: starSvg,
+            size: 18
+          },
+          name: 'Inspection Campaign'
+        },
+        {
+          url: '/rectification-campaign',
+          icon: {
+            svg: starSvg,
+            size: 18
+          },
+          name: 'Rectification Campaign'
+        },
+        {
+          url: '/monthly-report',
+          icon: {
+            svg: calenderSvg,
+            size: 18
+          },
+          name: 'Monthly report'
+        },
+      ]
     };
   },
   computed: {},

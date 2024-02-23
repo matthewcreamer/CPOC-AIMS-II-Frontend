@@ -2,15 +2,19 @@
   <div class="app-sidebar" :class="[sidebarHiding == true ? 'app-sidebar-hide' : 'app-sidebar']">
     <div class="item-container">
       <template v-for="(route, index) in routes">
-        <div class="section-label" v-if="!route.url" :key="index">
+        <div class="section-label" v-if="!route.url && !route.line" :key="'title_' + index">
           <label>{{ route.name }}</label>
         </div>
-        <router-link :to="route.url" v-if="route.url" :key="index">
+        <router-link :to="route.url" v-if="route.url" :key="'route_' + index">
           <v-ons-toolbar-button class="item">
-            <div v-html="route.icon"></div>
+            <component class="svg" :is="route.icon.svg" :style="{width: route.icon.size, height: route.icon.size}" />
+            <!-- <div v-html="route.icon"></div> -->
             <span>{{ route.name }}</span>
           </v-ons-toolbar-button>
         </router-link>
+        <div class="line" v-if="route.line" :key="'line_' + index">
+          <hr />
+        </div>
       </template>
     </div>
     <div class="item-container fixed-panel">
@@ -55,7 +59,7 @@ export default {
 @import "@/style/main.scss";
 .app-sidebar {
   width: 200px;
-  height: 100%;
+  height: calc(100% - 120px);
   background-color: $web-theme-color-secondary;
   border: 1px solid #e6e6e6;
   border-width: 0 1px 0 0;
@@ -97,11 +101,12 @@ export default {
       width: 180px;
       padding: 0;
       height: 34px;
+      // display: flex;
       justify-content: flex-start;
+      align-items: center;
       border-radius: 6px;
       margin: 10px auto;
       border: 0px;
-      position: relative;
       transition: all 0.3s;
       i {
         margin-left: 15px;
@@ -121,8 +126,8 @@ export default {
         margin-right: 10px;
       }
       .svg {
-        width: 18px;
-        max-height: 18px;
+        // width: 18px;
+        // max-height: 18px;
         object-fit: contain;
         margin-left: 10px;
         margin-right: 10px;
@@ -152,6 +157,10 @@ export default {
         margin: 0 10px;
         margin-left: 0;
       }
+    }
+    .line {
+      padding: 6px;
+      width: 180px;
     }
   }
 
@@ -192,6 +201,10 @@ export default {
           display: inherit !important;
           margin: 0;
         }
+      }
+      .line {
+        padding: 6px;
+        width: 180px;
       }
     }
   }
@@ -239,6 +252,9 @@ export default {
         display: block;
         transition: all 0.3s;
       }
+    }
+    .line {
+      display: none;
     }
     .item {
       width: fit-content;
