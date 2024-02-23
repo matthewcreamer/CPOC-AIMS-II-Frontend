@@ -26,16 +26,16 @@
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="single" />
           <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-          <DxColumn data-field="moc_number" caption="MOC No." :width="90" alignment="center" />
-          <DxColumn data-field="title" caption="Title" :min-width="100" alignment="center" />
+          <DxColumn data-field="moc_number" caption="MOC No." :width="140" alignment="center" />
+          <DxColumn data-field="title" caption="Title" :min-width="200" alignment="left" />
           <DxColumn data-field="nature_of_change" caption="Nature Of Change" :width="90" alignment="center" />
           <DxColumn data-field="worksite" caption="Worksite" :min-width="80" alignment="center" />
           <DxColumn data-field="residual_risk_level" caption="Residual Risk Level" :width="90" alignment="center" />
           <DxColumn data-field="start_date" caption="Start Date" :width="120" alignment="center" />
           <DxColumn data-field="expiry_date" caption="Expiry Date" :width="120" alignment="center" />
-          <DxColumn data-field="status" caption="Status" :width="80" alignment="center" />
+          <DxColumn data-field="status" cellTemplate="block-cell-template" caption="Status" :width="80" alignment="center" />
           <DxColumn data-field="action" caption="Action" :width="80" alignment="center" />
-          <DxColumn data-field="remark" caption="Remark" :width="80" alignment="center" />
+          <DxColumn data-field="remark" caption="Remark" :min-width="200" alignment="left" />
           <DxColumn data-field="initiator" caption="Initiator" :width="80" alignment="center" />
           <DxColumn caption="MOC" :width="80" alignment="center" cell-template="moc-cell-template" />
           <DxColumn caption="RA" :width="80" alignment="center" cell-template="ra-cell-template" />
@@ -57,6 +57,10 @@
 
           <template #list-cell-template="{  }">
             <listSvg class="listSvg" />
+          </template>
+
+          <template #block-cell-template="{ data }">
+            <div class="block" :style="{backgroundColor: GET_STATUS_CELL_COLOR(data)}"></div>
           </template>
 
           <!-- Configuration goes here -->
@@ -148,6 +152,7 @@ export default {
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
+      // light green = 1 / dark green = 2
       this.testList = [
         {
           id: 1,
@@ -158,11 +163,11 @@ export default {
           worksite: 'MDPP',
           residual_risk_level: 'Low',
           start_date: '14 Feb, 2023',
-          expiry_date: '',
-          status: '',
+          expiry_date: '14 Feb, 2039',
+          status: 1,
           action: '-',
           remark: '',
-          initiator: ''
+          initiator: 'Syahriman'
         },
         {
           id: 2,
@@ -173,8 +178,8 @@ export default {
           worksite: 'MDPP',
           residual_risk_level: 'Medium',
           start_date: '25 Jan, 2023',
-          expiry_date: '',
-          status: '',
+          expiry_date: '25 Jan, 2039',
+          status: 1,
           action: '-',
           remark: '',
           initiator: ''
@@ -188,8 +193,8 @@ export default {
           worksite: 'MDPP',
           residual_risk_level: 'Medium',
           start_date: '3 Jul, 2023',
-          expiry_date: '',
-          status: '',
+          expiry_date: '3 Jan, 2039',
+          status: 1,
           action: '-',
           remark: '',
           initiator: ''
@@ -203,11 +208,11 @@ export default {
           worksite: 'MDPP',
           residual_risk_level: 'Medium',
           start_date: '',
-          expiry_date: '',
-          status: '',
+          expiry_date: '31 Dec, 2030',
+          status: 2,
           action: '-',
-          remark: '',
-          initiator: ''
+          remark: 'Please Refer To MOD-22_008',
+          initiator: 'Nuttawat'
         },
         {
           id: 5,
@@ -218,10 +223,10 @@ export default {
           worksite: 'MDPP',
           residual_risk_level: 'Low',
           start_date: '',
-          expiry_date: '',
-          status: '',
+          expiry_date: '31 Dec, 2030',
+          status: 2,
           action: '-',
-          remark: '',
+          remark: 'Please Refer To MOD_22-05',
           initiator: ''
         },
         {
@@ -232,12 +237,12 @@ export default {
           nature_of_change: 'Deviation',
           worksite: 'MDPP',
           residual_risk_level: 'Low',
-          start_date: '',
-          expiry_date: '',
-          status: '',
+          start_date: '14 Mar, 2023',
+          expiry_date: '31 Dec, 2029',
+          status: 1,
           action: '-',
           remark: '',
-          initiator: ''
+          initiator: 'Syahriman'
         },
         {
           id: 7,
@@ -247,12 +252,12 @@ export default {
           nature_of_change: 'Deviation',
           worksite: 'MDPP',
           residual_risk_level: 'Medium',
-          start_date: '',
-          expiry_date: '',
-          status: '',
+          start_date: '25 Jul, 2023',
+          expiry_date: '16 Sep, 2024',
+          status: 1,
           action: '-',
-          remark: '',
-          initiator: ''
+          remark: 'Exlention 02',
+          initiator: 'CHANAT'
         },
       ];
       // this.FETCH_INSP_RECORD();
@@ -388,7 +393,17 @@ export default {
           );
         })
         .finally(() => {});
-    }
+    },
+    GET_STATUS_CELL_COLOR(value) {
+      if(value.rowType === "data" && value.column.dataField === "status") {
+        switch (value.data.status) {
+          case 1: return '#6ffc03';
+          case 2: return '#47a102';
+        
+          default: return '#000'
+        }
+      }
+    },
   }
 };
 </script>
@@ -396,6 +411,12 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.block {
+  display: flex;
+  margin: 0 auto;
+  width: 22px;
+  height: 22px;
+}
 .column-template {
   display: flex; 
   gap: 10px; 

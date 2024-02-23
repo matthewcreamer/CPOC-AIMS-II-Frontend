@@ -27,12 +27,12 @@
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="single" />
           <DxColumn data-field="module" caption="Module" :width="150" alignment="left" />
-          <DxColumn data-field="inspection_status" cellTemplate="circleTemplate" caption="Inspection Status" :width="150" alignment="center" />
+          <DxColumn data-field="inspection_status" cellTemplate="circle-cell-template" caption="Inspection Status" :width="150" alignment="center" />
           <DxColumn data-field="anomaly_repair_status" cellTemplate="circleTemplate" caption="Anomaly Repair" :width="150" alignment="center" />
           <DxColumn data-field="note" caption="Note" :min-width="300" alignment="left" />
 
 
-          <template #circleTemplate="{ data }">
+          <template #circle-cell-template="{ data }">
             <div class="circle" :style="{backgroundColor: GET_STATUS_CELL_COLOR(data)}"></div>
           </template>
           
