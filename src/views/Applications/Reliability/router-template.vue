@@ -6,7 +6,7 @@
         :isBack_specificPath="'/'"
         style="grid-column: span 3"
       />
-    <sidebar @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
+    <sidebar :routes="routes" @resizeGridLayout="RESIZE_GRID_LAYOUT()" style="grid-column: span 1; grid-row: span 2;"></sidebar>
     <banner :calname="calname" style="grid-column: span 2"></banner>
     <div class="pm-page-container">
       <router-view></router-view>
@@ -18,8 +18,12 @@
 // import axios from "/axios.js";
 // Structures
 import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
-import sidebar from "@/components/app-structures/app-sidebar-reliability-report.vue";
+import sidebar from "@/components/app-structures/app-sidebar.vue";
 import banner from "@/components/app-structures/app-banner.vue"
+
+import pieChartSvg from "@/components/svg/pie-chart-svg.vue"
+import windowLayoutSvg from "@/components/svg/window-layout-svg.vue"
+import rewindTimeSvg from "@/components/svg/rewind-time-svg.vue"
 
 export default {
   name: "router-template-detail",
@@ -47,6 +51,51 @@ export default {
       sidebarHiding: false,
       isAdd: false ,
       calname:{},
+      routes: [
+        {
+          name: 'Information'
+        },
+        {
+          url: '/reliability',
+          icon: {
+            svg: pieChartSvg,
+            size: 18
+          },
+          name: 'Dashboard'
+        },
+        {
+          url: '/failure-report',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Failure Report'
+        },
+        {
+          url: '/pending-approval',
+          icon: {
+            svg: rewindTimeSvg,
+            size: 18
+          },
+          name: 'Pending Approval'
+        },
+        {
+          url: '/stt',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Short Term Tracking'
+        },
+        {
+          url: '/ltt',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Long Term Tracking'
+        },
+      ]
     };
   },
   computed: {},
