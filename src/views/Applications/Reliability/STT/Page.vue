@@ -1,7 +1,59 @@
 <template>
   <div class="page-container">
     <div class="page-section">
-      <h1>Short Term Tracking</h1>
+      <div class="table-wrapper">
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="{ mode: 'single' }"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+          :column-auto-width="true"
+        >
+          <DxEditing
+            :allow-updating="true"
+            :allow-deleting="true"
+            :allow-adding="false"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="false" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="single" />
+          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
+          <DxColumn data-field="fr_no" caption="Report Date" :width="150" alignment="center" />
+          <DxColumn data-field="action_detail" caption="Action Detail" :min-width="200" alignment="center" />
+          <DxColumn data-field="action_date" caption="Action Date" :width="150" alignment="center" />
+          <DxColumn data-field="discription" caption="Disc." :width="100" alignment="center" />
+          <DxColumn data-field="action_due" caption="Action Due" :width="100" alignment="center" />
+          <DxColumn data-field="status" caption="Status" :width="100" alignment="center" />
+          <DxColumn data-field="remark" caption="Remark" :min-width="200" alignment="center" />
+
+          <DxColumn type="buttons">
+            <DxButton name="edit" hint="Edit" icon="edit" />
+            <DxButton name="delete" hint="Delete" icon="trash" />
+          </DxColumn>
+
+          <!-- Configuration goes here -->
+          <!-- <DxFilterRow :visible="true" /> -->
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="true" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+      </div>
     </div>
   </div>
 </template> 
@@ -19,21 +71,26 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  // DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  DxButton,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,20 +98,25 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
     // DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
     // DxItem,
-    // DxEditing,
+    DxEditing,
+    DxFilterRow,
+    DxButton,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
-    // DxFormItem,
+    // DxRequiredRule,
+    // DxFormItem
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -62,11 +124,80 @@ export default {
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      this.testList = [
+        {
+          id: 1,
+          id_item: 1,
+          fr_no: 'FR-00001',
+          action_detail: 'Change the delay time to 0sec for the transfer in case of MCC fail or MLO low pres',
+          action_date: '20 May 2024',
+          discription: 'INST',
+          action_due: 'Not Due',
+          status: 'Ongoing',
+          remark: '-'
+        },
+        {
+          id: 2,
+          id_item: 2,
+          fr_no: 'FR-00001',
+          action_detail: 'Revise the setpoint to higher value for earlier transfer',
+          action_date: '1 Jun 2024',
+          discription: 'INST',
+          action_due: 'Not Due',
+          status: 'Done',
+          remark: '-'
+        },
+        {
+          id: 3,
+          id_item: 3,
+          fr_no: 'FR-00001',
+          action_detail: 'Check on the pump performance and oil quality',
+          action_date: '1 Jan 2025',
+          discription: 'INST',
+          action_due: 'Not Due',
+          status: 'Ongoing',
+          remark: '-'
+        },
+        {
+          id: 4,
+          id_item: 4,
+          fr_no: 'FR-00002',
+          action_detail: 'Change the delay time to 0sec for the transfer in case of MCC fail or MLO low pres',
+          action_date: '20 May 2024',
+          discription: 'INST',
+          action_due: 'Not Due',
+          status: 'Ongoing',
+          remark: '-'
+        },
+        {
+          id: 5,
+          id_item: 5,
+          fr_no: 'FR-00002',
+          action_detail: 'Revise the setpoint to higher value for earlier transfer',
+          action_date: '1 Jun 2024',
+          discription: 'INST',
+          action_due: 'Not Due',
+          status: 'Done',
+          remark: '-'
+        },
+        {
+          id: 6,
+          id_item: 6,
+          fr_no: 'FR-00003',
+          action_detail: 'Check on the pump performance and oil quality',
+          action_date: '1 Jan 2025',
+          discription: 'INST',
+          action_due: 'Not Due',
+          status: 'Ongoing',
+          remark: '-'
+        },
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -205,7 +336,10 @@ export default {
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +383,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {
