@@ -1,12 +1,71 @@
 <template>
   <div class="page-container">
+    <div class="button-container">
+        <button class="export-btn" 
+          v-on:click="SAP"
+        >
+            APPROVAL
+        </button>
+    </div>
     <div class="page-section">
-      <h1>Pending Approval</h1>
+      <div class="table-wrapper">
+        <DxDataGrid
+          id="data-grid-list"
+          key-expr="id"
+          :data-source="testList"
+          :selection="selectionOptions"
+          @selectionChanged="onSelectionChanged"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
+        >
+          <DxEditing
+            :allow-updating="false"
+            :allow-deleting="false"
+            :allow-adding="false"
+            :use-icons="true"
+            mode="popup"
+          />
+          <DxFilterRow :visible="false" />
+          <DxHeaderFilter :visible="false" />
+          <DxSelection mode="multiple" />
+          
+          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
+          <DxColumn data-field="temporary_number" caption="Temporary Number" :width="90" alignment="center" />
+          <DxColumn data-field="platform" caption="Platform" :width="90" alignment="center" />
+          <DxColumn data-field="asset_type" caption="Asset Type" :width="90" alignment="center" />
+          <DxColumn data-field="tag_number" caption="Tag Number" :width="120" alignment="center" />
+          <DxColumn data-field="moc_number" caption="MOC Number" :width="120" alignment="center" />
+          <DxColumn data-field="repair_code" caption="Repair Code" :width="120" alignment="center" />
+          <DxColumn data-field="due_date" caption="Due Date" :width="100" alignment="center" />
+          <DxColumn data-field="repair_status" caption="Repair Status" :width="100" alignment="center" />
+          <DxColumn data-field="severity" caption="Severity" :width="80" alignment="center" />
+          <DxColumn data-field="description" caption="Description" :min-width="100" alignment="center" />
+
+          <!-- Configuration goes here -->
+          <!-- <DxFilterRow :visible="true" /> -->
+          <DxScrolling mode="standard" />
+          <DxSearchPanel :visible="true" />
+          <DxPaging :page-size="10" :page-index="0" />
+          <DxPager
+            :show-page-size-selector="true"
+            :allowed-page-sizes="[10, 20, 30]"
+            :show-navigation-buttons="true"
+            :show-info="false"
+            info-text="Page {0} of {1} ({2} items)"
+          />
+          <DxExport :enabled="false" />
+        </DxDataGrid>
+      </div>
     </div>
   </div>
 </template> 
 
 <script>
+/* eslint-disable */ 
 //API
 import axios from "/axios.js";
 import moment from "moment";
@@ -19,21 +78,28 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
+// import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
+// import DxSelectBox from 'devextreme-vue/select-box';
+// import { DxCheckBox } from 'devextreme-vue/check-box';
 import {
-//   DxDataGrid,
-//   DxSearchPanel,
-//   DxPaging,
-//   DxPager,
-//   DxScrolling,
-//   DxColumn,
-//   DxExport,
-//   DxToolbar,
-//   DxEditing,
-//   DxLookup,
-//   DxRequiredRule,
-//   DxFormItem,
-//   DxForm
+  DxDataGrid,
+  DxSearchPanel,
+  DxPaging,
+  DxPager,
+  DxScrolling,
+  DxColumn,
+  DxExport,
+  DxToolbar,
+  DxHeaderFilter,
+  DxSelection,
+  DxEditing,
+  DxFilterRow,
+  DxItem,
+  // DxLookup,
+  // DxRequiredRule,
+  // DxFormItem,
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -41,20 +107,26 @@ import {
 export default {
   name: "inspection-record",
   components: {
-    // DxDataGrid,
-    // DxSearchPanel,
-    // DxPaging,
-    // DxPager,
-    // DxScrolling,
-    // DxColumn,
-    // DxExport,
-    // DxToolbar,
+    DxDataGrid,
+    DxSearchPanel,
+    DxPaging,
+    DxPager,
+    DxScrolling,
+    DxColumn,
+    DxExport,
+    DxToolbar,
+    DxHeaderFilter,
+    DxSelection,
     // DxForm,
-    // DxItem,
-    // DxEditing,
+    DxItem,
+    DxEditing,
+    DxFilterRow,
+    // DxAddRowButton,
     // DxLookup,
-    // DxRequiredRule
+    // DxRequiredRule,
+    // DxCheckBox,
     // DxFormItem,
+
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -62,24 +134,119 @@ export default {
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
-      this.FETCH_INSP_RECORD();
+      this.testList = [
+        {
+          id: 1,
+          id_item: 1,
+          temporary_number: 'TEMP-23010',
+          platform: 'MDPP',
+          asset_type: 'Piping',
+          tag_number: '2-GC-J4N-1002',
+          moc_number: 'MOC OFF_23-024',
+          repair_code: 'Welding Patch',
+          due_date: '01 Feb 2024',
+          repair_status: 'Pending',
+          severity: 'P3',
+          description: '-'
+        },
+        {
+          id: 2,
+          id_item: 2,
+          temporary_number: 'TEMP-23009',
+          platform: 'MDPP',
+          asset_type: 'Flowline',
+          tag_number: 'MDPP-03',
+          moc_number: 'MOC OFF_23-023',
+          repair_code: 'Other',
+          due_date: '01 Jan 2024',
+          repair_status: 'Pending',
+          severity: 'P4',
+          description: '-'
+        },
+        {
+          id: 3,
+          id_item: 3,
+          temporary_number: 'TEMP-23008',
+          platform: 'MDPP',
+          asset_type: 'Pressure Vessel',
+          tag_number: 'V-01111',
+          moc_number: 'MOC OFF_23-018',
+          repair_code: 'Other',
+          due_date: '01 Dec 2023',
+          repair_status: 'Completed',
+          severity: 'P3',
+          description: '-'
+        },
+        {
+          id: 4,
+          id_item: 4,
+          temporary_number: 'TEMP-23007',
+          platform: 'MDPP',
+          asset_type: 'Flare',
+          tag_number: '-',
+          moc_number: 'MOC OFF_23-027',
+          repair_code: 'Other',
+          due_date: '01 Jan 2025',
+          repair_status: 'Pending',
+          severity: 'P3',
+          description: '-'
+        },
+      ];
+      // this.FETCH_INSP_RECORD();
     }
   },
   data() {
     return {
+      testList: null,
       inspRecordList: {},
       campaigeList: {},
+      statusList: [
+        { id: 1, code: "Fench" },
+        { id: 2, code: "Piping" },
+        { id: 3, code: "Pressure Vessel" },
+        { id: 4, code: "Bridge" },
+        { id: 5, code: "Lifting Cane" }
+      ],
       dataGridAttributes: {
         class: "data-grid-style"
       },
-      inspDateInputOptions: { placeholder: "Select date" },
-      projectNoInputOptions: { placeholder: "Enter project no" },
-      reportNoInputOptions: { placeholder: "Enter report no" },
-      remarkInputOptions: { placeholder: "Enter remark" }
+      ExpDateInputOptions: { placeholder: "Select date" },
+      GPIDateInputOptions: { placeholder: "Select date" },
+      GPINoInputOptions: { placeholder: "Enter GPI No." },
+      MainWorkCtrInputOptions: { placeholder: "Enter main workCtr" },
+      SeverityInputOptions: { placeholder: "Enter severity" },
+      platformNoInputOptions: { placeholder: "Enter platform" },
+      conmmentInputOptions: { placeholder: "Enter remark" },
+      tagNoInputOptions: { placeholder: "Enter tag No." },
+      actionInputOptions: { placeholder: "Enter action"},
+      selected_line: [],
+      selectedIds: [],
+      selectionOptions: {
+        mode: 'multiple',
+        onSelectionChanged: this.onSelectionChanged,
+      },
     };
   },
-  computed: {},
+  computed: {
+  },
   methods: {
+    onSelectionChanged(e) {
+      this.selectedIds = e.selectedRowsData.map(row => row.id);
+      // console.log('Selected IDs:', this.selectedIds);
+      // console.log("length", this.selectedIds.length);
+      const exportBtn = document.querySelector(".export-btn");
+      if (this.selectedIds.length === 0) {
+        exportBtn.classList.remove('selected');
+      } else {
+        exportBtn.classList.add('selected');
+      }
+    },
+    exportData() {
+      console.log('Exporting data...');
+    },
+    SAP(){
+      console.log("SAP YO")
+    },
     EXPORT_DATA(e) {
       const workbook = new Workbook();
       const worksheet = workbook.addWorksheet("Projects");
@@ -202,10 +369,42 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.filter-report {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 10px;
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 50px;
+  -webkit-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+
+  h5 {
+    margin: 0;
+  }
+  .field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
 .page-container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 51px calc(100vh - 95px);
+  transition: all 0.3s;
+  overflow-y: hidden;
 }
 #report-sheet {
   max-width: 100%;
@@ -249,6 +448,8 @@ export default {
 
 .page-section {
   padding: 20px;
+  overflow-y: auto;
+  grid-row: span 2;
 }
 
 .page-section:last-child {
@@ -265,5 +466,36 @@ export default {
 }
 .info-tab-display {
   display: flex;
+}
+
+.button-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.4rem;
+  .export-btn {
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 10px 8px;
+    gap: 1rem;
+    font-size: 14px;
+    width: 163px;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}
+
+.export-btn.selected {
+  background-color: #1D9531;
+  &:hover{
+    background-color: #71c47f;
+  }
 }
 </style>
