@@ -1,42 +1,48 @@
 <template>
   <div class="page-container">
+    <div class="button-container">
+        <button class="export-btn" 
+          v-on:click="SAP"
+        >
+            SAP Validate
+        </button>
+    </div>
     <div class="page-section">
       <div class="table-wrapper">
         <DxDataGrid
           id="data-grid-list"
           key-expr="id"
           :data-source="testList"
-          :selection="{ mode: 'single' }"
+          :selection="selectionOptions"
+          @selectionChanged="onSelectionChanged"
           :hover-state-enabled="true"
           :allow-column-reordering="true"
           :show-borders="true"
           :show-row-lines="true"
           :row-alternation-enabled="false"
           :word-wrap-enabled="true"
-          :column-auto-width="true"
         >
           <DxEditing
-            :allow-updating="true"
-            :allow-deleting="true"
-            :allow-adding="true"
+            :allow-updating="false"
+            :allow-deleting="false"
+            :allow-adding="false"
             :use-icons="true"
             mode="popup"
           />
           <DxFilterRow :visible="false" />
           <DxHeaderFilter :visible="false" />
-          <DxSelection mode="single" />
+          <DxSelection mode="multiple" />
+          
           <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-          <DxColumn data-field="report_date" caption="Report Date" :width="90" alignment="center" />
+          <DxColumn data-field="fr_no" caption="FR No." :width="90" alignment="center" />
+          <DxColumn data-field="tag_no" caption="Tag No." :width="100" alignment="center" />
           <DxColumn data-field="platform" caption="Platform" :width="90" alignment="center" />
-          <DxColumn data-field="asset_type" caption="Asset Type" :width="80" alignment="center" />
-          <DxColumn data-field="tag_no" caption="Tag No." :width="150" alignment="center" />
-          <DxColumn data-field="activites" caption="Activites" :min-width="150" alignment="center" />
+          <DxColumn data-field="unit" caption="Unit" :width="80" alignment="center" />
+          <DxColumn data-field="equipment_type" caption="Equipment Type" :width="90" alignment="center" />
           <DxColumn data-field="detail" caption="Detail" :min-width="300" alignment="center" />
-
-          <DxColumn type="buttons">
-            <DxButton name="edit" hint="Edit" icon="edit" />
-            <DxButton name="delete" hint="Delete" icon="trash" />
-          </DxColumn>
+          <DxColumn data-field="disc" caption="Disc." :width="90" alignment="center" />
+          <DxColumn data-field="rca_status" caption="RCA Status" :width="80" alignment="center" />
+          <DxColumn data-field="rca_action_status" caption="RCA Action Status" :width="80" alignment="center" />
 
           <!-- Configuration goes here -->
           <!-- <DxFilterRow :visible="true" /> -->
@@ -58,6 +64,7 @@
 </template> 
 
 <script>
+/* eslint-disable */ 
 //API
 import axios from "/axios.js";
 import moment from "moment";
@@ -72,6 +79,8 @@ import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
 // import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
+// import DxSelectBox from 'devextreme-vue/select-box';
+// import { DxCheckBox } from 'devextreme-vue/check-box';
 import {
   DxDataGrid,
   DxSearchPanel,
@@ -80,12 +89,12 @@ import {
   DxScrolling,
   DxColumn,
   DxExport,
-  // DxToolbar,
+  DxToolbar,
   DxHeaderFilter,
   DxSelection,
   DxEditing,
   DxFilterRow,
-  DxButton,
+  DxItem,
   // DxLookup,
   // DxRequiredRule,
   // DxFormItem,
@@ -104,22 +113,23 @@ export default {
     DxScrolling,
     DxColumn,
     DxExport,
-    // DxToolbar,
+    DxToolbar,
     DxHeaderFilter,
     DxSelection,
     // DxForm,
-    // DxItem,
+    DxItem,
     DxEditing,
     DxFilterRow,
-    DxButton,
     // DxAddRowButton,
     // DxLookup,
     // DxRequiredRule,
-    // DxFormItem
+    // DxCheckBox,
+    // DxFormItem,
+
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "PENDING APPROVAL (no figma)",
+      subpageName: "PENDING APPROVAL",
       subpageInnerName: null,
     });
     if (this.$store.state.status.server == true) {
@@ -127,33 +137,55 @@ export default {
         {
           id: 1,
           id_item: 1,
-          report_date: '13 Oct 2023',
+          fr_no: 'FR-00001',
+          tag_no: 'PCV-03302',
           platform: 'MDPP',
-          asset_type: 'Flowline',
-          tag_no: 'V-0111',
-          activites: 'Filter Coalescing Crack Detection',
-          detail: 'Complete crack monitoring for ...'
+          unit: '-',
+          equipment_type: 'Choke Valve',
+          detail: 'Phase 3 Choke valve damage issue (MDF01/05, AMA04/12, MTA10)',
+          disc: 'INST',
+          rca_status: 'Done',
+          rca_action_status: 'Done'
         },
         {
           id: 2,
           id_item: 2,
-          report_date: '10 Oct 2023',
-          platform: 'MDA',
-          asset_type: 'Pressure Vessel',
-          tag_no: 'MDA-05',
-          activites: 'Sand Erosion Integrity Management',
-          detail: 'Detect sign of sand erosion ...'
+          fr_no: 'FR-00002',
+          tag_no: 'LSB-PP-200',
+          platform: 'MDPP',
+          unit: 'V-0331',
+          equipment_type: 'Instrument and Utility',
+          detail: 'Gas Leak from ¾” drain valve upstream of PCV-03302​',
+          disc: 'MECH',
+          rca_status: 'Done',
+          rca_action_status: 'Done'
         },
         {
           id: 3,
           id_item: 3,
-          report_date: '23 Sep 2023',
+          fr_no: 'FR-00003',
+          tag_no: 'UPS-PP-230',
           platform: 'MDPP',
-          asset_type: 'Flare',
-          tag_no: '-',
-          activites: 'Drone inspection on Flare platform',
-          detail: 'As inspection team got request ...'
+          unit: 'Low Voltage',
+          equipment_type: 'Switch Board',
+          detail: 'ESD-2 activated due to lost power supply and TG-2 and TG-3 tripped and lost power supply.​',
+          disc: 'ELEC',
+          rca_status: 'Ongoing',
+          rca_action_status: 'Done'
         },
+        {
+          id: 4,
+          id_item: 4,
+          fr_no: 'FR-00004',
+          tag_no: 'PCV-03302',
+          platform: 'MDPP',
+          unit: 'BC1',
+          equipment_type: 'UPS',
+          detail: 'Variable Inlet Guide Vane (VIGV) Position Controller Shutdown​',
+          disc: 'INST',
+          rca_status: 'Done',
+          rca_action_status: 'Done'
+        }
       ];
       // this.FETCH_INSP_RECORD();
     }
@@ -163,17 +195,53 @@ export default {
       testList: null,
       inspRecordList: {},
       campaigeList: {},
+      statusList: [
+        { id: 1, code: "Fench" },
+        { id: 2, code: "Piping" },
+        { id: 3, code: "Pressure Vessel" },
+        { id: 4, code: "Bridge" },
+        { id: 5, code: "Lifting Cane" }
+      ],
       dataGridAttributes: {
         class: "data-grid-style"
       },
-      inspDateInputOptions: { placeholder: "Select date" },
-      projectNoInputOptions: { placeholder: "Enter project no" },
-      reportNoInputOptions: { placeholder: "Enter report no" },
-      remarkInputOptions: { placeholder: "Enter remark" }
+      ExpDateInputOptions: { placeholder: "Select date" },
+      GPIDateInputOptions: { placeholder: "Select date" },
+      GPINoInputOptions: { placeholder: "Enter GPI No." },
+      MainWorkCtrInputOptions: { placeholder: "Enter main workCtr" },
+      SeverityInputOptions: { placeholder: "Enter severity" },
+      platformNoInputOptions: { placeholder: "Enter platform" },
+      conmmentInputOptions: { placeholder: "Enter remark" },
+      tagNoInputOptions: { placeholder: "Enter tag No." },
+      actionInputOptions: { placeholder: "Enter action"},
+      selected_line: [],
+      selectedIds: [],
+      selectionOptions: {
+        mode: 'multiple',
+        onSelectionChanged: this.onSelectionChanged,
+      },
     };
   },
-  computed: {},
+  computed: {
+  },
   methods: {
+    onSelectionChanged(e) {
+      this.selectedIds = e.selectedRowsData.map(row => row.id);
+      // console.log('Selected IDs:', this.selectedIds);
+      // console.log("length", this.selectedIds.length);
+      const exportBtn = document.querySelector(".export-btn");
+      if (this.selectedIds.length === 0) {
+        exportBtn.classList.remove('selected');
+      } else {
+        exportBtn.classList.add('selected');
+      }
+    },
+    exportData() {
+      console.log('Exporting data...');
+    },
+    SAP(){
+      console.log("SAP YO")
+    },
     EXPORT_DATA(e) {
       const workbook = new Workbook();
       const worksheet = workbook.addWorksheet("Projects");
@@ -296,6 +364,35 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.filter-report {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 10px;
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 50px;
+  -webkit-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+
+  h5 {
+    margin: 0;
+  }
+  .field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
 .page-container {
   width: 100%;
   height: 100%;
@@ -364,5 +461,36 @@ export default {
 }
 .info-tab-display {
   display: flex;
+}
+
+.button-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.4rem;
+  .export-btn {
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 10px 8px;
+    gap: 1rem;
+    font-size: 14px;
+    width: 163px;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}
+
+.export-btn.selected {
+  background-color: #1D9531;
+  &:hover{
+    background-color: #71c47f;
+  }
 }
 </style>
