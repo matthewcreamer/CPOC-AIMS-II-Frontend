@@ -355,7 +355,7 @@ export default {
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "FAILURE REPORT",
+      subpageName: "FR NUMBER: ",
       subpageInnerName: null,
     });
     this.testList1 = [
