@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <ViewFR v-if="current_view == 0" @currentView="(n) => current_view = n" />
@@ -8,8 +9,8 @@
 <script>
 
 //Structures
-import ViewFR from "@/views/Applications/GPI/GPIRecord/View.vue"
-import AddFR from "@/views/Applications/GPI/GPIRecord/Add.vue"
+import ViewFR from "@/views/Applications/GPI/PendingApproval/View.vue"
+import AddFR from "@/views/Applications/GPI/PendingApproval/Add.vue"
 
 export default {
   name: "inspection-record",

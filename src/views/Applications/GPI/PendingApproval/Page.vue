@@ -90,35 +90,42 @@
         <DxColumn data-field="action" caption="Action" alignment="center" :editor-options="actionInputOptions">
         </DxColumn> -->
 
-        
+        <!-- <DxToolbar>
+          <DxItem location="after" template="exportData"/>
+          <DxItem location="after" template="sssss"/>
+        </DxToolbar>
 
-          <!-- Configuration goes here -->
-          <!-- <DxFilterRow :visible="true" /> -->
-          <DxScrolling mode="standard" />
-          <DxSearchPanel :visible="true" />
-          <DxPaging :page-size="10" :page-index="0" />
-          <DxPager
-            :show-page-size-selector="true"
-            :allowed-page-sizes="[10, 20, 30]"
-            :show-navigation-buttons="true"
-            :show-info="false"
-            info-text="Page {0} of {1} ({2} items)"
-          />
-          <DxExport :enabled="false" />
+        <template #exportData>
+          <button @click="exportData" class="export-btn">
+            SAP Validate
+          </button>
+        </template>
 
+        <template #sssss>
+          <button @click="exportData" class="export-btn">
+            SAP Validate
+          </button>
+        </template> -->
 
-          <!-- <DxToolbar>
-            <DxItem location="after" template="exportData"/>
-          </DxToolbar>
+        <!-- Configuration goes here -->
+        <!-- <DxFilterRow :visible="true" /> -->
+        <DxScrolling mode="standard" />
+        <DxSearchPanel :visible="true" />
+        <DxPaging :page-size="10" :page-index="0" />
+        <DxPager
+          :show-page-size-selector="true"
+          :allowed-page-sizes="[10, 20, 30]"
+          :show-navigation-buttons="true"
+          :show-info="false"
+          info-text="Page {0} of {1} ({2} items)"
+        />
+        <DxExport :enabled="false" />
 
-          <template #exportData>
-            <button @click="exportData" class="export-btn">
-              SAP Validate
-            </button>
-          </template> -->
 
           
-        </DxDataGrid>
+
+          
+      </DxDataGrid>
 
 
         <!-- <div class="filter-report">
@@ -153,6 +160,7 @@
 </template> 
 
 <script>
+/* eslint-disable */ 
 //API
 import axios from "/axios.js";
 import moment from "moment";
@@ -177,12 +185,12 @@ import {
   DxScrolling,
   DxColumn,
   DxExport,
-  // DxToolbar,
+  DxToolbar,
   DxHeaderFilter,
   DxSelection,
   DxEditing,
   DxFilterRow,
-  // DxItem,
+  DxItem,
   // DxLookup,
   // DxRequiredRule,
   // DxFormItem,
@@ -201,11 +209,11 @@ export default {
     DxScrolling,
     DxColumn,
     DxExport,
-    // DxToolbar,
+    DxToolbar,
     DxHeaderFilter,
     DxSelection,
     // DxForm,
-    // DxItem,
+    DxItem,
     DxEditing,
     DxFilterRow,
     // DxAddRowButton,
