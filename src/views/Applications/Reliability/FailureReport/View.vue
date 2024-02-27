@@ -15,6 +15,7 @@
           :word-wrap-enabled="true"
           :column-auto-width="true"
           @init-new-row="() => { $emit('currentView', 1); }"
+          @row-click="() => { $emit('currentView', 2, 1); }"
         >
           <DxEditing
             :allow-updating="false"

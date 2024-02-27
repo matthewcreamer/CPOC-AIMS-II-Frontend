@@ -1,7 +1,8 @@
 <template>
   <div>
-    <ViewFR v-if="current_view == 0" @currentView="(n) => current_view = n" />
-    <AddFR v-if="current_view == 1" @currentView="(n) => current_view = n" />
+    <ViewFR v-if="current_view == 0" @currentView="(view) => current_view = view" />
+    <AddFR v-if="current_view == 1" @currentView="(view) => current_view = view" />
+    <EditFR v-if="current_view == 2" @currentView="(view, row) => SET_EDIT(view, row)" />
   </div>
 </template> 
 
@@ -10,12 +11,14 @@
 //Structures
 import ViewFR from "@/views/Applications/Reliability/FailureReport/View.vue"
 import AddFR from "@/views/Applications/Reliability/FailureReport/Add.vue"
+import EditFR from "@/views/Applications/Reliability/FailureReport/Edit.vue"
 
 export default {
   name: "inspection-record",
   components: {
     ViewFR,
-    AddFR
+    AddFR,
+    EditFR
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -25,12 +28,16 @@ export default {
   },
   data() {
     return {
-      current_view: 1
+      current_view: 0,
+      edit_row: 0
     };
   },
   computed: {},
   methods: {
-    
+    SET_EDIT(view, row) {
+      this.current_view = view;
+      this.edit_row = row;
+    }
   }
 };
 </script>
