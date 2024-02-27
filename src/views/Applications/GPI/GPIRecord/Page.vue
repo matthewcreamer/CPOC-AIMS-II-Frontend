@@ -111,7 +111,6 @@
 </template> 
 
 <script>
- /* eslint-disable */ 
 //API
 import axios from "/axios.js";
 import moment from "moment";
@@ -125,7 +124,7 @@ import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
 import { DxItem } from "devextreme-vue/form";
-import DXButton from "devextreme-vue/button";
+// import DXButton from "devextreme-vue/button";
 
 import {
   DxDataGrid,
@@ -135,7 +134,7 @@ import {
   DxScrolling,
   DxColumn,
   DxExport,
-  DxToolbar,
+  // DxToolbar,
   DxEditing,
   DxLookup,
   DxRequiredRule,
@@ -158,7 +157,7 @@ export default {
     DxScrolling,
     DxColumn,
     DxExport,
-    DxToolbar,
+    // DxToolbar,
     DxForm,
     DxItem,
     DxEditing,
@@ -167,7 +166,7 @@ export default {
     DxFilterRow,
     DxHeaderFilter,
     DxButton,
-    DXButton,
+    // DXButton,
     // DxFormItem,
   },
   created() {

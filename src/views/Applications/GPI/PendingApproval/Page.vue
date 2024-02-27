@@ -1,7 +1,9 @@
 <template>
   <div class="page-container">
     <div class="button-container">
-        <button class="export-btn" v-on:click="SAP">
+        <button class="export-btn" 
+          v-on:click="SAP"
+        >
             SAP Validate
         </button>
     </div>
@@ -11,45 +13,40 @@
           id="data-grid-list"
           key-expr="id"
           :data-source="testList"
-          :selected-row-keys="selected_line_id"
-          :selection="{ mode: 'single' }"
-            :hover-state-enabled="true"
-            :allow-column-reordering="true"
-            :show-borders="true"
-            :show-row-lines="true"
-            :row-alternation-enabled="false"
-            :word-wrap-enabled="true"
-            @selection-changed="ON_SELECT"
-            @cell-prepared="onCellPrepared"
+          :selection="selectionOptions"
+          @selectionChanged="onSelectionChanged"
+          :hover-state-enabled="true"
+          :allow-column-reordering="true"
+          :show-borders="true"
+          :show-row-lines="true"
+          :row-alternation-enabled="false"
+          :word-wrap-enabled="true"
         >
           <DxEditing
             :allow-updating="false"
             :allow-deleting="false"
+            :allow-adding="false"
             :use-icons="true"
-            mode="form"
+            mode="popup"
           />
           <DxFilterRow :visible="false" />
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="multiple" />
           
-          <DxForm label-location="top">
-            <DxItem :col-count="3" :col-span="2" item-type="group">
-              <DxItem data-field="item_no" :col-span="1" />
-              <DxItem data-field="gpi_no" :col-span="1" />
-              <DxItem data-field="platform_type" :col-span="1" />
-              <DxItem data-field="id_asset_type" :col-span="1" />
-              <DxItem data-field="tag_no" :col-span="1" />
-              <DxItem data-field="gpi_date" :col-span="1" />
-              <DxItem data-field="exp_date" :col-span="1" />
-              <DxItem data-field="main_work_ctr" :col-span="1" />
-              <DxItem data-field="severity" :col-span="1" />
-              <DxItem data-field="comment" :col-span="1" />
-            </DxItem>
-          </DxForm>
-          <DxSelection mode="single" />
+          <!-- <DxColumn data-field="item_no" caption="Check" :width="130" alignment="center" /> -->
+          <DxColumn data-field="gpi_no" caption="GPI No." :width="130" alignment="center" />
+          <DxColumn data-field="platform_type" caption="Platform" :width="130" alignment="center" />
+          <DxColumn data-field="id_asset_type" caption="Asset Type" :width="130" alignment="center" />
+          <DxColumn data-field="tag_no" caption="Tag No." :min-width="300" alignment="center" />
+          <DxColumn data-field="gpi_date" caption="GPI Date" :min-width="200" alignment="center" />
+          <DxColumn data-field="exp_date" caption="Expected Finish Date" :min-width="200" alignment="center" />
+          <DxColumn data-field="main_work_ctr" caption="Main WorkCtr" :min-width="200" alignment="center" />
+          <DxColumn data-field="severity" caption="Severity" :min-width="200" alignment="center" />
+          <DxColumn data-field="comment" caption="Action" :min-width="300" alignment="center" />
 
 
-        <DxColumn data-field="item_no" caption="Check" alignment="center" :width="60" :editor-options="GPINoInputOptions">
+
+        <!-- <DxColumn data-field="item_no" caption="Check" alignment="center" :width="60" :editor-options="GPINoInputOptions">
           <DxRequiredRule />
         </DxColumn>
 
@@ -70,7 +67,6 @@
 
         <DxColumn data-field="tag_no" caption="Tag No." alignment="center" :editor-options="tagNoInputOptions">
           <DxRequiredRule />
-          <!-- <DxLookup :data-source="statusList" display-expr="integrity_status" value-expr="id" /> -->
         </DxColumn>
 
         <DxColumn data-field="gpi_date" caption="GPI Date" data-type="date" format="dd MMM yyyy" alignment="center"
@@ -92,16 +88,9 @@
         </DxColumn>
 
         <DxColumn data-field="action" caption="Action" alignment="center" :editor-options="actionInputOptions">
-        </DxColumn>
+        </DxColumn> -->
 
-          <!-- <DxToolbar>
-            <DxItem location="after" template="addRowTemplate" />
-          </DxToolbar>
-          
-
-          <template #addRowTemplate>
-            <DxAddRowButton icon="plus" text="Add New" />
-          </template> -->
+        
 
           <!-- Configuration goes here -->
           <!-- <DxFilterRow :visible="true" /> -->
@@ -116,7 +105,48 @@
             info-text="Page {0} of {1} ({2} items)"
           />
           <DxExport :enabled="false" />
+
+
+          <!-- <DxToolbar>
+            <DxItem location="after" template="exportData"/>
+          </DxToolbar>
+
+          <template #exportData>
+            <button @click="exportData" class="export-btn">
+              SAP Validate
+            </button>
+          </template> -->
+
+          
         </DxDataGrid>
+
+
+        <!-- <div class="filter-report">
+          <h5>FILTER REPORT</h5>
+          <div class="field">
+            <DxCheckBox
+              :value="true"
+              :element-attr="checkedLabel"
+            />
+            <span>Inspection</span>
+          </div>
+          <div class="field">
+            <DxCheckBox
+              :value="true"
+              :element-attr="checkedLabel"
+            />
+            <span>Anomaly</span>
+          </div>
+          <div class="field">
+            <DxCheckBox
+              :value="true"
+              :element-attr="checkedLabel"
+            />
+            <span>Highlight Activities</span>
+          </div>
+        </div> -->
+
+        
       </div>
     </div>
   </div>
@@ -137,6 +167,8 @@ import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
 // import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
+// import DxSelectBox from 'devextreme-vue/select-box';
+// import { DxCheckBox } from 'devextreme-vue/check-box';
 import {
   DxDataGrid,
   DxSearchPanel,
@@ -150,11 +182,11 @@ import {
   DxSelection,
   DxEditing,
   DxFilterRow,
-  DxItem,
-  DxLookup,
-  DxRequiredRule,
+  // DxItem,
+  // DxLookup,
+  // DxRequiredRule,
   // DxFormItem,
-  DxForm
+  // DxForm
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -172,14 +204,16 @@ export default {
     // DxToolbar,
     DxHeaderFilter,
     DxSelection,
-    DxForm,
-    DxItem,
+    // DxForm,
+    // DxItem,
     DxEditing,
     DxFilterRow,
     // DxAddRowButton,
-    DxLookup,
-    DxRequiredRule,
-    // DxFormItem
+    // DxLookup,
+    // DxRequiredRule,
+    // DxCheckBox,
+    // DxFormItem,
+
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -269,25 +303,29 @@ export default {
       tagNoInputOptions: { placeholder: "Enter tag No." },
       actionInputOptions: { placeholder: "Enter action"},
       selected_line: [],
-
+      selectedIds: [],
+      selectionOptions: {
+        mode: 'multiple',
+        onSelectionChanged: this.onSelectionChanged,
+      },
     };
   },
   computed: {
-    selected_line_id() {
-      return this.selected_line.map((e) => e.id_line)
-    },
   },
   methods: {
-    onCellPrepared(e) {
-      if(e.rowType === "data" && e.column.caption === "Status") {
-          console.log(e);
-          e.cellElement.style.backgroundColor = this.GET_INTERVAL_COLOR(e.displayValue);
-          e.cellElement.style.color = "#fff";
-          e.cellElement.style.textTransform = "uppercase";
+    onSelectionChanged(e) {
+      this.selectedIds = e.selectedRowsData.map(row => row.id);
+      // console.log('Selected IDs:', this.selectedIds);
+      // console.log("length", this.selectedIds.length);
+      const exportBtn = document.querySelector(".export-btn");
+      if (this.selectedIds.length === 0) {
+        exportBtn.classList.remove('selected');
+      } else {
+        exportBtn.classList.add('selected');
       }
     },
-    ON_SELECT({selectedRowsData}) {
-      this.selected_line = selectedRowsData
+    exportData() {
+      console.log('Exporting data...');
     },
     SAP(){
       console.log("SAP YO")
@@ -414,6 +452,35 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/main.scss";
 
+.filter-report {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 10px;
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 50px;
+  -webkit-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+  box-shadow: 0px 10px 28px -7px rgba(0,0,0,0.3);
+
+  h5 {
+    margin: 0;
+  }
+  .field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
 .page-container {
   width: 100%;
   height: 100%;
@@ -485,25 +552,33 @@ export default {
 }
 
 .button-container {
-    padding: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.4rem;
-    button {
-        cursor: pointer;
-        display: inline-flex;
-        justify-content: space-between;
-        border: 1px solid lightgray;
-        background-color: transparent;
-        border-radius: 4px;
-        padding: 10px 8px;
-        gap: 1rem;
-        font-size: 14px;
-        width: 163px;
-        &:hover {
-            background-color: lightgray;
-        }
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.4rem;
+  .export-btn {
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: space-between;
+    border: 1px solid lightgray;
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 10px 8px;
+    gap: 1rem;
+    font-size: 14px;
+    width: 163px;
+    &:hover {
+      background-color: lightgray;
     }
+  }
+}
+
+.export-btn.selected {
+  background-color: #1D9531;
+  &:hover{
+    background-color: #71c47f;
+  }
 }
 </style>
