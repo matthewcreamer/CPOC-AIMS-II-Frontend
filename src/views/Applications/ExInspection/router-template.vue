@@ -67,6 +67,38 @@ export default {
           },
           name: 'List of Ex-Inspection'
         },
+        {
+          url: '/ex-information',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Page of Ex-information'
+        },
+        {
+          url: '/ex-inspectionXX',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Page of Ex-Inspection'
+        },
+        {
+          url: '/ex-checklist',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Page of Ex-checklist'
+        },
+        {
+          url: '/ex-picture',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Page of Ex-picture'
+        },
       ]
     };
   },

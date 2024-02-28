@@ -5,134 +5,60 @@
         <h3 style="grid-column: span 2">New Ex-Inspection List</h3>
 
         <div class="input-wrapper">
-          <span>Tag No.</span>
+          <span>Inspection Date</span>
           <div class="text">
-            <DxTextBox
-              placeholder="Enter Tag No."
+            <DxDateBox
+              placeholder="Select Inspection Date"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Equipment Description</span>
+          <span>Campaign</span>
           <div class="text">
-            <DxTextBox
-              placeholder="Select Equipment Description"
+            <DxSelectBox
+              placeholder="Select Campaign"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Location</span>
+          <span>Checklist Status</span>
           <div class="select">
             <DxSelectBox
               :items="testList"
-              placeholder="Select Location"
+              placeholder="Select Checklist Status"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Specific Location</span>
+          <span>Picture Log Status</span>
           <div class="select">
             <DxSelectBox
               :items="testList"
-              placeholder="Enter Specific Location"
+              placeholder="Select Picture Log Status"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Zone</span>
+          <span>Integrity Status</span>
           <div class="input">
-            <DxTextBox
-              placeholder="Select Zone"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Gas Group</span>
-          <div class="input">
-            <DxDateBox
-              placeholder="Select Gas Group"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Temp class</span>
-          <div class="select">
-            <DxDateBox
-              :items="testList"
-              placeholder="Select Temp class"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Discipline</span>
-          <div class="select">
             <DxSelectBox
-              :items="testList"
-              placeholder="Select Discipline"
+              placeholder="Select Integrity Status"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>S/N I</span>
-          <div class="select">
-            <DxTextBox
-              placeholder="Enter S/N I"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>S/N II</span>
+          <span>Note</span>
           <div class="input">
             <DxTextBox
-              placeholder="Enter S/N II"
+              placeholder="Enter Note"
             />
           </div>
         </div>
-
-        <div class="input-wrapper">
-          <span>Main Equipment</span>
-          <div class="input">
-            <DxTextBox
-              placeholder="Enter Main Equipment"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Associated Equipment</span>
-          <div class="input">
-            <DxTextBox
-              placeholder="Enter Associated Equipment"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Remark</span>
-          <div class="input">
-            <DxTextBox
-              placeholder="Enter Remark"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Picture</span>
-          <input type="file" ref="fileInput" @change="handleFileChange" />
-        </div>
-        <div v-if="selectedFile" style="grid-column: span 2; margin: auto;">
-          <img :src="imageUrl" alt="Selected Picture" width="300" />
-        </div>
-
 
         <button class="create" @click="$emit('currentView', 0)">Create</button>
         <button @click="$emit('currentView', 0)">Cancel</button>
