@@ -3,6 +3,7 @@
     <ViewFR v-if="current_view == 0" @currentView="(view) => current_view = view" />
     <AddFR v-if="current_view == 1" @currentView="(view) => current_view = view" />
     <EditFR v-if="current_view == 2" @currentView="(view, row) => SET_EDIT(view, row)" />
+    <TaskFR v-if="current_view == 3" @currentView="(view) => current_view = view" />
   </div>
 </template> 
 
@@ -12,13 +13,15 @@
 import ViewFR from "@/views/Applications/IAMP/Inspection/View.vue"
 import AddFR from "@/views/Applications/IAMP/Inspection/Add.vue"
 import EditFR from "@/views/Applications/IAMP/Inspection/Edit.vue"
+import TaskFR from "@/views/Applications/IAMP/Inspection/Task.vue"
 
 export default {
   name: "inspection-record",
   components: {
     ViewFR,
     AddFR,
-    EditFR
+    EditFR,
+    TaskFR
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -28,7 +31,7 @@ export default {
   },
   data() {
     return {
-      current_view: 1,
+      current_view: 3,
       edit_row: 0
     };
   },

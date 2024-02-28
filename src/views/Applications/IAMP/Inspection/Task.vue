@@ -14,7 +14,6 @@
           :row-alternation-enabled="false"
           :word-wrap-enabled="true"
           :column-auto-width="true"
-          @row-click="() => { $emit('currentView', 3); }"
         >
           <DxEditing
             :allow-updating="false"
@@ -27,21 +26,23 @@
           <DxHeaderFilter :visible="false" />
           <DxSelection mode="single" />
           <DxColumn data-field="id_item" caption="Item" :min-width="70" alignment="center" />
+          <DxColumn data-field="work_order_number" caption="Work Order Number" :min-width="90" alignment="center" />
           <DxColumn data-field="platform" caption="Platform" :min-width="90" alignment="center" />
-          <DxColumn data-field="tag_no" caption="Tag No." :min-width="200" alignment="center" />
-          <DxColumn data-field="risk_ranking" caption="Risk Ranking" :min-width="80" alignment="center" />
-          <DxColumn data-field="integrity_status" caption="Integrity Status" :min-width="90" alignment="center" />
+          <DxColumn data-field="asset" caption="Asset" :min-width="120" alignment="center" />
+          <DxColumn data-field="tag_no" caption="Tag No." :min-width="140" alignment="center" />
           <DxColumn data-field="inspection_type" caption="Inspection Type" :min-width="90" alignment="center" />
-          <DxColumn data-field="last_inspection_date" caption="Last Inspection Date" :min-width="90" alignment="center" />
           <DxColumn data-field="due_inspection_date" caption="Due Inspection Date" :min-width="80" alignment="center" />
-          <DxColumn data-field="inspection_work_order" caption="Inspection Work Order" :min-width="80" alignment="center" />
-          <DxColumn :width="90" alignment="center" cell-template="action-cell-template" />
+          <DxColumn data-field="plan_inspection_date" caption="Plan Inspection Date" :min-width="80" alignment="center" />
+          <DxColumn data-field="status" caption="Status" :min-width="80" alignment="center" />
+          <DxColumn data-field="status" :width="90" alignment="center" cell-template="action-cell-template" />
 
-          <template #action-cell-template="{  }">
+          <template #action-cell-template="{ data }">
             <div class="action-wrapper">
-              <span @click="$emit('currentView', 1)" class="create-task">CREATE TASK</span>
+              <penSvg class="penSvg" />
+              <trashSvg v-if="data.value != 'Completed'" class="trashSvg" />
             </div>
           </template>
+
           <DxScrolling mode="standard" />
           <DxSearchPanel :visible="true" />
           <DxPaging :page-size="10" :page-index="0" />
@@ -66,6 +67,8 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import penSvg from "@/components/svg/pen-svg.vue"
+import trashSvg from "@/components/svg/trash-svg.vue"
 
 //DataGrid
 import "devextreme/dist/css/dx.light.css";
@@ -117,7 +120,9 @@ export default {
     // DXButton,
     // DxLookup,
     // DxRequiredRule,
-    // DxFormItem
+    // DxFormItem,
+    penSvg,
+    trashSvg
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -129,122 +134,122 @@ export default {
         {
           id: 1,
           id_item: 1,
+          work_order_number: 'IT-00001',
           platform: 'MDPP',
-          tag_no: '0.5-AI-B2-5092',
-          risk_ranking: 'LOW',
-          integrity_status: 'P6',
+          asset: 'Piping',
+          tag_no: '0.5-CR-B2-4306',
           inspection_type: 'NDE',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '01 Mar 2024',
+          status: 'Completed'
         },
         {
           id: 2,
           id_item: 2,
+          work_order_number: 'IT-00002',
           platform: 'MDPP',
-          tag_no: '0.5-AI-B2-5092',
-          risk_ranking: 'LOW',
-          integrity_status: 'P6',
+          asset: 'Piping',
+          tag_no: '0.5-CR-B2-4306',
           inspection_type: 'VT',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '01 Feb 2024',
+          status: 'Completed'
         },
         {
           id: 3,
           id_item: 3,
+          work_order_number: 'IT-00003',
           platform: 'MDPP',
+          asset: 'Piping',
           tag_no: '0.5-OW-BS1-7892',
-          risk_ranking: 'LOW',
-          integrity_status: 'P6',
           inspection_type: 'NDE',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '10 Feb 2024',
+          status: 'Pending'
         },
         {
           id: 4,
           id_item: 4,
+          work_order_number: 'IT-00004',
           platform: 'MDPP',
+          asset: 'Piping',
           tag_no: '0.5-OW-BS1-7892',
-          risk_ranking: 'LOW',
-          integrity_status: 'P6',
           inspection_type: 'VT',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '01 Mar 2024',
+          status: 'Pending'
         },
         {
           id: 5,
           id_item: 5,
+          work_order_number: 'IT-00005',
           platform: 'MDPP',
-          tag_no: '0.5-OW-C4N-7959',
-          risk_ranking: 'LOW',
-          integrity_status: 'P6',
-          inspection_type: 'NDE',
-          last_inspection_date: '2020',
+          asset: 'Pressure Vessel',
+          tag_no: 'V-0111',
+          inspection_type: 'External',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '01 Mar 2024',
+          status: 'Completed'
         },
         {
           id: 6,
           id_item: 6,
+          work_order_number: 'IT-00006',
           platform: 'MDPP',
+          asset: 'Structure',
           tag_no: '0.5-OW-C4N-7959',
-          risk_ranking: 'LOW',
-          integrity_status: 'P6',
           inspection_type: 'VT',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '14 Feb 2024',
+          status: 'Pending'
         },
         {
           id: 7,
           id_item: 7,
+          work_order_number: 'IT-00007',
           platform: 'MDPP',
+          asset: 'Flowline',
           tag_no: '0.5-OU-A2-5058',
-          risk_ranking: 'LOW',
-          integrity_status: 'P5',
           inspection_type: 'NDE',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '10 Apr 2024',
+          status: 'Pending'
         },
         {
           id: 8,
           id_item: 8,
+          work_order_number: 'IT-00008',
           platform: 'MDPP',
+          asset: 'Flowline',
           tag_no: '0.5-OU-A2-5058',
-          risk_ranking: 'LOW',
-          integrity_status: 'P5',
           inspection_type: 'VT',
-          last_inspection_date: '2020',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '01 Apr 2024',
+          status: 'Pending'
         },
         {
           id: 9,
           id_item: 9,
+          work_order_number: 'IT-00009',
           platform: 'MDPP',
-          tag_no: '0.5-CR-B2-4306',
-          risk_ranking: 'LOW',
-          integrity_status: 'P4',
-          inspection_type: 'NDE',
-          last_inspection_date: '2020',
+          asset: 'Pressure Vessel',
+          tag_no: 'V-0112',
+          inspection_type: 'Internal',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '01 Apr 2024',
+          status: 'Pending'
         },
         {
           id: 10,
           id_item: 10,
+          work_order_number: 'IT-00010',
           platform: 'MDPP',
-          tag_no: '0.5-CR-B2-4306',
-          risk_ranking: 'LOW',
-          integrity_status: 'P4',
-          inspection_type: 'VT',
-          last_inspection_date: '2020',
+          asset: 'Piping',
+          tag_no: '0.5-AI-B2-5092',
+          inspection_type: 'NDE',
           due_inspection_date: '2024',
-          inspection_work_order: '-'
+          plan_inspection_date: '15 May 2024',
+          status: 'Pending'
         },
       ];
       // this.FETCH_INSP_RECORD();
@@ -457,9 +462,31 @@ export default {
 .info-tab-display {
   display: flex;
 }
-.create-task {
-  color: $dexon-primary-green;
-  font-size: 11px;
-  font-weight: 800;
+.action-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.penSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: orange; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.trashSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: red; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 </style>
