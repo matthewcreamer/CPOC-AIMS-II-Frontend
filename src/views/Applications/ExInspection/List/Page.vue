@@ -1,318 +1,37 @@
+
 <template>
-  <div class="page-container">
-    <div class="page-section">
-      <div class="table-wrapper">
-        <DxDataGrid
-          id="data-grid-list"
-          key-expr="id"
-          :data-source="testList"
-          :selection="{ mode: 'single' }"
-          :hover-state-enabled="true"
-          :allow-column-reordering="true"
-          :show-borders="true"
-          :show-row-lines="true"
-          :row-alternation-enabled="false"
-          :word-wrap-enabled="true"
-          :column-auto-width="true"
-        >
-          <DxEditing
-            :allow-updating="false"
-            :allow-deleting="false"
-            :allow-adding="true"
-            :use-icons="true"
-            mode="popup"
-          />
-          <DxFilterRow :visible="false" />
-          <DxHeaderFilter :visible="false" />
-          <DxSelection mode="single" />
-          <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-          <DxColumn data-field="tag_no" caption="Tag No." :width="150" alignment="center" />
-          <DxColumn data-field="equip_desc" caption="Equipment Description" :width="150" alignment="center" />
-          <DxColumn data-field="location" caption="Location" :width="90" alignment="center" />
-          <DxColumn data-field="spec_location" caption="Specific Location" :width="200" alignment="center" />
-          <DxColumn data-field="zone" caption="Zone" :width="90" alignment="center" />
-          <DxColumn data-field="group_gas" caption="Gas Group" :width="90" alignment="center" />
-          <DxColumn data-field="class_temp" caption="Temp Class" :width="90" alignment="center" />
-          <DxColumn data-field="other" caption="other?" alignment="center" />
-          <DxColumn data-field="other" caption="other?" alignment="center" />
-          <DxColumn data-field="other" caption="other?" alignment="center" />
-
-          <!-- <DxToolbar>
-            <DxItem location="after" template="addRowTemplate" />
-          </DxToolbar>
-          
-
-          <template #addRowTemplate>
-            <DxAddRowButton icon="plus" text="Add New" />
-          </template> -->
-
-          <!-- Configuration goes here -->
-          <!-- <DxFilterRow :visible="true" /> -->
-          <DxScrolling mode="standard" />
-          <DxSearchPanel :visible="true" />
-          <DxPaging :page-size="10" :page-index="0" />
-          <DxPager
-            :show-page-size-selector="true"
-            :allowed-page-sizes="[10, 20, 30]"
-            :show-navigation-buttons="true"
-            :show-info="false"
-            info-text="Page {0} of {1} ({2} items)"
-          />
-          <DxExport :enabled="false" />
-        </DxDataGrid>
-      </div>
-    </div>
+  <div>
+    <ViewFR v-if="current_view == 0" @currentView="(n) => current_view = n" />
+    <AddFR v-if="current_view == 1" @currentView="(n) => current_view = n" />
   </div>
 </template> 
 
 <script>
-//API
-import axios from "/axios.js";
-import moment from "moment";
-
-//Components
-//import VueTabsChrome from "vue-tabs-chrome";
-
-//DataGrid
-import "devextreme/dist/css/dx.light.css";
-import { Workbook } from "exceljs";
-import saveAs from "file-saver";
-import { exportDataGrid } from "devextreme/excel_exporter";
-// import DxAddRowButton from "devextreme-vue/button";
-// import { DxItem } from "devextreme-vue/form";
-import {
-  DxDataGrid,
-  DxSearchPanel,
-  DxPaging,
-  DxPager,
-  DxScrolling,
-  DxColumn,
-  DxExport,
-  // DxToolbar,
-  DxHeaderFilter,
-  DxSelection,
-  DxEditing,
-  DxFilterRow,
-  // DxLookup,
-  // DxRequiredRule,
-  // DxFormItem,
-  // DxForm
-} from "devextreme-vue/data-grid";
 
 //Structures
+import ViewFR from "@/views/Applications/ExInspection/List/View.vue"
+import AddFR from "@/views/Applications/ExInspection/List/Add.vue"
 
 export default {
   name: "inspection-record",
   components: {
-    DxDataGrid,
-    DxSearchPanel,
-    DxPaging,
-    DxPager,
-    DxScrolling,
-    DxColumn,
-    DxExport,
-    // DxToolbar,
-    DxHeaderFilter,
-    DxSelection,
-    // DxForm,
-    // DxItem,
-    DxEditing,
-    DxFilterRow,
-    // DxAddRowButton,
-    // DxLookup,
-    // DxRequiredRule,
-    // DxFormItem
+    ViewFR,
+    AddFR
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "LIST OF INSPECTION",
+      subpageName: "FAILURE REPORT",
       subpageInnerName: null,
     });
-    if (this.$store.state.status.server == true) {
-      this.testList = [
-        {
-          id: 1,
-          id_item: 1,
-          tag_no: 'NA-PP-252',
-          equip_desc: 'NAV. LIGHT',
-          location: 'MAIN',
-          spec_location: 'MERCURY WASHING BAY',
-          zone: 'NHA',
-          group_gas: 'NHA',
-          class_temp: 'NHA',
-          other: ' . . . ',
-        },
-        {
-          id: 1,
-          id_item: 2,
-          tag_no: 'NAJB-250-04',
-          equip_desc: 'JUNCTION BOX',
-          location: 'MAIN',
-          spec_location: 'MERCURY WASHING BAY',
-          zone: 'NHA',
-          group_gas: 'NHA',
-          class_temp: 'NHA',
-          other: ' . . . ',
-        },
-        {
-          id: 1,
-          id_item: 1,
-          tag_no: 'FR-00001',
-          equip_desc: 'PCV-03302',
-          location: 'MAIN',
-          spec_location: 'MERCURY WASHING BAY',
-          zone: 'NHA',
-          group_gas: 'NHA',
-          class_temp: 'NHA',
-          other: ' . . . ',
-        },
-        {
-          id: 1,
-          id_item: 1,
-          tag_no: 'FR-00001',
-          equip_desc: 'PCV-03302',
-          location: 'MAIN',
-          spec_location: 'MERCURY WASHING BAY',
-          zone: 'NHA',
-          group_gas: 'NHA',
-          class_temp: 'NHA',
-          other: ' . . . ',
-        }
-      ];
-      // this.FETCH_INSP_RECORD();
-    }
   },
   data() {
     return {
-      testList: null,
-      inspRecordList: {},
-      campaigeList: {},
-      dataGridAttributes: {
-        class: "data-grid-style"
-      },
-      inspDateInputOptions: { placeholder: "Select date" },
-      projectNoInputOptions: { placeholder: "Enter project no" },
-      reportNoInputOptions: { placeholder: "Enter report no" },
-      remarkInputOptions: { placeholder: "Enter remark" }
+      current_view: 1
     };
   },
   computed: {},
   methods: {
-    EXPORT_DATA(e) {
-      const workbook = new Workbook();
-      const worksheet = workbook.addWorksheet("Projects");
-      exportDataGrid({
-        worksheet: worksheet,
-        component: e.component
-      }).then(function() {
-        workbook.xlsx.writeBuffer().then(function(buffer) {
-          saveAs(
-            new Blob([buffer], { type: "application/octet-stream" }),
-            "inspection_record.xlsx"
-          );
-        });
-      });
-      e.cancel = true;
-    },
-    FETCH_INSP_RECORD() {
-      this.isLoading = true;
-      var id_tag = this.$route.params.id_tag;
-      axios({
-        method: "get",
-        url:
-          "/PipingInspectionRecord/get-piping-ir-by-id-line?id_line=" + id_tag,
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("token"))
-        }
-      })
-        .then(res => {
-          console.log("insp record:");
-          console.log(res);
-          if (res.status == 200 && res.data) {
-            console.log("success");
-            this.inspRecordList = res.data;
-            console.log(this.inspRecordList);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-    CREATE_RECORD(e) {
-      e.data.id_line = this.$route.params.id_tag;
-      e.data.id = 0;
-      e.data.is_active = true;
-      //e.data.inspection_date = moment(e.data.inspection_date).format("L");
-      console.log(e.data);
-      axios({
-        method: "post",
-        url: "/PipingInspectionRecord",
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("token"))
-        },
-        data: e.data
-      })
-        .then(res => {
-          if (res.status == 201) {
-            console.log("create success");
-            this.FETCH_INSP_RECORD();
-          }
-        })
-        .catch(error => {
-          this.$ons.notification.alert(
-            error.code + " " + error.response.status + " " + error.message
-          );
-        })
-        .finally(() => {});
-    },
-    UPDATE_RECORD(e) {
-      e.data.inspection_date = moment(e.data.inspection_date).format("L");
-      console.log(e.data);
-      axios({
-        method: "put",
-        url: "/PipingInspectionRecord/" + e.key,
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("token"))
-        },
-        data: e.data
-      })
-        .then(res => {
-          if (res.status == 204) {
-            console.log("update success");
-            this.FETCH_INSP_RECORD();
-          }
-        })
-        .catch(error => {
-          this.$ons.notification.alert(
-            error.code + " " + error.response.status + " " + error.message
-          );
-        })
-        .finally(() => {});
-    },
-    DELETE_RECORD(e) {
-      axios({
-        method: "delete",
-        url: "/PipingInspectionRecord/" + e.key,
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("token"))
-        }
-      })
-        .then(res => {
-          if (res.status == 204) {
-            console.log("delete success");
-            this.FETCH_INSP_RECORD();
-          }
-        })
-        .catch(error => {
-          this.$ons.notification.alert(
-            error.code + " " + error.response.status + " " + error.message
-          );
-        })
-        .finally(() => {});
-    }
+    
   }
 };
 </script>
@@ -390,3 +109,5 @@ export default {
   display: flex;
 }
 </style>
+
+

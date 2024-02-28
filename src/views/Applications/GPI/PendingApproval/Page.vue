@@ -336,7 +336,12 @@ export default {
       console.log('Exporting data...');
     },
     SAP(){
+      if (this.selectedIds.length === 0) {
+        alert("Please select any line")
+        return
+      }
       console.log("SAP YO")
+
     },
     EXPORT_DATA(e) {
       const workbook = new Workbook();
@@ -568,7 +573,6 @@ export default {
   .export-btn {
     transition: background-color 0.3s ease;
     cursor: pointer;
-    display: inline-flex;
     justify-content: space-between;
     border: 1px solid lightgray;
     background-color: transparent;

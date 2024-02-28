@@ -5,162 +5,134 @@
         <h3 style="grid-column: span 2">New Failure Report</h3>
 
         <div class="input-wrapper">
-          <span>Platform</span>
-          <div class="select">
-            <DxSelectBox
-              :items="testList"
-              placeholder="Select Platform"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Asset Type</span>
-          <div class="select">
-            <DxSelectBox
-              :items="testList"
-              placeholder="Asset Type"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Tag Number</span>
-          <div class="select">
-            <DxSelectBox
-              :items="testList"
-              placeholder="Select Tag Number"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Unit</span>
-          <div class="select">
-            <DxSelectBox
-              :items="testList"
-              placeholder="Enter Unit"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Equipment Type</span>
-          <div class="input">
+          <span>Tag No.</span>
+          <div class="text">
             <DxTextBox
-              placeholder="Enter Equipment Type"
+              placeholder="Enter Tag No."
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Drawing Number</span>
-          <div class="input">
+          <span>Equipment Description</span>
+          <div class="text">
             <DxTextBox
-              placeholder="Enter Drawing Number"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Failure Impact</span>
-          <div class="select">
-            <DxSelectBox
-              :items="testList"
-              placeholder="Select Failure Impact"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Disc.</span>
-          <div class="select">
-            <DxSelectBox
-              :items="testList"
-              placeholder="Select Disc."
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Failure Date</span>
-          <div class="select">
-            <DxDateBox
-              type="date"
-              placeholder="Select Date"
+              placeholder="Select Equipment Description"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
           <span>Location</span>
-          <div class="input">
-            <DxTextBox
-              placeholder="Enter Location"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper" fill>
-          <span>Details</span>
-          <div class="input">
-            <DxTextArea
-              :height="60"
-              :max-length="200"
-              :auto-resize-enabled="true"
-              placeholder="Enter Details"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper" fill>
-          <span>Findings</span>
-          <div class="input">
-            <DxTextArea
-              :height="60"
-              :max-length="200"
-              :auto-resize-enabled="true"
-              placeholder="Enter Findings"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Mitigation</span>
           <div class="select">
             <DxSelectBox
               :items="testList"
-              placeholder="Select Mitigation"
+              placeholder="Select Location"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Production Loss</span>
-          <div class="input">
-            <DxTextBox
-              placeholder="Enter Production Loss"
+          <span>Specific Location</span>
+          <div class="select">
+            <DxSelectBox
+              :items="testList"
+              placeholder="Enter Specific Location"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Environment</span>
+          <span>Zone</span>
           <div class="input">
             <DxTextBox
-              placeholder="Enter Environment"
+              placeholder="Select Zone"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Health and Safety</span>
+          <span>Gas Group</span>
           <div class="input">
-            <DxTextBox
-              placeholder="Enter Health and Safety"
+            <DxDateBox
+              placeholder="Select Gas Group"
             />
           </div>
         </div>
+
+        <div class="input-wrapper">
+          <span>Temp class</span>
+          <div class="select">
+            <DxDateBox
+              :items="testList"
+              placeholder="Select Temp class"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Discipline</span>
+          <div class="select">
+            <DxSelectBox
+              :items="testList"
+              placeholder="Select Discipline"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>S/N I</span>
+          <div class="select">
+            <DxTextBox
+              placeholder="Enter S/N I"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>S/N II</span>
+          <div class="input">
+            <DxTextBox
+              placeholder="Enter S/N II"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Main Equipment</span>
+          <div class="input">
+            <DxTextBox
+              placeholder="Enter Main Equipment"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Associated Equipment</span>
+          <div class="input">
+            <DxTextBox
+              placeholder="Enter Associated Equipment"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Remark</span>
+          <div class="input">
+            <DxTextBox
+              placeholder="Enter Remark"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Picture</span>
+          <input type="file" ref="fileInput" @change="handleFileChange" />
+        </div>
+        <div v-if="selectedFile" style="grid-column: span 2; margin: auto;">
+          <img :src="imageUrl" alt="Selected Picture" width="300" />
+        </div>
+
 
         <button class="create" @click="$emit('currentView', 0)">Create</button>
         <button @click="$emit('currentView', 0)">Cancel</button>
@@ -172,6 +144,7 @@
 </template> 
 
 <script>
+/* eslint-disable */
 //API
 import axios from "/axios.js";
 import moment from "moment";
@@ -187,7 +160,7 @@ import { exportDataGrid } from "devextreme/excel_exporter";
 import DxSelectBox from 'devextreme-vue/select-box';
 import DxTextBox from 'devextreme-vue/text-box';
 import DxDateBox from 'devextreme-vue/date-box';
-import DxTextArea from 'devextreme-vue/text-area';
+// import DxTextArea from 'devextreme-vue/text-area';
 // import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
@@ -207,6 +180,7 @@ import {
   // DxRequiredRule,
   // DxFormItem,
   // DxForm
+  DxFileUploader,
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -232,10 +206,11 @@ export default {
     // DxLookup,
     // DxRequiredRule,
     // DxFormItem,
+    DxFileUploader,
     DxSelectBox,
     DxTextBox,
     DxDateBox,
-    DxTextArea
+    // DxTextArea
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -245,6 +220,8 @@ export default {
   },
   data() {
     return {
+      selectedFile: null,
+      imageUrl: null,
       testList: [],
       inspRecordList: {},
       campaigeList: {},
@@ -259,6 +236,13 @@ export default {
   },
   computed: {},
   methods: {
+    handleFileChange(event) {
+      this.selectedFile = event.target.files[0];
+
+      if (this.selectedFile) {
+        this.imageUrl = URL.createObjectURL(this.selectedFile);
+      }
+    },
     EXPORT_DATA(e) {
       const workbook = new Workbook();
       const worksheet = workbook.addWorksheet("Projects");
@@ -425,7 +409,9 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    
+    input{
+      width: 200px;
+    }
     span {
       font-size: 16px;
     }
