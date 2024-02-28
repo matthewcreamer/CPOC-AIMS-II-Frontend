@@ -430,6 +430,7 @@ export default {
     padding: 5px; 
     background-color: blue; 
     fill: white;
+    border-radius: 5px;
   }
   svg:hover {
     transform: scale(1.1);
@@ -441,6 +442,7 @@ export default {
   background-color: orange; 
   fill: white;
   transition: 0.2s;
+  border-radius: 5px;
 }
 .listSvg:hover {
   transform: scale(1.1);

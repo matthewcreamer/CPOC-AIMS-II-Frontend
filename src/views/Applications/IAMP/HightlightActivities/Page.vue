@@ -16,8 +16,8 @@
           :column-auto-width="true"
         >
           <DxEditing
-            :allow-updating="true"
-            :allow-deleting="true"
+            :allow-updating="false"
+            :allow-deleting="false"
             :allow-adding="true"
             :use-icons="true"
             mode="popup"
@@ -32,11 +32,14 @@
           <DxColumn data-field="tag_no" caption="Tag No." :width="150" alignment="center" />
           <DxColumn data-field="activites" caption="Activites" :min-width="150" alignment="center" />
           <DxColumn data-field="detail" caption="Detail" :min-width="300" alignment="center" />
+          <DxColumn :width="80" alignment="center" cell-template="action-cell-template" />
 
-          <DxColumn type="buttons">
-            <DxButton name="edit" hint="Edit" icon="edit" />
-            <DxButton name="delete" hint="Delete" icon="trash" />
-          </DxColumn>
+          <template #action-cell-template="{  }">
+            <div class="action-wrapper">
+              <penSvg class="penSvg" />
+              <trashSvg class="trashSvg" />
+            </div>
+          </template>
 
           <!-- Configuration goes here -->
           <!-- <DxFilterRow :visible="true" /> -->
@@ -64,13 +67,15 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import penSvg from "@/components/svg/pen-svg.vue"
+import trashSvg from "@/components/svg/trash-svg.vue"
 
 //DataGrid
 import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
-// import DxAddRowButton from "devextreme-vue/button";
+// import DXButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
   DxDataGrid,
@@ -85,11 +90,11 @@ import {
   DxSelection,
   DxEditing,
   DxFilterRow,
-  DxButton,
+  // DxButton,
   // DxLookup,
   // DxRequiredRule,
   // DxFormItem,
-  // DxForm
+  // DxForm,
 } from "devextreme-vue/data-grid";
 
 //Structures
@@ -111,11 +116,14 @@ export default {
     // DxItem,
     DxEditing,
     DxFilterRow,
-    DxButton,
+    // DxButton,
+    // DXButton,
     // DxAddRowButton,
     // DxLookup,
     // DxRequiredRule,
-    // DxFormItem
+    // DxFormItem,
+    penSvg,
+    trashSvg
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -364,5 +372,33 @@ export default {
 }
 .info-tab-display {
   display: flex;
+}
+
+.action-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.penSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: orange; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.trashSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: red; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 </style>
