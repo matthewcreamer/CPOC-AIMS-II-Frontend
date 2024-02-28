@@ -68,7 +68,7 @@ export default {
           name: 'Dashboard'
         },
         {
-          url: '/inspection',
+          url: '/iamp/inspection',
           icon: {
             svg: windowLayoutSvg,
             size: 18
@@ -79,7 +79,7 @@ export default {
           line: true
         },
         {
-          url: '/anomaly-iamp',
+          url: '/iamp/anomaly-iamp',
           icon: {
             svg: exclamationMarkSvg,
             size: 18
@@ -87,7 +87,7 @@ export default {
           name: 'Anomaly'
         },
         {
-          url: '/hightlight-activities',
+          url: '/iamp/hightlight-activities',
           icon: {
             svg: starSvg,
             size: 18
@@ -95,7 +95,7 @@ export default {
           name: 'Highlight Activities'
         },
         {
-          url: '/moc',
+          url: '/iamp/moc',
           icon: {
             svg: starSvg,
             size: 18
@@ -103,7 +103,7 @@ export default {
           name: 'Management Of Change'
         },
         {
-          url: '/inspection-campaign',
+          url: '/iamp/inspection-campaign',
           icon: {
             svg: starSvg,
             size: 18
@@ -111,7 +111,7 @@ export default {
           name: 'Inspection Campaign'
         },
         {
-          url: '/rectification-campaign',
+          url: '/iamp/rectification-campaign',
           icon: {
             svg: starSvg,
             size: 18
@@ -119,7 +119,7 @@ export default {
           name: 'Rectification Campaign'
         },
         {
-          url: '/monthly-report',
+          url: '/iamp/monthly-report',
           icon: {
             svg: calenderSvg,
             size: 18

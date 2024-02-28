@@ -20,7 +20,7 @@ export default {
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
-      subpageName: "FAILURE REPORT",
+      subpageName: "EX-INSPECTION",
       subpageInnerName: null,
     });
   },

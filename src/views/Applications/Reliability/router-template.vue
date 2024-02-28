@@ -64,7 +64,7 @@ export default {
           name: 'Dashboard'
         },
         {
-          url: '/failure-report',
+          url: '/reliability/failure-report',
           icon: {
             svg: windowLayoutSvg,
             size: 18
@@ -72,7 +72,7 @@ export default {
           name: 'Failure Report'
         },
         {
-          url: '/pending-approval',
+          url: '/reliability/pending-approval',
           icon: {
             svg: rewindTimeSvg,
             size: 18
@@ -80,7 +80,7 @@ export default {
           name: 'Pending Approval'
         },
         {
-          url: '/stt',
+          url: '/reliability/stt',
           icon: {
             svg: windowLayoutSvg,
             size: 18
@@ -88,7 +88,7 @@ export default {
           name: 'Short Term Tracking'
         },
         {
-          url: '/ltt',
+          url: '/reliability/ltt',
           icon: {
             svg: windowLayoutSvg,
             size: 18

@@ -146,7 +146,7 @@ export default {
     }
 
     .item:hover,
-    .router-link-active > .item,
+    // .router-link-active > .item,
     .router-link-exact-active > .item {
       background: $dexon-primary-green;
     }

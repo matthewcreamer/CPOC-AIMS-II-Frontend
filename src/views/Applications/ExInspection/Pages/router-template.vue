@@ -52,23 +52,36 @@ export default {
       calname: {},
       routes: [
         {
-          name: 'Information'
-        },
-        {
-          url: '/ex-inspection',
+          url: '/ex-inspection/tag/1/information',
           icon: {
             svg: pieChartSvg,
             size: 18
           },
-          name: 'Dashboard'
+          name: 'Information'
         },
         {
-          url: '/list',
+          url: '/ex-inspection/tag/1/inspection-record',
           icon: {
             svg: windowLayoutSvg,
             size: 18
           },
-          name: 'List of Ex-Inspection'
+          name: 'Inspection Record'
+        },
+        {
+          url: '/ex-inspection/tag/1/checklist',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Checklist'
+        },
+        {
+          url: '/ex-inspection/tag/1/picture-log',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'Picture Log'
         },
       ]
     };

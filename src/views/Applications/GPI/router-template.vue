@@ -66,7 +66,7 @@ export default {
           name: 'Dashboard'
         },
         {
-          url: '/gpi-record',
+          url: '/gpi/gpi-record',
           icon: {
             svg: windowLayoutSvg,
             size: 18
@@ -74,7 +74,7 @@ export default {
           name: 'GPI Record'
         },
         {
-          url: '/gpi-pending-approval',
+          url: '/gpi/gpi-pending-approval',
           icon: {
             svg: rewindTimeSvg,
             size: 18

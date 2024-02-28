@@ -52,9 +52,6 @@ export default {
       calname: {},
       routes: [
         {
-          name: 'Information'
-        },
-        {
           url: '/ex-inspection',
           icon: {
             svg: pieChartSvg,
@@ -63,7 +60,7 @@ export default {
           name: 'Dashboard'
         },
         {
-          url: '/list',
+          url: '/ex-inspection/list',
           icon: {
             svg: windowLayoutSvg,
             size: 18

@@ -65,7 +65,7 @@ export default {
           name: 'Dashboard'
         },
         {
-          url: '/trr',
+          url: '/temporary-repair/trr',
           icon: {
             svg: windowLayoutSvg,
             size: 18
@@ -73,7 +73,7 @@ export default {
           name: 'Temporary Repair Record'
         },
         {
-          url: '/temporary-pending-approval',
+          url: '/temporary-repair/temporary-pending-approval',
           icon: {
             svg: rewindTimeSvg,
             size: 18
