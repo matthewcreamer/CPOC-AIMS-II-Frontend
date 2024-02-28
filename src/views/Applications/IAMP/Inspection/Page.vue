@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      current_view: 3,
+      current_view: 0,
       edit_row: 0
     };
   },

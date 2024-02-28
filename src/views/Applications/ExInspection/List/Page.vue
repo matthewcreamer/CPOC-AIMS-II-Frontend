@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      current_view: 1
+      current_view: 0
     };
   },
   computed: {},
