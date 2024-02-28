@@ -18,8 +18,11 @@
 // import axios from "/axios.js";
 // Structures
 import toolbar from "@/components/app-structures/app-navbar-toolbar.vue";
-import sidebar from "@/components/app-structures/app-sidebar-ex-inspection.vue";
+import sidebar from "@/components/app-structures/app-sidebar.vue";
 import banner from "@/components/app-structures/app-banner.vue";
+
+import pieChartSvg from "@/components/svg/pie-chart-svg.vue"
+import windowLayoutSvg from "@/components/svg/window-layout-svg.vue"
 
 export default {
   name: "router-template-detail",
@@ -49,24 +52,23 @@ export default {
       calname: {},
       routes: [
         {
-          url: '/',
-          icon: '<svg class="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.70784 13.6001C5.85982 15.2903 7.80036 16.4001 10.0001 16.4001C13.5347 16.4001 16.4001 13.5347 16.4001 10.0001C16.4001 6.46547 13.5347 3.6001 10.0001 3.6001C6.46547 3.6001 3.6001 6.46547 3.6001 10.0001V10.8001M10.0001 6.4001V10.0001L12.4001 12.4001" stroke="white" stroke-width="2"/><path d="M5.6001 8.7998L3.6001 10.7998L1.6001 8.7998" stroke="white" stroke-width="1.2"/></svg>',
           name: 'Information'
         },
         {
-          url: '/',
-          icon: '<svg class="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.70784 13.6001C5.85982 15.2903 7.80036 16.4001 10.0001 16.4001C13.5347 16.4001 16.4001 13.5347 16.4001 10.0001C16.4001 6.46547 13.5347 3.6001 10.0001 3.6001C6.46547 3.6001 3.6001 6.46547 3.6001 10.0001V10.8001M10.0001 6.4001V10.0001L12.4001 12.4001" stroke="white" stroke-width="2"/><path d="M5.6001 8.7998L3.6001 10.7998L1.6001 8.7998" stroke="white" stroke-width="1.2"/></svg>',
-          name: 'Inspection Record'
+          url: '/ex-inspection',
+          icon: {
+            svg: pieChartSvg,
+            size: 18
+          },
+          name: 'Dashboard'
         },
         {
-          url: '/',
-          icon: '<svg class="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.70784 13.6001C5.85982 15.2903 7.80036 16.4001 10.0001 16.4001C13.5347 16.4001 16.4001 13.5347 16.4001 10.0001C16.4001 6.46547 13.5347 3.6001 10.0001 3.6001C6.46547 3.6001 3.6001 6.46547 3.6001 10.0001V10.8001M10.0001 6.4001V10.0001L12.4001 12.4001" stroke="white" stroke-width="2"/><path d="M5.6001 8.7998L3.6001 10.7998L1.6001 8.7998" stroke="white" stroke-width="1.2"/></svg>',
-          name: 'Checklist'
-        },
-        {
-          url: '/',
-          icon: '<svg class="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.70784 13.6001C5.85982 15.2903 7.80036 16.4001 10.0001 16.4001C13.5347 16.4001 16.4001 13.5347 16.4001 10.0001C16.4001 6.46547 13.5347 3.6001 10.0001 3.6001C6.46547 3.6001 3.6001 6.46547 3.6001 10.0001V10.8001M10.0001 6.4001V10.0001L12.4001 12.4001" stroke="white" stroke-width="2"/><path d="M5.6001 8.7998L3.6001 10.7998L1.6001 8.7998" stroke="white" stroke-width="1.2"/></svg>',
-          name: 'Picture Log'
+          url: '/list',
+          icon: {
+            svg: windowLayoutSvg,
+            size: 18
+          },
+          name: 'List of Ex-Inspection'
         },
       ]
     };
