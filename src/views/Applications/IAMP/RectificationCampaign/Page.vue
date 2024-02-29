@@ -32,15 +32,18 @@
           <DxColumn data-field="target_completion" caption="Target Completion" :width="130" alignment="center" />
           <DxColumn data-field="execution" caption="Execution" :width="130" alignment="center" />
           <DxColumn data-field="comments" caption="Comments" :min-width="300" alignment="center" />
+          <DxColumn :width="80" alignment="center" cell-template="action-cell-template" />
 
-          <!-- <DxToolbar>
-            <DxItem location="after" template="addRowTemplate" />
-          </DxToolbar>
-          
-
-          <template #addRowTemplate>
-            <DxAddRowButton icon="plus" text="Add New" />
-          </template> -->
+          <template #action-cell-template="{  }">
+            <div class="action-wrapper">
+              <div @click="() => { $emit('currentView', 2, 1); }">
+                <penSvg class="penSvg" />
+              </div>
+              <div>
+                <trashSvg class="trashSvg" />
+              </div>
+            </div>
+          </template>
 
           <!-- Configuration goes here -->
           <!-- <DxFilterRow :visible="true" /> -->
@@ -68,6 +71,8 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import penSvg from "@/components/svg/pen-svg.vue"
+import trashSvg from "@/components/svg/trash-svg.vue"
 
 //DataGrid
 import "devextreme/dist/css/dx.light.css";
@@ -117,7 +122,9 @@ export default {
     // DxAddRowButton,
     // DxLookup,
     // DxRequiredRule,
-    // DxFormItem
+    // DxFormItem,
+    penSvg,
+    trashSvg
   },
   created() {
     this.$store.commit("UPDATE_CURRENT_PAGENAME", {
@@ -376,5 +383,33 @@ export default {
 }
 .info-tab-display {
   display: flex;
+}
+.action-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.penSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: orange; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.trashSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: red; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 </style>
