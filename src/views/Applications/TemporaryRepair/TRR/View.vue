@@ -42,8 +42,12 @@
 
           <template #action-cell-template="{  }">
             <div class="action-wrapper">
-              <penSvg class="penSvg" />
-              <trashSvg class="trashSvg" />
+              <div @click="() => { $emit('currentView', 2, 1); }">
+                <penSvg class="penSvg" />
+              </div>
+              <div>
+                <trashSvg class="trashSvg" />
+              </div>
             </div>
           </template>
           
