@@ -76,6 +76,14 @@ export default {
           name: 'Inspection Record'
         },
         {
+          url: '/iamp/moc',
+          icon: {
+            svg: starSvg,
+            size: 18
+          },
+          name: 'Management Of Change'
+        },
+        {
           line: true
         },
         {
@@ -93,14 +101,6 @@ export default {
             size: 18
           },
           name: 'Highlight Activities'
-        },
-        {
-          url: '/iamp/moc',
-          icon: {
-            svg: starSvg,
-            size: 18
-          },
-          name: 'Management Of Change'
         },
         {
           url: '/iamp/inspection-campaign',
