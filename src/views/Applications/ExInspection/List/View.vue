@@ -15,6 +15,7 @@
           :word-wrap-enabled="true"
           :column-auto-width="true"
           @init-new-row="() => { $emit('currentView', 1); }"
+          @row-click="() => { $router.push({ path: '/ex-inspection/tag/1/information', replace: true }); }"
         >
           <DxEditing
             :allow-updating="false"
