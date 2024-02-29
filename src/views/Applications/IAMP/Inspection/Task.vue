@@ -34,12 +34,16 @@
           <DxColumn data-field="due_inspection_date" caption="Due Inspection Date" :min-width="80" alignment="center" />
           <DxColumn data-field="plan_inspection_date" caption="Plan Inspection Date" :min-width="80" alignment="center" />
           <DxColumn data-field="status" caption="Status" :min-width="80" alignment="center" />
-          <DxColumn data-field="status" :width="90" alignment="center" cell-template="action-cell-template" />
+          <DxColumn name="actions" data-field="status" :width="90" alignment="center" cell-template="action-cell-template" />
 
           <template #action-cell-template="{ data }">
             <div class="action-wrapper">
-              <penSvg class="penSvg" />
-              <trashSvg v-if="data.value != 'Completed'" class="trashSvg" />
+              <div @click="() => { $emit('currentView', 2, 1); }">
+                <penSvg class="penSvg" />
+              </div>
+              <div>
+                <trashSvg v-if="data.value != 'Completed'" class="trashSvg" />
+              </div>
             </div>
           </template>
 

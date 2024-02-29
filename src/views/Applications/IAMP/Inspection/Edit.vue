@@ -17,8 +17,6 @@
         <DxSwitch :value="false"/>
         <span>EDIT MODE</span>
       </div> -->
-      <button @click="$emit('currentView', 0)" class="submit">SUBMIT</button>
-      <button @click="$emit('currentView', 0)" class="draft">DRAFT</button>
       <button @click="$emit('currentView', 0)" class="delete"><trashSvg style="width: 15px; fill: white;" />  DELETE</button>
     </div>
     <div class="page-section">
@@ -28,6 +26,7 @@
           <div class="input">
             <DxTextBox
               value="MDPP"
+              disabled="true"
             />
           </div>
         </div>
@@ -36,22 +35,71 @@
           <span>Asset Type</span>
           <div class="input">
             <DxTextBox
-              value="Chock Valve"
+              value="Piping"
+              disabled="true"
             />
           </div>
         </div>
 
-        <div class="input-wrapper">
+        <div span-2 class="input-wrapper">
           <span>Tag Number</span>
           <div class="input">
             <DxTextBox
-              value="PCV-03302"
+              value="0.5-AI-B2-5092"
+              disabled="true"
             />
           </div>
         </div>
 
         <div class="input-wrapper">
-          <span>Unit</span>
+          <span>Inspection Type</span>
+          <div class="input">
+            <DxTextBox
+              value="NDE"
+              disabled="true"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Status</span>
+          <div class="input">
+            <DxSelectBox
+              value=""
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Due Inspection Date</span>
+          <div class="input">
+            <DxTextBox
+              value="2024"
+              disabled="true"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Plan Inspection Date</span>
+          <div class="input">
+            <DxTextBox
+              value="01 Mar 2024"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Plan Manhours</span>
+          <div class="input">
+            <DxTextBox
+              value="8"
+            />
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <span>Actual Manhours</span>
           <div class="input">
             <DxTextBox
               value=""
@@ -59,17 +107,8 @@
           </div>
         </div>
 
-        <div class="input-wrapper">
-          <span>Equipment Type</span>
-          <div class="input">
-            <DxTextBox
-              value="Chock Valve"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Drawing Number</span>
+        <div span-2 class="input-wrapper">
+          <span>Inspection Effectiveness</span>
           <div class="input">
             <DxTextBox
               value=""
@@ -77,36 +116,8 @@
           </div>
         </div>
 
-        <div class="input-wrapper">
-          <span>Failure Impact</span>
-          <div class="input">
-            <DxTextBox
-              value="P5"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Disc.</span>
-          <div class="input">
-            <DxTextBox
-              value="INST"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Failure Date</span>
-          <div class="input">
-            <DxDateBox
-              type="date"
-              value="2/15/2024"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Location</span>
+        <div fill class="input-wrapper">
+          <span>Note</span>
           <div class="input">
             <DxTextBox
               value=""
@@ -114,67 +125,6 @@
           </div>
         </div>
 
-        <div class="input-wrapper">
-          <span>Mitigation</span>
-          <div class="input">
-            <DxTextBox
-              value="Ongoing"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Production Loss</span>
-          <div class="input">
-            <DxTextBox
-              value="-"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Environment</span>
-          <div class="input">
-            <DxTextBox
-              value="-"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper">
-          <span>Health and Safety</span>
-          <div class="input">
-            <DxTextBox
-              value=""
-            />
-          </div>
-        </div>
-
-        <div span-2 />
-
-        <div class="input-wrapper" span-2>
-          <span>Details</span>
-          <div class="input">
-            <DxTextArea
-              :height="120"
-              :max-length="200"
-              :auto-resize-enabled="true"
-              value="Phase 3 Choke valve damage issue (MDF01/05, AMA04/12, MTA10)"
-            />
-          </div>
-        </div>
-
-        <div class="input-wrapper" span-2>
-          <span>Findings</span>
-          <div class="input">
-            <DxTextArea
-              :height="120"
-              :max-length="200"
-              :auto-resize-enabled="true"
-              value="-"
-            />
-          </div>
-        </div>
         <div fill>
           <DxDataGrid
             id="data-grid-list"
@@ -190,8 +140,8 @@
             :column-auto-width="true"
           >
             <DxEditing
-              :allow-updating="true"
-              :allow-deleting="true"
+              :allow-updating="false"
+              :allow-deleting="false"
               :allow-adding="true"
               :use-icons="true"
               mode="popup"
@@ -200,67 +150,22 @@
             <DxHeaderFilter :visible="false" />
             <DxSelection mode="single" />
             <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-            <DxColumn data-field="st_action_detail" caption="Short Term Action Detail" :min-width="150" alignment="left" />
-            <DxColumn data-field="action_date" caption="Action Date" :width="120" alignment="center" />
-            <DxColumn data-field="disc" caption="Disc." :width="120" alignment="center" />
-            <DxColumn data-field="status" caption="Status" :width="120" alignment="center" />
-            <DxColumn data-field="remark" caption="Remark" :min-width="200" alignment="center" />
+            <DxColumn data-field="file_name" caption="File Name" :width="150" alignment="left" />
+            <DxColumn data-field="file_type" caption="File Type" :width="150" alignment="center" />
+            <DxColumn data-field="file_extension" caption="Extension" :width="150" alignment="center" />
+            <DxColumn data-field="Note" caption="Note" :min-width="150" alignment="center" />
+            <DxColumn name="actions" :width="90" alignment="center" cell-template="action-cell-template" />
 
-            <DxColumn type="buttons">
-              <DxButton name="edit" hint="Edit" icon="edit" />
-              <DxButton name="delete" hint="Delete" icon="trash" />
-            </DxColumn>
-
-            <!-- Configuration goes here -->
-            <!-- <DxFilterRow :visible="true" /> -->
-            <DxScrolling mode="standard" />
-            <DxSearchPanel :visible="true" />
-            <DxPaging :page-size="10" :page-index="0" />
-            <DxPager
-              :show-page-size-selector="true"
-              :allowed-page-sizes="[10, 20, 30]"
-              :show-navigation-buttons="true"
-              :show-info="false"
-              info-text="Page {0} of {1} ({2} items)"
-            />
-            <DxExport :enabled="false" />
-          </DxDataGrid>
-        </div>
-        <div fill>
-          <DxDataGrid
-            id="data-grid-list"
-            key-expr="id"
-            :data-source="testList2"
-            :selection="{ mode: 'single' }"
-            :hover-state-enabled="true"
-            :allow-column-reordering="true"
-            :show-borders="true"
-            :show-row-lines="true"
-            :row-alternation-enabled="false"
-            :word-wrap-enabled="true"
-            :column-auto-width="true"
-          >
-            <DxEditing
-              :allow-updating="true"
-              :allow-deleting="true"
-              :allow-adding="true"
-              :use-icons="true"
-              mode="popup"
-            />
-            <DxFilterRow :visible="false" />
-            <DxHeaderFilter :visible="false" />
-            <DxSelection mode="single" />
-            <DxColumn data-field="id_item" caption="Item" :width="70" alignment="center" />
-            <DxColumn data-field="st_action_detail" caption="Short Term Action Detail" :min-width="150" alignment="left" />
-            <DxColumn data-field="action_date" caption="Action Date" :width="120" alignment="center" />
-            <DxColumn data-field="disc" caption="Disc." :width="120" alignment="center" />
-            <DxColumn data-field="status" caption="Status" :width="120" alignment="center" />
-            <DxColumn data-field="remark" caption="Remark" :min-width="200" alignment="center" />
-
-            <DxColumn type="buttons">
-              <DxButton name="edit" hint="Edit" icon="edit" style="" />
-              <DxButton name="delete" hint="Delete" icon="trash" />
-            </DxColumn>
+            <template #action-cell-template="{  }">
+              <div class="action-wrapper">
+                <div @click="() => { $emit('currentView', 2, 1); }">
+                  <penSvg class="penSvg" />
+                </div>
+                <div>
+                  <trashSvg class="trashSvg" />
+                </div>
+              </div>
+            </template>
 
             <!-- Configuration goes here -->
             <!-- <DxFilterRow :visible="true" /> -->
@@ -290,6 +195,7 @@ import moment from "moment";
 
 //Components
 //import VueTabsChrome from "vue-tabs-chrome";
+import penSvg from "@/components/svg/pen-svg.vue"
 import trashSvg from "@/components/svg/trash-svg.vue"
 
 //DataGrid
@@ -297,10 +203,10 @@ import "devextreme/dist/css/dx.light.css";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { exportDataGrid } from "devextreme/excel_exporter";
-// import DxSelectBox from 'devextreme-vue/select-box';
+import DxSelectBox from 'devextreme-vue/select-box';
 import DxTextBox from 'devextreme-vue/text-box';
-import DxDateBox from 'devextreme-vue/date-box';
-import DxTextArea from 'devextreme-vue/text-area';
+// import DxDateBox from 'devextreme-vue/date-box';
+// import DxTextArea from 'devextreme-vue/text-area';
 // import DxAddRowButton from "devextreme-vue/button";
 // import { DxItem } from "devextreme-vue/form";
 import {
@@ -316,7 +222,7 @@ import {
   DxSelection,
   DxEditing,
   DxFilterRow,
-  DxButton,
+  // DxButton,
   // DxLookup,
   // DxRequiredRule,
   // DxFormItem,
@@ -342,15 +248,16 @@ export default {
     // DxItem,
     DxEditing,
     DxFilterRow,
-    DxButton,
+    // DxButton,
     // DxAddRowButton,
     // DxLookup,
     // DxRequiredRule,
     // DxFormItem,
-    // DxSelectBox,
+    DxSelectBox,
     DxTextBox,
-    DxDateBox,
-    DxTextArea,
+    // DxDateBox,
+    // DxTextArea,
+    penSvg,
     trashSvg
   },
   created() {
@@ -362,56 +269,24 @@ export default {
         {
           id: 1,
           id_item: 1,
-          st_action_detail: 'Change the delay time to 0sec for the transfer in case of MCC fail or MLO low pres',
-          action_date: '20 May 2024',
-          disc: 'INST',
-          status: 'Ongoing',
-          remark: '-'
+          file_name: '0.5-AI-B2-5092-ITP',
+          file_type: 'ITP',
+          file_extension: 'PDF',
+          note: '-'
         },
-        {
-          id: 2,
-          id_item: 2,
-          st_action_detail: 'Revise the setpoint to higher value for earlier transfer',
-          action_date: '1 Jun 2024',
-          disc: 'INST',
-          status: 'Done',
-          remark: '-'
-        },
-        {
-          id: 3,
-          id_item: 3,
-          st_action_detail: 'Check on the pump performance and oil quality',
-          action_date: '1 Jan 2025',
-          disc: 'INST',
-          status: 'Ongoing',
-          remark: '-'
-        },
-      ];
-      this.testList2 = [
         {
           id: 1,
           id_item: 1,
-          st_action_detail: 'Conduct study on the MLO pressure profile include check on internal leak',
-          action_date: '31 Dec 2028',
-          disc: 'INST',
-          status: 'Ongoing',
-          remark: '-'
-        },
-        {
-          id: 2,
-          id_item: 2,
-          st_action_detail: 'Upgrade to pressure membrane type level transmitter',
-          action_date: '31 Dec 2029',
-          disc: 'INST',
-          status: 'Done',
-          remark: '-'
+          file_name: '0.5-AI-B2-5092-INSP',
+          file_type: 'Inspection Report',
+          file_extension: 'PDF',
+          note: '-'
         },
       ];
   },
   data() {
     return {
       testList1: [],
-      testList2: [],
       inspRecordList: {},
       campaigeList: {},
       dataGridAttributes: {
@@ -654,13 +529,22 @@ export default {
 
 .table-wrapper {
   display: grid;
-  grid-template-columns: 22% 22% 22% 22%;
-  gap: 4%;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
   *[span-2] {
     grid-column: span 2;
   }
-  *[fill] {
+  *[span-3] {
+    grid-column: span 3;
+  }
+  *[span-4] {
     grid-column: span 4;
+  }
+  *[span-5] {
+    grid-column: span 5;
+  }
+  *[fill] {
+    grid-column: span 6;
   }
   .input-wrapper {
     display: flex;
@@ -670,6 +554,33 @@ export default {
     span {
       font-size: 16px;
     }
+  }
+}
+.action-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.penSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: orange; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+.trashSvg {
+  width: 25px; 
+  padding: 5px; 
+  background-color: red; 
+  fill: white;
+  transition: 0.2s;
+  border-radius: 5px;
+  &:hover {
+    transform: scale(1.1);
   }
 }
 </style>
