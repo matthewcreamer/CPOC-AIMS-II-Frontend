@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        # with:
+        #   fetch-depth: 2
 
       - name: Set Git config
         run: |
@@ -33,20 +35,24 @@ jobs:
         run: |
           git diff --quiet || { git add . && git commit -m "Update mode to prod" && git push; }
 
-      - name: Build project
-        run: |
-          npm i
-          npm run build
+      # - name: Build project
+      #   run: |
+      #     npm i
+      #     npm run build
+      # - name: Install Packages and Build Application 
+      #     run: |
+      #       npm ci
+      #       npm run build
 
-      - name: Copy files to Windows server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.WINDOWS_SERVER_HOST }}
-          username: ${{ secrets.WINDOWS_SERVER_USERNAME }}
-          password: ${{ secrets.WINDOWS_SERVER_PASSWORD }}
-          port: ${{ secrets.WINDOWS_SERVER_PORT }}
-          script: |
-            $source = "dist"
-            $destination = "C:\inetpub\test_auto_deploy"
-            New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
-            Copy-Item -Path $source -Destination $destination -Recurse
+      # - name: Copy files to Windows server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: "52.220.173.180"
+      #     username: "administrator"
+      #     password: "Grade5-ship-Line8-blue3"
+      #     port: "33488"
+      #     script: |
+      #       $source = "dist"
+      #       $destination = "C:\inetpub\test_auto_deploy"
+      #       New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
+      #       Copy-Item -Path $source -Destination $destination -Recurse
