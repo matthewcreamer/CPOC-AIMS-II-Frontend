@@ -46,6 +46,6 @@ jobs:
           port: ${{ secrets.WINDOWS_SERVER_PORT }}
           script: |
             $source = "build"
-            $destination = "C:/testing"
+            $destination = "C:\inetpub\test_auto_deploy"
             New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
             Copy-Item -Path $source -Destination $destination -Recurse
