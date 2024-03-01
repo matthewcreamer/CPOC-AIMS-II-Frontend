@@ -11,8 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
+        # with:
+        #   fetch-depth: 2
 
       - name: Set Git config
         run: |
@@ -39,9 +39,9 @@ jobs:
       #   run: |
       #     npm i
       #     npm run build
-      - name: Install Packages and Build Application  # Installs npm packages and builds the Vue.js application.
+      - name: Install Packages and Build Application 
           run: |
-            npm i
+            npm ci
             npm run build
 
       - name: Copy files to Windows server
