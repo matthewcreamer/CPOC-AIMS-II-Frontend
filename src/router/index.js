@@ -46,7 +46,7 @@ const routes = [
       },
     ]
   },
-  //Inspection & anomaly monthly performance
+//Inspection & anomaly monthly performance
   {
     path: "/iamp",
     name: "Inspection & Anomaly Monthly Performance",
@@ -236,7 +236,6 @@ const routes = [
       },
     ]
   },
-  
   {
     path: "/md",
     name: "MasterData",
