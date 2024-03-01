@@ -31,7 +31,7 @@ export default new Vuex.Store({
       managementApps: [
         {
           id: 103,
-          name: "Master Data",
+          name: "Master Datas",
           icon: "/img/icon_menu/modules/master_data.svg",
           icon_menu: '/img/icon_menu/modules/master_data.svg',
           link: "/md/applicable-status",
