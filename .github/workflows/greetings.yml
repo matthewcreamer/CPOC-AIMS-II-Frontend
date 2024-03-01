@@ -30,4 +30,7 @@ jobs:
       - name: Commit and push changes
         run: |
           git add .
-          git diff --quiet && git commit -m "Update mode to prod" && git push
+          if git diff --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update mode to prod" && git push
