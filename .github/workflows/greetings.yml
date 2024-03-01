@@ -41,18 +41,18 @@ jobs:
       #     npm run build
       - name: Install Packages and Build Application 
           run: |
-            npm i
+            npm ci
             npm run build
 
-      - name: Copy files to Windows server
-        uses: appleboy/ssh-action@master
-        with:
-          host: "52.220.173.180"
-          username: "administrator"
-          password: "Grade5-ship-Line8-blue3"
-          port: "33488"
-          script: |
-            $source = "dist"
-            $destination = "C:\inetpub\test_auto_deploy"
-            New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
-            Copy-Item -Path $source -Destination $destination -Recurse
+      # - name: Copy files to Windows server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: "52.220.173.180"
+      #     username: "administrator"
+      #     password: "Grade5-ship-Line8-blue3"
+      #     port: "33488"
+      #     script: |
+      #       $source = "dist"
+      #       $destination = "C:\inetpub\test_auto_deploy"
+      #       New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
+      #       Copy-Item -Path $source -Destination $destination -Recurse
