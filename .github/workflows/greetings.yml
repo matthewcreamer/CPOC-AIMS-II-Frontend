@@ -13,20 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Checkout dev branch
-        run: git checkout -f dev
-
       - name: Merge dev into main
+        run: git checkout main
         run: git merge --no-ff origin/dev -m "Merge dev into main"
-
-      - name: Change files from dev to prod
-        run: |
-          sed -i 's/dev/prod/g' src/store/index.js
-
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Change files from dev to prod"
-          git push
+        run: git push
