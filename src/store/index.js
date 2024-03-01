@@ -17,7 +17,7 @@ export default new Vuex.Store({
       prod: 'https://dis02.dexon-technology.com:444/api',
     },
     user: '',
-    appIcon: '/app-icon.jpeg',
+    appIcon: '/img/app-logo.svg',
     currentInApp: '',
     currentPageName: '',
     currentPageInnerName: '',
@@ -31,30 +31,23 @@ export default new Vuex.Store({
       managementApps: [
         {
           id: 103,
-          name: "Master Data Manager",
-          icon: "/img/icon_sidebar/master_data/table.png",
-          icon_menu: '/img/icon_menu/master_data/table.png',
+          name: "Master Data",
+          icon: "/img/icon_menu/modules/master_data.svg",
+          icon_menu: '/img/icon_menu/modules/master_data.svg',
           link: "/md/applicable-status",
           isActive: true,
         },
-        // {
-        //   id: 105,
-        //   name: "Asset Manager",
-        //   icon: "/img/icon_sidebar/client/client.png",
-        //   icon_menu: '/img/icon_menu/client/client.png',
-        //   link: "/client-company-manager",
-        //   isActive: true,
-        // },
         {
           id: 108,
-          name: "User Account Manager",
-          icon: "/img/icon_sidebar/account/account.png",
-          icon_menu: "/img/icon_menu/account/account.png",
+          name: "User Account",
+          icon: "/img/icon_menu/modules/users.svg",
+          icon_menu: "/img/icon_menu/modules/users.svg",
           link: "/user-account-manager",
           isActive: true,
         },
       ],
     },
+
     sidebarMasterDateList: [
       {
         id: 100,
@@ -235,12 +228,13 @@ export default new Vuex.Store({
 
         })
         .catch((error) => {
+
           console.log("VALIDATE ERROR:")
           console.log(error)
           if (error.response.status == 0) {
             console.log('SERVER FAILED')
-            state.status.server = false;
-            state.status.fullscreenAlert = true;
+            //state.status.server = false;
+            //state.status.fullscreenAlert = true;
             // alert('Cannot connect to server. Click "OK" to retry.')
             // router.go();
           }

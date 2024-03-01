@@ -1,46 +1,21 @@
 <template>
   <div class="app-sidebar" :class="[sidebarHiding == true ? 'app-sidebar-hide' : 'app-sidebar']">
     <div class="item-container">
-      <!-- SECTION INFO -->
-      <div class="section-label">
-        <label>NDE</label>
-      </div>
-      <router-link :to="'/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Dashboard</span>
-        </v-ons-toolbar-button>
-      </router-link>
-      <router-link :to="'/report/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Report</span>
-        </v-ons-toolbar-button>
-      </router-link>
-      <router-link :to="'/pending-appv/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Pending Approval</span>
-        </v-ons-toolbar-button>
-      </router-link>
-
-      <!-- SECTION INFO -->
-      <div class="section-label">
-        <label>Management</label>
-      </div>
-
-      <router-link :to="'/account/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Account</span>
-        </v-ons-toolbar-button>
-      </router-link>
-      <router-link :to="'/report-appv/'">
-        <v-ons-toolbar-button class="item">
-          <img src="/img/icon_sidebar/tank/info.png" />
-          <span>Report Approval</span>
-        </v-ons-toolbar-button>
-      </router-link>
+      <template v-for="(route, index) in routes">
+        <div class="section-label" v-if="!route.url && !route.line" :key="'title_' + index">
+          <label>{{ route.name }}</label>
+        </div>
+        <router-link :to="route.url" v-if="route.url" :key="'route_' + index">
+          <v-ons-toolbar-button class="item">
+            <component class="svg" :is="route.icon.svg" :style="{width: route.icon.size, height: route.icon.size}" />
+            <!-- <div v-html="route.icon"></div> -->
+            <span>{{ route.name }}</span>
+          </v-ons-toolbar-button>
+        </router-link>
+        <div class="line" v-if="route.line" :key="'line_' + index">
+          <hr />
+        </div>
+      </template>
     </div>
     <div class="item-container fixed-panel">
       <v-ons-toolbar-button class="item bottom-btn" v-on:click="SHOW_HIDE_SIDEBAR()">
@@ -59,7 +34,9 @@
 export default {
   name: "app-sidebar",
   created() {},
-  props: {},
+  props: {
+    routes: Array
+  },
   data() {
     return {
       id_tag: this.$route.params.id_tag,
@@ -82,8 +59,8 @@ export default {
 @import "@/style/main.scss";
 .app-sidebar {
   width: 200px;
-  height: 100%;
-  background-color: #2759a8;
+  height: calc(100% - 120px);
+  background-color: $web-theme-color-secondary;
   border: 1px solid #e6e6e6;
   border-width: 0 1px 0 0;
   position: relative;
@@ -124,11 +101,12 @@ export default {
       width: 180px;
       padding: 0;
       height: 34px;
+      // display: flex;
       justify-content: flex-start;
+      align-items: center;
       border-radius: 6px;
       margin: 10px auto;
       border: 0px;
-      position: relative;
       transition: all 0.3s;
       i {
         margin-left: 15px;
@@ -147,6 +125,13 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
       }
+      .svg {
+        // width: 18px;
+        // max-height: 18px;
+        object-fit: contain;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
       i.right-arrow {
         position: absolute;
         top: 50%;
@@ -155,11 +140,15 @@ export default {
         font-size: 14px;
       }
     }
+    .item:not(:empty) > *:first-child {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
 
     .item:hover,
-    .router-link-active > .item,
+    // .router-link-active > .item,
     .router-link-exact-active > .item {
-      background: $dexon-primary-red;
+      background: $dexon-primary-green;
     }
 
     .bottom-btn {
@@ -169,10 +158,14 @@ export default {
         margin-left: 0;
       }
     }
+    .line {
+      padding: 6px;
+      width: 180px;
+    }
   }
 
   .fixed-panel {
-    background-color: #2759a8;
+    background-color: $web-theme-color-secondary;
   }
 }
 @media screen and (max-width: 1024px) {
@@ -208,6 +201,10 @@ export default {
           display: inherit !important;
           margin: 0;
         }
+      }
+      .line {
+        padding: 6px;
+        width: 180px;
       }
     }
   }
@@ -255,6 +252,9 @@ export default {
         display: block;
         transition: all 0.3s;
       }
+    }
+    .line {
+      display: none;
     }
     .item {
       width: fit-content;

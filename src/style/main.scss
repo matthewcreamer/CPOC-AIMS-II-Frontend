@@ -12,12 +12,14 @@ $web-default-font: "SF Pro",
 
 $web-theme-color-primary: #FDFDFD;
 $web-theme-color-background: #F6F6F6;
-$web-theme-color-secondary: #2759A8;
+$web-theme-color-secondary: #291F85;
 $web-theme-color-tertiary: #eb1851;
 $web-theme-color-lightgrey: #F6F6F6;
 
 $dexon-primary-red: #eb1851;
+$dexon-primary-green: #1D9531;
 $dexon-primary-blue: #140a4b;
+$dexon-primary-gray: #828282;
 
 $web-font-color-black: #303030;
 $web-font-color-grey: #5B5B5B;
@@ -921,6 +923,52 @@ hr {
     }
 
 }
+
+#data-grid-list .dx-datagrid-headers {
+    color: #fff;
+    background-color: $web-theme-color-secondary;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  #data-grid-list td[role="columnheader"] {
+    text-align: center !important;
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  #data-grid-list td[role="gridcell"] {
+    font-size: 12px;
+    font-weight: 500;
+    vertical-align: middle;
+    cursor: pointer !important;
+  }
+  
+  #data-grid-list .dx-toolbar-text-auto-hide .dx-button .dx-button-content {
+    padding: 9px;
+  }
+  
+  #data-grid-list .dx-datagrid-search-panel {
+    margin: 0;
+  }
+  
+  #data-grid-list .dx-datagrid {
+    background-color: transparent !important;
+  }
+  
+  #data-grid-list .dx-toolbar {
+    background-color: transparent !important;
+  }
+  
+  #data-grid-list .dx-datagrid-focus-overlay {
+    border: none;
+    border-bottom: 2px solid $web-theme-color-secondary;
+  }
+  
+  .dx-checkbox-checked .dx-checkbox-icon::before {
+    content: "\2714"; 
+    color: black;
+  }
 
 // .dx-header-row>td>.dx-datagrid-text-content {
 //     writing-mode: tb-rl !important;

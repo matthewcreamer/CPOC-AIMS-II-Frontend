@@ -1,57 +1,48 @@
 <template>
   <div id="page-login" class="page-body">
-    <div class="app-logo-login">
-      <!-- <img src="/img/logo-dark.png" /> -->
-    </div>
-
-    <!-- LOG IN -->
-    <div class="login-panel" v-if="current_tab == 1">
-      <div class="app-logo">
-        <img :src="appIcon" alt="app icon" />
-      </div>
-      <!-- <h1>SPRC</h1> -->
-      <label class="sub-title">E-NDE REPORT</label>
+    <div class="login-panel" v-if="!isLoading">
+      <img class="app-background" src="/img/banner.png" alt="app background image">
+      
       <div class="form-login">
-        <div class="input-set">
-          <input
+        <img class="app-logo" :src="appIcon" alt="app icon" />
+
+        <div class="app-description">
+          <h2>CPOC IMS</h2>
+          <h1>INSPECTION & MAINTENANCE SYSTEM</h1>
+          <h3>CARIGALI-PTTEPI Operating Company Sdn. Bhd.</h3>
+        </div>
+
+        <input
             class="user"
             type="text"
             placeholder="Username"
             v-model="formData.username"
             v-on:keyup.enter="SIGN_IN()"
-          />
-        </div>
-        <div class="input-set">
-          <input
+        />
+        <input
             class="password"
             type="password"
             placeholder="Password"
             v-model="formData.password"
             v-on:keyup.enter="SIGN_IN()"
-          />
-        </div>
-        <div class="button-set" style="margin-top: 40px">
-          <button class="blue" v-on:click="SIGN_IN()">
-            <label>Sign In</label>
-          </button>
-        </div>
-        <!-- <hr />
-        <div class="button-set">
-          <button class="outline-blue" v-on:click="SIGN_UP_BTN(2)">
-            <label>Create Account</label>
-          </button>
-        </div>-->
-        <div class="help-label">
-          <label>
-            Need helps? Visit
-            <a>Help Center</a>
-          </label>
+        />
+
+        <button class="signin" v-on:click="SIGN_IN()">Sign In</button>
+        <button class="microsoft" v-on:click="SIGN_IN()">
+          <img src="/img/microsoft.svg" alt="microsoft">
+          Login with Microsoft
+        </button>
+
+        <span @click="$router.push('/forgot-password')" class="forgotPassword">Forgot Password?</span>
+
+        <div class="footer">
+          <span>2024 Ⓒ Designed and developed by</span>
+          <img src="/img/dexon.svg" alt="dexon">
         </div>
       </div>
     </div>
 
     <PageLoading v-if="isLoading == true" text="Logging In" />
-    <div class="bg-filter"></div>
   </div>
 </template>
 
@@ -140,171 +131,105 @@ export default {
 @import "@/style/main.scss";
 
 #page-login {
-  // background-image: url("/public/img/main-bg.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-
-  .bg-filter {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    background: linear-gradient(180deg, #140a4b 0%, rgba(39, 89, 168, 0) 100%);
-  }
 }
 .page-container {
   position: relative;
   height: 100%;
 }
 .login-panel {
-  width: 360px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 30px 20px;
-  border-radius: 6px;
-  background: #fff;
-  box-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.06);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  h1 {
-    font-size: 2.5em;
-    font-style: normal;
-    font-weight: 510;
-    line-height: 30px;
-    color: $web-font-color-black;
-    text-align: center;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  label.sub-title {
-    font-size: 24px;
-    color: $web-font-color-grey;
-    margin: 2px 0 10px 0;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
-  }
-  .content-wrapper {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  .app-background {
     width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-  }
-}
-.app-logo {
-  height: 65px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-
-  img {
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
-}
-
-.app-logo-login {
-  width: 150px;
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  z-index: 9;
-  img {
-    width: 100%;
-    object-fit: contain;
-  }
-}
-
-.form-login {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 20px;
-  .input-set {
+  .form-login {
+    background-color: white;
+    height: 100vw;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
-
+    padding: 0 35px 0 35px;
+    gap: 20px;
+    .app-logo {
+      margin-top: 15vh;
+      width: 80px;
+      height: 80px;
+      align-self: flex-start;
+    }
+    .app-description {
+      margin-top: 10px;
+      align-self: flex-start;
+      h2 {
+        color: #1D9531;
+        font-size: 16px;
+        margin: 0;
+      }
+      h1 {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0;
+      }
+      h3 {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+        margin-top: 3px;
+      }
+    }
     input {
-      width: -webkit-fill-available;
-      background: #f0f0f0;
-      border: 1px solid #cecece;
-      box-sizing: border-box;
-      height: 44px;
-      text-indent: 10px;
-      font-size: 1.75em;
-      line-height: 30px;
-      font-style: normal;
-      font-weight: 400;
-      border-radius: 6px;
+      width: calc(100% - 60px);
+      padding: 10px 30px;
+      background-color: #F9F9F9;
+      border: none;
+      margin-top: 15px;
+      border-radius: 5px;
+      box-shadow: inset 0 2px 0 #E9E9E9;
     }
-    .user,
-    .first {
-      border-radius: 6px 6px 0px 0px;
+    input::placeholder {
+      color: #BCBCBC;
     }
-    .middle {
-      border-radius: 0px;
-      border-width: 0px 1px 1px 1px;
+    button {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      font-weight: 800;
+      cursor: pointer;
     }
-    .password,
-    .last {
-      border-radius: 0px 0px 6px 6px;
-      border-width: 0px 1px 1px 1px;
+    .signin {
+      background-image: linear-gradient(to right, #1A0D7F, #3F2DCA);
     }
-
-    .password:focus {
-      border-width: 0px 1px 1px 1px;
+    .microsoft {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background-image: linear-gradient(to right, #000000, #737373);
     }
-  }
-  .save-password-set {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    label {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 1.75em;
-      line-height: 30px;
-      color: $web-font-color-grey;
-      margin-left: 10px;
+    .forgotPassword {
+      text-decoration: underline;
+      font-size: 13px;
+      align-self: flex-start;
+      cursor: pointer;
     }
-  }
-}
-.button-set {
-  margin: 20px 0;
-  button {
-    height: 44px;
-  }
-}
-h1 {
-  font-weight: 800 !important;
-  margin: 20px 0 20px 0;
-}
-.help-label {
-  font-size: 12px;
-  color: $web-font-color-grey;
-  a {
-    color: $web-font-color-blue;
-    text-decoration: underline;
-    cursor: pointer;
+    .footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: fixed;
+      bottom: 20px;
+      font-size: 10px;
+      img {
+        width: 100px;
+        height: auto;
+      }
+    }
   }
 }
 </style>

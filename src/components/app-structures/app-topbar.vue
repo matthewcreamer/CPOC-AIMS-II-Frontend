@@ -1,20 +1,16 @@
 <template>
-  <div id="app-topbar" v-if="isLoginPage == false">
+  <div id="app-topbar" v-if="canDisplayToolbar">
     <div class="app-topbar-wrapper">
       <div class="left-col">
         <div class="web-logo" v-on:click="GO_TO('/')">
-          <img src="/img/SPRC_logo.jpeg" alt />
+          <img src="/img/app-logo.svg" alt />
         </div>
-        <div class="inapp-menu mobile-none" v-if="this.$store.state.currentInApp">
-          <div class="home-btn" v-on:click="GO_TO('/')">
-            <i class="las la-home"></i>
-          </div>
-          <div class="btn-group-separater"></div>
-          <div class="inapp-logo">
-            <img :src="this.$store.state.currentInApp.icon" />
-            <label for>{{ this.$store.state.currentInApp.name }}</label>
-          </div>
+
+        <div class="app-topbar-text">
+          <label>CPOC IMS</label>
+          <label>INSPECTION & MAINTENANCE SYSTEM</label>
         </div>
+
         <label class="dev-mode-badge" v-if="this.$store.state.mode == 'dev'">
           RUNNING IN DEVELOPMENT MODE
           <br />
@@ -179,12 +175,12 @@ export default {
     }
   },
   computed: {
-    isLoginPage() {
+    canDisplayToolbar() {
       var path = this.$route.path;
-      if (path == "/login") {
-        return true;
-      } else {
+      if (path == "/login" || path == "/forgot-password") {
         return false;
+      } else {
+        return true;
       }
     },
     baseURL() {
@@ -224,6 +220,19 @@ export default {
   .left-col {
     display: flex;
     align-items: center;
+    .app-topbar-text {
+      display: flex;
+      flex-direction: column;
+      label {
+        font-size: 12px;
+        font-weight: 700;
+        color: $web-font-color-blue;
+        font-family: $web-default-font;
+      }
+      label:first-child {
+        color: #1D9531;
+      }
+    }
     .sidebar-toggle {
       width: 40px;
       height: 30px;
@@ -239,19 +248,19 @@ export default {
       }
     }
     .web-logo {
-      width: 100px;
       cursor: pointer;
-
-      margin: 0 10px 0 20px;
-      // cursor: pointer;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-left: 10px;
+      margin-right: 10px;
       img {
-        width: 100%;
-        height: 44px;
-        object-fit: contain;
+        width: 38px;
+        height: 38px;
       }
       @media screen and (max-width: 768px) {
         width: 80px;
-        margint-top: 4px;
+        margin-top: 4px;
       }
     }
     .inapp-menu {

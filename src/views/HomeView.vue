@@ -1,13 +1,14 @@
 <template>
   <div id="page-home" class="page-body">
     <div id="user-panel">
-      <div class="page-container" style="padding-top: 40px; padding-bottom: 80px">
+      <div class="page-container">
         <div class="wrapper">
           <div class="left-col">
             <div class="detail">
+              <img src="/img/default_profile_picture.png" alt>
               <div class="name">
-                <h2>Title Page</h2>
-                <h2>Sub-title</h2>
+                <span>Admin</span>
+                <span>Super User</span>
               </div>
             </div>
           </div>
@@ -21,22 +22,6 @@
             </v-ons-toolbar-button>
           </div>
         </div>
-        <div class="searchbar-box">
-          <input
-            type="text"
-            name="search"
-            size="50"
-            v-model="search_key"
-            placeholder="Search"
-            class="query"
-          />
-          <span class="icon">
-            <i class="la la-search"></i>
-          </span>
-          <span class="close" v-if="search_key" v-on:click="SEARCH_CLEAR()">
-            <i class="la la-close"></i>
-          </span>
-        </div>
       </div>
       <div class="bg-filter"></div>
     </div>
@@ -46,33 +31,37 @@
         <h2 class="page-section-label" style="padding-top: 40px">Modules</h2>
       </div>
       <div class="client-list-recent" v-if="!this.search_key && this.assetListRecent.length > 0">
-        <v-ons-card
-          class="client-card"
-          v-for="item in assetListPaged"
-          :key="item.id"
-          v-on:click="VIEW_INFO(item)"
-        >
+        <div
+            class="client-card"
+            v-for="item in assetListPaged"
+            :key="item.id"
+            v-on:click="VIEW_INFO(item)"
+          >
           <div class="client_logo">
             <img :src="item.logo" alt="logo" />
           </div>
           <div class="title">{{ item.asset_name }}</div>
-        </v-ons-card>
+        </div>
       </div>
     </div>
     <div class="page-container" v-if="
          !this.search_key
       ">
       <div class="section-label" v-if="showSectionLabel == true">
-        <h2 class="page-section-label">Master Data & Management</h2>
+        <h2 class="page-section-label">Management</h2>
       </div>
-      <div class="app-drawer-wrapper">
-        <div class="app-item-wrapper" v-for="item in appsList.managementApps" :key="item.id">
-          <div class="app-item" v-on:click="OPEN_APP(item)" v-if="item.isActive == true">
-            <img :src="item.icon_menu" />
-            <label>{{ item.name }}</label>
+      <div class="client-list-recent" >
+          <div
+            class="client-card"
+            v-on:click="OPEN_APP(item)" 
+            v-for="item in appsList.managementApps" :key="item.id"
+          >
+            <div class="client_logo" v-if="item.isActive == true">
+              <img :src="item.icon_menu" alt="logo" />
+            </div>
+            <div class="title">{{ item.name }}</div>
           </div>
         </div>
-      </div>
     </div>
     <AppLoading :icon="openingApp.icon_menu" :name="openingApp.name" v-if="isOpening == true" />
     <PageLoading v-if="isLoading == true" text="Loading" />
@@ -106,13 +95,33 @@ export default {
       assetList: [
         {
           id_asset: 1,
-          asset_name: "Module 1",
-          // logo: "/img/icon_menu/equipment/flowline.png"
+          asset_name: "Inspection & Anomaly Monthly Performance",
+          logo: "/img/icon_menu/modules/insp_anom.svg"
         },
         {
           id_asset: 2,
-          asset_name: "Module 2",
-          // logo: "/img/icon_menu/equipment/piping.png"
+          asset_name: "General Platform Inspection",
+          logo: "/img/icon_menu/modules/gpi.svg"
+        },
+        {
+          id_asset: 3, 
+          asset_name: "Ex-Inspection",
+          logo: "/img/icon_menu/modules/ex.svg"
+        },
+        {
+          id_asset: 4,
+          asset_name: "Reliability Report",
+          logo: "/img/icon_menu/modules/relia.svg"
+        },
+        {
+          id_asset: 5,
+          asset_name: "Temporary Repair",
+          logo: "/img/icon_menu/modules/tempo.svg"
+        },
+        {
+          id_asset: 6,
+          asset_name: "Corrosion Monitoring",
+          logo: "/img/icon_menu/modules/cm.svg"
         },
       ],
       assetListPaged: [],
@@ -153,14 +162,18 @@ export default {
     VIEW_INFO(i) {
       if (i.id_asset) {
         let path = encodeURI(i.asset_name.toLowerCase());
-        if (i.asset_name == "Pressure Vessel") {
-          path = "vessel";
-        } else if (i.asset_name == "Storage Tank") {
-          path = "tank";
-        } else if (i.asset_name == "Pressure Relief Device") {
-          path = "prd";
-        } else if (i.asset_name == "Rotating") {
-          path = "rotating";
+        if (i.asset_name == "Inspection & Anomaly Monthly Performance") {
+          path = "iamp";
+        } else if (i.asset_name == "General Platform Inspection") {
+          path = "gpi";
+        } else if (i.asset_name == "Ex-Inspection") {
+          path = "ex-inspection";
+        } else if (i.asset_name == "Reliability Report") {
+          path = "reliability";
+        } else if (i.asset_name == "Temporary Repair") {
+          path = "temporary-repair";
+        } else if (i.asset_name == "Corrosion Monitoring") {
+          path = "";
         }
         this.KEEP_RECENT(i);
         this.$store.commit("UPDATE_CURRENT_VIEW_CLIENT", i.asset_name);
@@ -260,11 +273,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/style/main.scss";
-#page-home {
-  height: calc(100vh - 44px);
-  overflow-y: scroll;
-}
-
 .app-drawer-wrapper {
   display: grid;
   width: 100%;
@@ -359,7 +367,6 @@ export default {
 
 .page-container {
   position: relative;
-  // height: 100%;
   padding-top: 40px;
 }
 
@@ -384,73 +391,66 @@ export default {
   justify-content: space-between;
   align-items: center;
   .page-section-label {
-    font-size: 1.75em;
-    font-style: italic;
+    font-size: 1.9em;
+    font-weight: 800;
     text-transform: capitalize;
     color: $web-font-color-black;
     padding-left: 8px;
-    font-weight: 500;
   }
 }
 
 #user-panel {
-  // background-image: url("/public/img/filename");
+  background-image: url("/public/img/banner.png");
   background-size: cover;
-  background-position: center;
+  background-position: 50% 45%;
   background-repeat: no-repeat;
   position: relative;
-
-  @media screen and (max-width: 768px) {
-    margin: 0 -20px;
-  }
+  height: 170px;
+  
   .page-container {
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .wrapper {
-    height: 150px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    width: 100%;
     .left-col {
       .detail {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         color: $web-font-color-white;
         text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+        
+        img {
+          width: 70px;
+          height: 70px;
+          margin-right: 20px;
+        }
         .name {
           display: flex;
-
-          h2 {
-            font-style: normal;
-            font-weight: 700;
-            font-size: 24px;
-            margin: 0 !important;
-            text-transform: uppercase;
-            letter-spacing: 1pt;
-            user-select: text;
-          }
-          h2:last-child {
-            margin-left: 10px !important;
-          }
-
-          .hl {
-            font-size: 30px;
-            font-weight: 700;
-          }
-        }
-        .desc {
-          margin-top: 15px;
-          display: flex;
           flex-direction: column;
-          label {
+
+          span {
             font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 22px;
-            // color: $web-font-color-grey;
+            font-weight: 700;
+            font-size: 15px;
+            user-select: text;
+            color: white;
+          }
+          span:last-child {
+            font-weight: 500;
+            opacity: 0.6;
           }
         }
       }
@@ -486,7 +486,7 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(90deg, #22a6da 0%, rgba(39, 89, 168, 0) 150%);
+    background: linear-gradient(90deg, $web-theme-color-secondary 20%, rgba(39, 89, 168, 0) 80%);
   }
 }
 
@@ -528,42 +528,32 @@ export default {
 
 .client-card {
   cursor: pointer;
-  height: 100%;
-  padding: 8px 20px;
+  width: 180px;
+  height: 170px;
   margin: 0;
+  aspect-ratio: 4 / 3;
   .client_logo {
-    width: 100%;
-    max-width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    background: rgb(20,10,75);
+    background: linear-gradient(175deg, rgba(20,10,75,1) 28%, rgba(20,10,75,0.6012998949579832) 100%);
+    border-radius: 30px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px auto 10px;
-
-    //Another Style (no background)
-    // width: 60px;
-    // height: 60px;
-    // padding: 10px;
-    // margin: 10px auto;
-    // overflow: hidden;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
-    // border-radius: 6px;
-    // background-color: white;
-    // margin-bottom: 14px;
+    padding: 5px;
 
     img {
-      width: 100%;
-      height: 100%;
+      max-width: 50%;
+      max-height: 50%;
       object-fit: contain;
     }
   }
   .title {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 1.4em;
+    font-weight: 500;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -571,25 +561,18 @@ export default {
     text-align: center;
     font-family: "SF Pro", "SF Pro Display", "Helvetica Nueue", "Noto Sans Thai",
       "Roboto", sans-serif !important;
-  }
-
-  @media screen and (max-width: 1024px) {
-    .client_logo {
-      width: 100%;
-      height: 80px;
-    }
-  }
-  @media screen and (max-width: 425px) {
-    .client_logo {
-      width: 100%;
-      height: 80px;
-    }
+      text-transform: uppercase;
   }
 }
 
 .client-card:hover {
-  // transition: all 100ms;
+  transition: all 120ms;
   transform: scale(1.02);
+}
+
+.client-card:active {
+  transition: all 120ms;
+  transform: scale(0.97);
 }
 
 .client-list-list {

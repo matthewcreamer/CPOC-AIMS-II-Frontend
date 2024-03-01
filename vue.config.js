@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   pwa: {
-    name: 'SPRC NDERMS',
+    name: 'CPOC IMS',
     themeColor: '#2859A8',
     msTileColor: '#2859A8',
     appleMobileWebAppCapable: 'yes',
@@ -16,5 +16,5 @@ module.exports = defineConfig({
     //   // ...other Workbox options...
     // }
   },
-  chainWebpack: config => { config.plugin('html').tap(args => { args[0].title = 'E-NDE REPORT | SPRC'; return args; }); }
+  chainWebpack: config => { config.plugin('html').tap(args => { args[0].title = 'CPOC IMS'; return args; }); }
 })

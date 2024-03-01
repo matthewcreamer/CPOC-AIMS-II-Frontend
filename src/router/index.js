@@ -18,7 +18,12 @@ const routes = [
     component: () => import("../views/LoginView.vue"),
   },
   {
-    path: "/home",
+    path: "/forgot-password",
+    name: "Forgot Password",
+    component: () => import("../views/ForgotPasswordView.vue"),
+  },
+  {
+    path: "/",
     name: "Home",
     component: () => import("../views/HomeView.vue"),
   },
@@ -30,7 +35,7 @@ const routes = [
 
   //NDE
   {
-    path: "/",
+    path: "/nde",
     name: "NDE",
     component: () => import("../views/Applications/NDE/router-template.vue"),
     children: [
@@ -38,6 +43,196 @@ const routes = [
         path: "/",
         alias: "NDE Dashboard",
         component: () => import("../views/Applications/NDE/NdeDashboard.vue"),
+      },
+    ]
+  },
+//Inspection & anomaly monthly performance
+  {
+    path: "/iamp",
+    name: "Inspection & Anomaly Monthly Performance",
+    component: () => import("../views/Applications/IAMP/router-template.vue"),
+    children: [
+      {
+        path: "",
+        alias: "Dashboard",
+        component: () => import("../views/Applications/IAMP/Dashboard/Page.vue"),
+      },
+      {
+        path: "inspection",
+        alias: "Inspection & Anomaly Monthly Performance Inspection",
+        component: () => import("../views/Applications/IAMP/Inspection/Page.vue"),
+      },
+      {
+        path: "anomaly-iamp",
+        alias: "Inspection & Anomaly Monthly Performance Anomaly",
+        component: () => import("../views/Applications/IAMP/Anomaly/Page.vue"),
+      }, 
+      {
+        path: "hightlight-activities",
+        alias: "Hightlight Activities",
+        component: () => import("../views/Applications/IAMP/HightlightActivities/Page.vue"),
+      },
+      {
+        path: "moc",
+        alias: "Management Of Change",
+        component: () => import("../views/Applications/IAMP/MOC/Page.vue"),
+      },
+      {
+        path: "inspection-campaign",
+        alias: "Inspection Campaign",
+        component: () => import("../views/Applications/IAMP/InspectionCampaign/Page.vue"),
+      },
+      {
+        path: "rectification-campaign",
+        alias: "Rectification Campaign",
+        component: () => import("../views/Applications/IAMP/RectificationCampaign/Page.vue"),
+      },
+      {
+        path: "inspection-campaign",
+        alias: "Inspection Campaign",
+        component: () => import("../views/Applications/IAMP/InspectionCampaign/Page.vue"),
+      },
+      {
+        path: "monthly-report",
+        alias: "Monthly Report",
+        component: () => import("../views/Applications/IAMP/MonthlyReport/Page.vue"),
+      },
+    ]
+  },
+  //GPI
+  {
+    path: "/gpi",
+    name: "General Platform Inspection",
+    component: () => import("../views/Applications/GPI/router-template.vue"),
+    children: [
+      {
+        path: "",
+        alias: "Dashboard",
+        component: () => import("../views/Applications/GPI/Dashboard/Page.vue"),
+      },
+      {
+        path: "gpi-record",
+        alias: "GPI Record",
+        component: () => import("../views/Applications/GPI/GPIRecord/Page.vue"),
+      },
+      {
+        path: "gpi-pending-approval",
+        alias: "Pending Approval",
+        component: () => import("../views/Applications/GPI/PendingApproval/Page.vue"),
+      },
+    ]
+  },
+  //Ex-inspection
+  {
+    path: "/ex-inspection",
+    name: "Ex-Inspection",
+    component: () => import("../views/Applications/ExInspection/router-template.vue"),
+    children: [
+      {
+        path: "",
+        alias: "Ex-Inspection Dashboard",
+        component: () => import("../views/Applications/ExInspection/Dashboard/Page.vue"),
+      },
+      {
+        path: "list",
+        alias: "List of Ex-Inspection",
+        component: () => import("../views/Applications/ExInspection/List/Page.vue"),
+      },
+    ],
+  },
+  {
+    path: "/ex-inspection/tag/:id_tag",
+    alias: "Ex-Inspection Info",
+    component: () =>
+      import("../views/Applications/ExInspection/Pages/router-template.vue"),
+    children: [
+      {
+        path: "information",
+        alias: "Ex-Inpsection Info",
+        component: () =>
+          import(
+            "../views/Applications/ExInspection/Pages/Information/Page.vue"
+          ),
+      },
+      {
+        path: "inspection-record",
+        alias: "Ex-Inpsection Info",
+        component: () =>
+          import(
+            "../views/Applications/ExInspection/Pages/InspectionRecord/Page.vue"
+          ),
+      },
+      {
+        path: "checklist",
+        alias: "Ex-Inpsection Info",
+        component: () =>
+          import(
+            "../views/Applications/ExInspection/Pages/Checklist/Page.vue"
+          ),
+      },
+      {
+        path: "picture-log",
+        alias: "Ex-Inpsection Info",
+        component: () =>
+          import(
+            "../views/Applications/ExInspection/Pages/PictureLog/Page.vue"
+          ),
+      },
+    ]
+  },
+  //Temporary repair
+  {
+    path: "/temporary-repair",
+    name: "Temporary Repair",
+    component: () => import("../views/Applications/TemporaryRepair/router-template.vue"),
+    children: [
+      {
+        path: "",
+        alias: "Temporary Repair Dashboard",
+        component: () => import("../views/Applications/TemporaryRepair/Dashboard/Page.vue"),
+      },
+      {
+        path: "trr",
+        alias: "Temporary Repair Record",
+        component: () => import("../views/Applications/TemporaryRepair/TRR/Page.vue"),
+      },
+      {
+        path: "temporary-pending-approval",
+        alias: "Temporary Repair Pending Approval",
+        component: () => import("../views/Applications/TemporaryRepair/PendingApproval/Page.vue"),
+      },
+    ]
+  },
+  //Reliability
+  {
+    path: "/reliability",
+    name: "Reliability",
+    component: () => import("../views/Applications/Reliability/router-template.vue"),
+    children: [
+      {
+        path: "",
+        alias: "Reliability Dashboard",
+        component: () => import("../views/Applications/Reliability/Dashboard/Page.vue"),
+      },
+      {
+        path: "failure-report",
+        alias: "Failure Report",
+        component: () => import("../views/Applications/Reliability/FailureReport/Page.vue"),
+      },
+      {
+        path: "pending-approval",
+        alias: "Pending Approval",
+        component: () => import("../views/Applications/Reliability/PendingApproval/Page.vue"),
+      },
+      {
+        path: "stt",
+        alias: "Short Term Tracking",
+        component: () => import("../views/Applications/Reliability/STT/Page.vue"),
+      },
+      {
+        path: "ltt",
+        alias: "Long Term Tracking",
+        component: () => import("../views/Applications/Reliability/LTT/Page.vue"),
       },
     ]
   },
