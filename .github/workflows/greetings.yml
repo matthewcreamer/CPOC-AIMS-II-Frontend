@@ -1,7 +1,7 @@
 name: Merge dev to main and change files
 
 on:
-  pull:
+  push:
     branches:
       - main
   # push:
