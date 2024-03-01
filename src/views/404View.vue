@@ -7,7 +7,7 @@
 
       <v-ons-toolbar-button id="btn" v-on:click="$router.go(-1)">
         <i class="las la-arrow-left"></i>
-        <span>Back to previous pagessts</span>
+        <span>Back to previous pagesstsd</span>
       </v-ons-toolbar-button>
     </div>
   </div>
