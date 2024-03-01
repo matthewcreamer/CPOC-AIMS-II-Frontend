@@ -1,7 +1,9 @@
 name: Merge dev to main and change files
 
 on:
-  workflow_dispatch:
+  pull:
+    branches:
+      - main
   # push:
   #   branches:
   #     - dev
