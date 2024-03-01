@@ -61,5 +61,5 @@ jobs:
       - name: Deploy to IIS
         shell: cmd
         run: |
-          xcopy /s /y .\README.md C:\inetpub\test_auto_deploy
+          xcopy /s /y .\README.md C:\inetpub\test_auto_deploy 
           
