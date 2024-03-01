@@ -26,8 +26,15 @@ jobs:
       - name: Edit index.js
         run: |
             sed -i "s/mode: 'dev'/mode: 'prod'/" src/store/index.js
-      - name: Commit and push changes
+      - name: Check for changes
+        id: git-check
         run: |
-            git add .
-            git commit -m "Update mode to prod"
-            git push
+          git diff --quiet || echo "Changes found"
+          git diff --quiet || exit 1
+
+      - name: Commit and push changes
+        if: steps.git-check.outcome == 'success'
+        run: |
+          git add .
+          git commit -m "Update mode to prod"
+          git push
