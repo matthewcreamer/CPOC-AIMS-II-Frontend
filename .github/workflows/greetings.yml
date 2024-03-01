@@ -13,8 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # - name: Checkout main branch
-      #   run: git checkout -f main
+      - name: Checkout dev branch
+        run: git checkout -f dev
 
       - name: Merge dev into main
         run: git merge --no-ff origin/dev -m "Merge dev into main"
@@ -29,4 +29,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Change files from dev to prod"
-          git push origin main
+          git push
