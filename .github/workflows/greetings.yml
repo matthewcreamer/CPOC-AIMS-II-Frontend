@@ -3,7 +3,7 @@ name: Merge dev to main and change files
 on:
   push:
     branches:
-      - main
+      - dev
   # push:
   #   branches:
   #     - dev
