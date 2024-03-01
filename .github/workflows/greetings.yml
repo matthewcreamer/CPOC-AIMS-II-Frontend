@@ -6,27 +6,20 @@ on:
       - dev
 
 jobs:
-  merge_and_change:
+  merge-branch:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Checkout main branch
-        run: git checkout -f main
-
-      - name: Merge dev into main
-        run: git merge --no-ff origin/dev -m "Merge dev into main"
-
-      - name: Change files from dev to prod
+      - name: Set Git config
         run: |
-          sed -i 's/dev/prod/g' src/store/index.js
-
-      - name: Commit changes
+            git config --local user.email "actions@github.com"
+            git config --local user.name "Github Actions"
+      - name: Merge master back to dev
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Change files from dev to prod"
-          git push
+            git fetch --unshallow
+            git checkout main
+            git pull
+            git merge --no-ff dev -m "Auto-merge master back to dev"
+            git push
