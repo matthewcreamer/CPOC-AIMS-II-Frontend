@@ -7,13 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    mode: 'prod', //prod, prod
+    mode: 'dev', //dev, prod
     modeURL: {
-      prod: 'https://localhost:5001/',
+      dev: 'https://localhost:5001/',
       prod: 'https://dis02.dexon-technology.com:444/'
     },
     urlApi: {
-      prod: 'https://localhost:5001/api',
+      dev: 'https://localhost:5001/api',
       prod: 'https://dis02.dexon-technology.com:444/api',
     },
     user: '',

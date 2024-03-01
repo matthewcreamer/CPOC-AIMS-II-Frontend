@@ -23,3 +23,6 @@ jobs:
             git pull
             git merge --no-ff dev -m "Auto-merge master back to dev"
             git push
+      - name: Edit index.js
+        run: |
+            sed -i 's/mode: '\''dev'\''/mode: '\''prod'\''/' src/store/index.js
