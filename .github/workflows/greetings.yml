@@ -31,9 +31,9 @@ jobs:
       #   run: |
       #       sed -i "s/mode: 'dev'/mode: 'prod'/" src/store/index.js
      
-      - name: Commit and push changes
-        run: |
-          git diff --quiet || { git add . && git commit -m "Update mode to prod" && git push; }
+      # - name: Commit and push changes
+      #   run: |
+      #     git diff --quiet || { git add . && git commit -m "Update mode to prod" && git push; }
 
       # - name: Build project
       #   run: |
