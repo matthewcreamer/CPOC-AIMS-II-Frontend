@@ -6,14 +6,14 @@ on:
       - dev
 
 jobs:
-  merge_and_change:
+  merge-branch:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
 
       - name: Merge dev into main
-        run: git checkout main
+        run: 
              git merge --no-ff origin/dev -m "Merge dev into main"
              git push
