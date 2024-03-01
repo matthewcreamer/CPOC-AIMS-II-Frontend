@@ -19,11 +19,6 @@ jobs:
             git config --local user.email "actions@github.com"
             git config --local user.name "Github Actions"
 
-      - name: Create Node Environment  # Sets up Node.js environment.
-          uses: actions/setup-node@v4
-          with: 
-            node-version: 16.x
-
       - name: Merge master back to dev
         run: |
             git fetch --unshallow
