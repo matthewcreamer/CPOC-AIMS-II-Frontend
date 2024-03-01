@@ -35,6 +35,7 @@ jobs:
 
       - name: Build project
         run: |
+          npm i
           npm run build
 
       - name: Copy files to Windows server
