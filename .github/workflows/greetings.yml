@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - dev
+  # push:
+  #   branches:
+  #     - dev
 
 jobs:
   merge-branch:
@@ -16,6 +19,7 @@ jobs:
         run: |
             git config --local user.email "actions@github.com"
             git config --local user.name "Github Actions"
+
       - name: Merge master back to dev
         run: |
             git fetch --unshallow
@@ -23,6 +27,7 @@ jobs:
             git pull
             git merge --no-ff dev -m "Auto-merge master back to dev"
             git push
+
       - name: Edit index.js
         run: |
             sed -i "s/mode: 'dev'/mode: 'prod'/" src/store/index.js
