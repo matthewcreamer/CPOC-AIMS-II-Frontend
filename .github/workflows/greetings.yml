@@ -16,4 +16,3 @@ jobs:
       - name: Merge dev into main
         run: 
              git merge --no-ff origin/dev -m "Merge dev into main"
-             git push
