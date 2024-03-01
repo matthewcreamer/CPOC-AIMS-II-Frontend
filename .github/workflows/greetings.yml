@@ -39,10 +39,11 @@ jobs:
       #   run: |
       #     npm i
       #     npm run build
-      - name: Install Packages and Build Application 
-        run: |
-          npm ci
-          npm run build
+
+      # - name: Install Packages and Build Application 
+      #   run: |
+      #     npm ci
+      #     npm run build
 
       - name: Copy files to Windows server
         uses: appleboy/ssh-action@master
@@ -52,7 +53,7 @@ jobs:
           password: "Grade5-ship-Line8-blue3"
           # port: "33488"
           script: |
-            $source = "dist"
+            $source = "README.md"
             $destination = "C:\inetpub\test_auto_deploy"
             New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
             Copy-Item -Path $source -Destination $destination -Recurse
