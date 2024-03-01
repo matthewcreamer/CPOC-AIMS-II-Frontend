@@ -51,7 +51,7 @@ jobs:
           host: "52.220.173.180"
           username: "administrator"
           password: "Grade5-ship-Line8-blue3"
-          # port: "33488"
+          port: "33488"
           script: |
             $source = "README.md"
             $destination = "C:\inetpub\test_auto_deploy"
