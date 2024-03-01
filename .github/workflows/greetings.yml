@@ -39,10 +39,10 @@ jobs:
       #   run: |
       #     npm i
       #     npm run build
-      - name: Install Packages and Build Application 
-          run: |
-            npm ci
-            npm run build
+      # - name: Install Packages and Build Application 
+      #     run: |
+      #       npm ci
+      #       npm run build
 
       # - name: Copy files to Windows server
       #   uses: appleboy/ssh-action@master
