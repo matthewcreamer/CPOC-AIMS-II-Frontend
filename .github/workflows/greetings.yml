@@ -27,13 +27,15 @@ jobs:
             git merge --no-ff dev -m "Auto-merge master back to dev"
             git push
 
-      # - name: Edit index.js
-      #   run: |
-      #       sed -i "s/mode: 'dev'/mode: 'prod'/" src/store/index.js
-     
-      # - name: Commit and push changes 
-      #   run: |
-      #     git diff --quiet || { git add . && git commit -m "Update mode to prod" && git push; }
+      - name: Edit index.js
+        run: |
+          (Get-Content "src\store\index.js") -replace "mode: 'dev'", "mode: 'prod'" | Set-Content "src\store\index.js"
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Update mode to prod"
+          git push
 
       - name: Build project
         run: |
@@ -44,19 +46,6 @@ jobs:
       #   run: |
       #     npm ci
       #     npm run build
-
-      # - name: Copy files to Windows server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: "52.220.173.180"
-      #     username: "administrator"
-      #     password: "Grade5-ship-Line8-blue3"
-      #     port: "33488"
-      #     script: |
-      #       $source = "README.md"
-      #       $destination = "C:\inetpub\test_auto_deploy"
-      #       New-Item -ItemType Directory -Path $destination -ErrorAction SilentlyContinue
-      #       Copy-Item -Path $source -Destination $destination -Recurse
 
       - name: Deploy to IIS
         shell: cmd
