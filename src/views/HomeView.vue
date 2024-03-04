@@ -7,7 +7,7 @@
             <div class="detail">
               <img src="/img/default_profile_picture.png" alt>
               <div class="name">
-                <span>Admin</span>
+                <span>Adminssssssss</span>
                 <span>Super User</span>
               </div>
             </div>
