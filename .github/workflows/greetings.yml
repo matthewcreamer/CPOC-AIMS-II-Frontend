@@ -35,10 +35,10 @@ jobs:
       #   run: |
       #     git diff --quiet || { git add . && git commit -m "Update mode to prod" && git push; }
 
-      # - name: Build project
-      #   run: |
-      #     npm i
-      #     npm run build
+      - name: Build project
+        run: |
+          npm install
+          npm run build
 
       # - name: Install Packages and Build Application 
       #   run: |
