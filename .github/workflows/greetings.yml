@@ -46,6 +46,4 @@ jobs:
       - name: Deploy to IIS
         shell: cmd
         run: |
-          iisreset /stop
           xcopy /s /y .\dist C:\inetpub\CPOC-AIMS\Frontend
-          iisreset /start
