@@ -2,8 +2,12 @@ name: Merge dev to main and deploy
 
 on:
   workflow_dispatch:
-    branches:
-      - dev
+    inputs:
+      manual_branch:
+        description: Set branch
+        required: true
+        type: string
+        default: dev
 
 jobs:
   merge-branch:
