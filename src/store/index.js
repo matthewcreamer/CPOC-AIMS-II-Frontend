@@ -9,12 +9,12 @@ export default new Vuex.Store({
   state: {
     mode: 'prod', //dev, prod
     modeURL: {
-      dev: 'https://localhost:5001/',
-      prod: 'https://dis02.dexon-technology.com:444/'
+      dev: 'https://localhost:7129/',
+      prod: 'https://dis02.dexon-technology.com:449/'
     },
     urlApi: {
-      dev: 'https://localhost:5001/api',
-      prod: 'https://dis02.dexon-technology.com:444/api',
+      dev: 'https://localhost:7129/api',
+      prod: 'https://dis02.dexon-technology.com:449/api',
     },
     user: '',
     appIcon: '/img/app-logo.svg',
