@@ -1,10 +1,10 @@
-name: Merge dev to main and change files
+name: Merge dev to main and deploy
 
 on:
   workflow_dispatch:
   # push:
-  #   branches:
-  #     - dev
+    branches:
+      - dev
 
 jobs:
   merge-branch:
@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        # with:
-        #   fetch-depth: 2
 
       - name: Set Git config
         run: |
